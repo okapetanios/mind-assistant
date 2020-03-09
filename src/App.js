@@ -10,6 +10,8 @@ import { combineReducers, createStore } from "redux";
 import { Provider } from "react-redux";
 import SearchComponent from "./components/SearchComponent";
 import Home from "./Home";
+import SearchDetailsComponent from "./components/SearchDetailsComponent";
+import ProfileComponent from "./components/ProfileComponent";
 
 
 
