@@ -4,7 +4,7 @@ const jokeReducer = (state={jokes:[]}, action) => {
     switch (action.type) {
         case FIND_JOKES_BY_KEYWORD:
             return {
-                jokes: action.jokes
+                jokes: action.jokes.results
             };
         case FIND_JOKE:
             return {

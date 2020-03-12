@@ -19,8 +19,7 @@ class App extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            keyword: '',
-            jokes: []
+            keyword: ''
         }
     }
 
@@ -30,22 +29,6 @@ class App extends React.Component {
     });
 
     store = createStore(this.reducers);
-
-    searchJokes = () => {
-        fetch(`https://icanhazdadjoke.com/search?term=${this.state.keyword}`, {
-            headers: {
-                Accept: "application/json"
-            }
-        })
-            .then(response => response.json())
-            .then(this.renderJokes)
-    };
-
-    renderJokes = (search) => {
-        this.setState({
-            jokes: search.results
-        })
-    };
 
     keyWordChange = event =>
         this.setState({ keyword: event.target.value });
@@ -68,9 +51,8 @@ class App extends React.Component {
                                            type="search"
                                            placeholder="Search  for Dad Jokes"
                                            aria-label="Search" />
-                                    <Link to={"/search"}>
-                                        <button onClick={this.searchJokes}
-                                                className="btn btn-outline-success my-2 my-sm-0"
+                                    <Link to={`/search/${this.state.keyword}`}>
+                                        <button className="btn btn-outline-success my-2 my-sm-0"
                                                 type="submit">
                                             Search
                                         </button>
@@ -86,8 +68,7 @@ class App extends React.Component {
                                 render={(props) =>
                                     <SearchComponent
                                         {...props}
-                                        jokes={this.state.jokes}
-                                        keyword={this.state.keyword === '' ? 'AllJokes' : this.state.keyword}
+                                        criteria={props.match.params.criteria}
                                     />
                                 } />
                             <Route
