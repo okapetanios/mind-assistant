@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file:$PROJECT_DIR$/../../../../../../..//$PROJECT_DIR$/mind-assistant.iml" filepath="$PROJECT_DIR$/mind-assistant.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/mind-assistant.iml" filepath="$PROJECT_DIR$/.idea/mind-assistant.iml" />
+      <module fileurl="file://file:D:/../../..//D:/ALIGN/Spring 2020/CS5610/mind-assistant/mind-assistant.iml" filepath="file:D:/../../..//D:/ALIGN/Spring 2020/CS5610/mind-assistant/mind-assistant.iml" />
     </modules>
   </component>
 </project>

@@ -1,5 +1,7 @@
+import {JOKE_URL} from "../const/Constants";
+
 class JokeService {
-    url = "https://icanhazdadjoke.com";
+    url = JOKE_URL;
 
     findJokeById = (jokeId) => {
         return fetch(`${this.url}/j/${jokeId}`, {
