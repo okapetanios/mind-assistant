@@ -15,6 +15,7 @@ import SearchDetailsComponent from "./components/SearchDetailsComponent";
 import ProfileComponent from "./components/ProfileComponent";
 import profileReducer from "./reducers/profileReducer";
 import userReducer from "./reducers/userReducer";
+import folderReducer from "./reducers/folderReducer";
 
 
 class App extends React.Component {
@@ -28,7 +29,8 @@ class App extends React.Component {
     reducers = combineReducers({
         jokes: jokeReducer,
         profile: profileReducer,
-        user: userReducer
+        user: userReducer,
+        folder: folderReducer
     });
 
     store = createStore(this.reducers);
