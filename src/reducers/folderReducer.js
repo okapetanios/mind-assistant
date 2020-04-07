@@ -22,7 +22,7 @@ const folderReducer = (state={folders:[]}, action) => {
         case UPDATE_FOLDER:
             return {
                 folders: state.folders.map(folder =>
-                    folder.id === action.folderID ? action.folder : folder
+                    folder.id === action.folderId ? action.folder : folder
                 )
             };
         case DELETE_FOLDER:
