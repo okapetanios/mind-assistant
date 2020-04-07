@@ -27,7 +27,7 @@ const folderReducer = (state={folders:[]}, action) => {
             };
         case DELETE_FOLDER:
             return {
-                folders: state.folders.filter(folder => folder.id !== action.folderID)
+                folders: state.folders.filter(folder => folder.id !== action.folderId)
             };
         case FIND_ALL_FOLDERS:
             return {
