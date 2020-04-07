@@ -16,6 +16,7 @@ import ProfileComponent from "./components/ProfileComponent";
 import profileReducer from "./reducers/profileReducer";
 import userReducer from "./reducers/userReducer";
 import folderReducer from "./reducers/folderReducer";
+import noteReducer from "./reducers/noteReducer";
 
 
 class App extends React.Component {
@@ -30,7 +31,8 @@ class App extends React.Component {
         jokes: jokeReducer,
         profile: profileReducer,
         user: userReducer,
-        folder: folderReducer
+        folders: folderReducer,
+        notes: noteReducer
     });
 
     store = createStore(this.reducers);
