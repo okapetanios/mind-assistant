@@ -17,6 +17,7 @@ import profileReducer from "./reducers/profileReducer";
 import userReducer from "./reducers/userReducer";
 import folderReducer from "./reducers/folderReducer";
 import noteReducer from "./reducers/noteReducer";
+import labelReducer from "./reducers/labelReducer";
 
 
 class App extends React.Component {
@@ -32,7 +33,8 @@ class App extends React.Component {
         profile: profileReducer,
         user: userReducer,
         folders: folderReducer,
-        notes: noteReducer
+        notes: noteReducer,
+        labels: labelReducer
     });
 
     store = createStore(this.reducers);
