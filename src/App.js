@@ -12,8 +12,9 @@ import jokeReducer from "./reducers/jokeReducer";
 import Home from "./Home";
 import SearchComponent from "./components/SearchComponent";
 import SearchDetailsComponent from "./components/SearchDetailsComponent";
-import ProfileComponent from "./components/ProfileComponent";
+import EditProfileComponent from "./components/profile/EditProfileComponent";
 import profileReducer from "./reducers/profileReducer";
+import PublicProfileComponent from "./components/profile/PublicProfileComponent"
 import userReducer from "./reducers/userReducer";
 import folderReducer from "./reducers/folderReducer";
 import noteReducer from "./reducers/noteReducer";
@@ -92,9 +93,16 @@ class App extends React.Component {
                             <Route
                                 exact path={"/profiles/:profileId"}
                                 render={(props) =>
-                                    <ProfileComponent
+                                    <PublicProfileComponent
                                         {...props}
                                         profileId={props.match.params.profileId}
+                                    />
+                                }/>
+                            <Route
+                                exact path={"/profile"}
+                                render={(props) =>
+                                    <EditProfileComponent
+                                        {...props}
                                     />
                                 }/>
                             <Route path={"/"}>
