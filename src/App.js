@@ -9,7 +9,7 @@ import {
 import { combineReducers, createStore } from "redux";
 import { Provider } from "react-redux";
 import SearchComponent from "./components/SearchComponent";
-import Home from "./Home";
+import Home from "./containers/Home";
 import SearchDetailsComponent from "./components/SearchDetailsComponent";
 import ProfileComponent from "./components/ProfileComponent";
 
@@ -33,7 +33,7 @@ class App extends Component {
     store = createStore(this.reducers);
 
     searchJokes = () => {
-       
+
         fetch(`https://icanhazdadjoke.com/search?term=${this.state.keyword}`, {
             headers: {
                 Accept: "application/json"
@@ -67,13 +67,23 @@ class App extends Component {
                                     <input value={this.state.keyword} onChange={this.keyWordChange} className="form-control mr-sm-2" type="search" placeholder="Search"
                                         aria-label="Search" />
                                     <Link to={"/search"}>
-                                        <button onClick={this.searchJokes} className="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                                        <button onClick={this.searchJokes} className="btn btn-outline-success my-2 my-sm-0" type="submit">Search Dad Jokes</button>
                                     </Link>
                                 </form>
                             </div>
                         </nav>
 
                         <Switch>
+
+
+                            <Route exact path={"/"}
+                                render={(props) =>
+                                    <Home {...props}
+                                    />
+                                }
+                            />
+
+
                             <Route
                                 path={"/search"}
                                 render={(props) =>
@@ -85,9 +95,9 @@ class App extends Component {
 
                                     />
                                 } />
-                            <Route path={"/"}>
-                                <Home />
-                            </Route>
+
+
+
                         </Switch>
                     </div>
                 </Router>
