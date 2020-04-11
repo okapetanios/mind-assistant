@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import '../App.css';
+import NoteComponent from '../components/NoteComponent'
 
 class Home extends Component {
 

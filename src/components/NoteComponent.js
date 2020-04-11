@@ -1,22 +1,26 @@
 import React from 'react';
-
+import LabelComponent from './LabelComponent'
 class NoteComponent extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            someKey: 'someValue'
+            someKey: 'I\'m a Note'
         }
 
 
     }
 
   render() {
-    return <p>{this.state.someKey}</p>;
+    return <div class="card"><p>{this.state.someKey}</p>
+
+    <LabelComponent/>
+    
+    </div>;
   }
 
   componentDidMount() {
     this.setState({
-      someKey: 'otherValue'
+      someKey: 'I\'m a Note after Mount'
     });
   }
 }
