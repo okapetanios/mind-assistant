@@ -70,6 +70,7 @@ class App extends React.Component {
                                         </button>
                                     </Link>
                                 </form>
+                                <a className="nav-link btn-dark" href="/login">Log In</a>
                             </div>
                         </nav>
 
