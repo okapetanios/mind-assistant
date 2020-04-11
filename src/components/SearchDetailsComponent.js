@@ -23,27 +23,27 @@ class SearchDetailsComponent extends React.Component {
                     Find users that currently have the particular resultId saved as public note
                     */}
                     <li>
-                        <Link to={"/profiles/user1"}>
+                        <Link to={"/profile/user1"}>
                             User 1
                         </Link>
                     </li>
                     <li>
-                        <Link to={"/profiles/user2"}>
+                        <Link to={"/profile/user2"}>
                             User 2
                         </Link>
                     </li>
                     <li>
-                        <Link to={"/profiles/user3"}>
+                        <Link to={"/profile/user3"}>
                             User 3
                         </Link>
                     </li>
                     <li>
-                        <Link to={"/profiles/user4"}>
+                        <Link to={"/profile/user4"}>
                             User 4
                         </Link>
                     </li>
                     <li>
-                        <Link to={"/profiles/user5"}>
+                        <Link to={"/profile/user5"}>
                             User 5
                         </Link>
                     </li>

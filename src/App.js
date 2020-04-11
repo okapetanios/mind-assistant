@@ -69,7 +69,7 @@ class App extends React.Component {
                                     </Link>
                                 </form>
                             </div>
-                        </nav>s
+                        </nav>
 
                         <Switch>
 
@@ -101,7 +101,7 @@ class App extends React.Component {
                                     />
                                 }/>
                             <Route
-                                exact path={"/profiles/:profileId"}
+                                exact path={"/profile/:profileId"}
                                 render={(props) =>
                                     <PublicProfileComponent
                                         {...props}
