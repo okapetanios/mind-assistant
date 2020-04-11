@@ -19,6 +19,8 @@ import userReducer from "./reducers/userReducer";
 import folderReducer from "./reducers/folderReducer";
 import noteReducer from "./reducers/noteReducer";
 import labelReducer from "./reducers/labelReducer";
+import LoginComponent from "./components/LoginComponent";
+import RegisterComponent from "./components/RegisterComponent";
 
 
 class App extends React.Component {
@@ -112,6 +114,20 @@ class App extends React.Component {
                                 exact path={"/profile"}
                                 render={(props) =>
                                     <EditProfileComponent
+                                        {...props}
+                                    />
+                                }/>
+                            <Route
+                                exact path={"/login"}
+                                render={(props) =>
+                                    <LoginComponent
+                                        {...props}
+                                    />
+                                }/>
+                            <Route
+                                exact path={"/register"}
+                                render={(props) =>
+                                    <RegisterComponent
                                         {...props}
                                     />
                                 }/>
