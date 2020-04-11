@@ -10,7 +10,8 @@ class LabelComponent extends React.Component {
   }
 
   render() {
-    return <a class="label"></a>;
+    return <a class="label">I'm a label</a>;
+    // Render option to create a label
   }
 
   componentDidMount() {

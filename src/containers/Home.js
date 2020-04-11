@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import '../App.css';
-import NoteComponent from '../components/NoteComponent'
+import NoteListComponent from '../components/NoteListComponent'
 
 class Home extends Component {
 
@@ -9,18 +9,7 @@ class Home extends Component {
         return (
             <div className="App">
                 <header className="App-header">
-
-                    <p>
-                        Edit <code>src/App.js</code> and save to reload.
-            </p>
-                    <a
-                        className="App-link"
-                        href="https://reactjs.org"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
-                        Learn More
-            </a>
+            <NoteListComponent/>
                 </header>
             </div>
         )

@@ -71,7 +71,7 @@ class App extends Component {
                                     </Link>
                                 </form>
                             </div>
-                        </nav>
+                        </nav>s
 
                         <Switch>
 
