@@ -51,7 +51,7 @@ class LoginComponent extends React.Component{
                     <label className="col-sm-2 col-form-label"></label>
                     <div className="col-sm-10">
                         <a className="btn btn-primary btn-block wbdv-button wbdv-login"
-                           href="../profile/profile.template.client.html"
+                           href="/profile"
                            role="button">
                             Sign in</a>
                         <div className="row">
