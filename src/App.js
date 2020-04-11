@@ -7,9 +7,9 @@ import {
     Link
 } from "react-router-dom";
 import { combineReducers, createStore } from "redux";
-import {Provider} from "react-redux";
+import { Provider } from "react-redux";
+import Home from "./containers/Home";
 import jokeReducer from "./reducers/jokeReducer";
-import Home from "./Home";
 import SearchComponent from "./components/SearchComponent";
 import SearchDetailsComponent from "./components/SearchDetailsComponent";
 import EditProfileComponent from "./components/profile/EditProfileComponent";
@@ -69,9 +69,19 @@ class App extends React.Component {
                                     </Link>
                                 </form>
                             </div>
-                        </nav>
+                        </nav>s
 
                         <Switch>
+
+
+                            <Route exact path={"/"}
+                                render={(props) =>
+                                    <Home {...props}
+                                    />
+                                }
+                            />
+
+
                             <Route
                                 exact path={["/search",
                                             "/search/:criteria"]}
