@@ -30,6 +30,7 @@ const EditProfileComponent = ({profileId, history}) =>
                 </select>
             </div>
             <button type="submit" className="btn btn-primary">Submit</button>
+            <a type="cancel" href="/" className="btn btn-danger float-right">Cancel</a>
         </form>
     </div>;
 
