@@ -1,5 +1,4 @@
 import React from "react";
-import {Link} from "react-router-dom";
 
 class LoginComponent extends React.Component{
     login = () => {
@@ -53,9 +52,8 @@ class LoginComponent extends React.Component{
                 <div className="form-group row">
                     <label className="col-sm-2 col-form-label"></label>
                     <div className="col-sm-10">
-                        <button className="btn-primary btn-block "
-                           onClick={this.login}
-                           role="button">
+                        <button className="btn btn-primary btn-block "
+                           onClick={this.login}>
                             Sign in
                         </button>
                         <div className="row">

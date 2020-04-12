@@ -66,19 +66,19 @@ class EditProfileComponent extends React.Component{
                 <div className="form-group row">
                     <div className="col-sm-2 col-form-label"></div>
                     <div className="col-sm-10">
-                        <button className="btn-primary btn-block"
-                                role="button">
+                        <button className="btn btn-primary btn-block">
                             Submit
                         </button>
                         <div className="row">
                             <div className="col-6">
-                                <a onClick={this.logout}>
+                                <button className={"btn btn-link"}
+                                    onClick={this.logout}>
                                     Logout
-                                </a>
+                                </button>
                             </div>
                             <div className="col-6">
                                 <a href="/"
-                                   className="float-right">
+                                   className="btn btn-link float-right">
                                     Cancel
                                 </a>
                             </div>

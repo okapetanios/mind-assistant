@@ -1,8 +1,38 @@
 import React from "react";
+import userService from "../services/userService";
+import {createUser} from "../actions/userActions";
+import {connect} from "react-redux";
+
+const UserService = new userService();
 
 class RegisterComponent extends React.Component{
+    state = {
+        username: "",
+        password: "",
+        verify: ""
+    };
+
+    updateUsername = (e) => {
+        this.setState({
+            username: e.target.value
+        })
+    };
+
+    updatePassword = (e) => {
+        this.setState({
+            password: e.target.value
+        })
+    };
+
+    updateVerify = (e) => {
+        this.setState({
+            verify: e.target.value
+        })
+    };
 
     register = () => {
+        const user = {username: this.state.username, password: this.state.password};
+        this.props.createUser(user);
         this.props.history.push("/profile")
     };
 
@@ -21,7 +51,10 @@ class RegisterComponent extends React.Component{
                         <input type="text"
                                className="form-control"
                                id="usernameFld"
-                               placeholder="Alice"/>
+                               placeholder="Alice"
+                               value={this.state.user.username}
+                               onChange={this.updateUsername}
+                        />
                     </div>
                 </div>
 
@@ -35,7 +68,10 @@ class RegisterComponent extends React.Component{
                         <input type="password"
                                className="form-control "
                                id="passwordFld"
-                               placeholder="123qwe#$%"/>
+                               placeholder="123qwe#$%"
+                               value={this.state.user.password}
+                               onChange={this.updatePassword}
+                        />
                     </div>
                 </div>
 
@@ -49,7 +85,10 @@ class RegisterComponent extends React.Component{
                         <input type="password"
                                className="form-control "
                                id="verifyPasswordFld"
-                               placeholder="123qwe#$%"/>
+                               placeholder="123qwe#$%"
+                               value={this.state.user.verify}
+                               onChange={this.updateVerify}
+                        />
                     </div>
                 </div>
 
@@ -57,9 +96,8 @@ class RegisterComponent extends React.Component{
                 <div className="form-group row">
                     <div className="col-sm-2 col-form-label"></div>
                     <div className="col-sm-10">
-                        <button className="btn-primary btn-block"
-                           onClick={this.register}
-                           role="button">
+                        <button className="btn btn-primary btn-block"
+                           onClick={this.register}>
                             Sign Up
                         </button>
                         <div>
@@ -73,4 +111,17 @@ class RegisterComponent extends React.Component{
     }
 }
 
-export default RegisterComponent
+const stateToPropertyMapper = (state) => ({
+    user: state.user.user
+});
+const dispatchToPropertyMapper = (dispatch) => ({
+    createUser: (user) => {
+        UserService.createUser(user).then(status => {
+            dispatch(createUser(user))
+        })
+    }
+});
+export default connect(
+    stateToPropertyMapper,
+    dispatchToPropertyMapper
+)(RegisterComponent)

@@ -7,13 +7,14 @@ class userService {
         return fetch(`${this.url}/${userId}`).then(response => response.json())
     };
 
-    createUser = (userId, user) => {
+    createUser = (user) => {
         return fetch(this.url, {
             method: "POST",
             body: JSON.stringify(user),
             headers: {
                 "content-type": "application/json"
-            }
+            },
+            credentials: "include"
         }).then(response => response.json())
     };
 

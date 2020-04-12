@@ -1,6 +1,6 @@
 import {CREATE_USER, DELETE_USER, FIND_ALL_USERS, FIND_USER, UPDATE_USER} from "../actions/userActions";
 
-const userReducer = (state={user:[]}, action) => {
+const userReducer = (state={user:{}}, action) => {
     switch (action.type) {
         case FIND_USER:
             return {
