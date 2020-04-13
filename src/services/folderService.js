@@ -1,8 +1,8 @@
 import {HEROKU_URL} from "../const/Constants";
 
 class folderService {
-    url = HEROKU_URL + "/folders";
-    userURL = (userId) => `${HEROKU_URL}/users/${userId}/folders`;
+    url = HEROKU_URL + "/api/folders";
+    userURL = (userId) => `${HEROKU_URL}/api/users/${userId}/folders`;
 
     findFoldersForUser = (userId) => {
         return fetch(this.userURL(userId)).then(response => response.json())
