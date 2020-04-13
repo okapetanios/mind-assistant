@@ -1,8 +1,32 @@
 import React from "react";
+import {connect} from "react-redux";
+import userService from "../services/userService";
+import {loginUser} from "../actions/userActions";
+
+const UserService = new userService();
 
 class LoginComponent extends React.Component{
+    state = {
+        username: "",
+        password: ""
+    };
+
+    updateUsername = (e) => {
+        this.setState({
+            username: e.target.value
+        })
+    };
+
+    updatePassword = (e) => {
+        this.setState({
+            password: e.target.value
+        })
+    };
+
     login = () => {
-        this.props.history.push("/")
+        const user = {username: this.state.username, password: this.state.password};
+        this.props.loginUser(user);
+        this.props.history.push("/profile")
     };
 
     render() {
@@ -31,7 +55,10 @@ class LoginComponent extends React.Component{
                         <input type="text"
                                className="form-control "
                                id="inputUsername"
-                               placeholder="Alice"/>
+                               placeholder="Alice"
+                               value={this.state.username}
+                               onChange={this.updateUsername}
+                        />
                     </div>
                 </div>
 
@@ -44,7 +71,10 @@ class LoginComponent extends React.Component{
                         <input type="password"
                                className="form-control"
                                id="inputPassword"
-                               placeholder="123qwe#$%"/>
+                               placeholder="123qwe#$%"
+                               value={this.state.password}
+                               onChange={this.updatePassword}
+                        />
                     </div>
                 </div>
 
@@ -76,4 +106,17 @@ class LoginComponent extends React.Component{
     }
 }
 
-export default LoginComponent
+const stateToPropertyMapper = (state) => ({
+    user: state.user.user
+});
+const dispatchToPropertyMapper = (dispatch) => ({
+    loginUser: (user) => {
+        UserService.loginUser(user).then(status => {
+            dispatch(loginUser(user))
+        })
+    }
+});
+export default connect(
+    stateToPropertyMapper,
+    dispatchToPropertyMapper
+)(LoginComponent)

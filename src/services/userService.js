@@ -11,7 +11,10 @@ class userService {
     };
 
     findCurrentUser = () => {
-        return fetch(this.currentUserUrl, {credentials: "include"}).then(response => response.json())
+        return fetch(this.currentUserUrl, {
+            method: "GET",
+            credentials: "include"
+        }).then(response => response.json())
     };
 
     logoutUser = () => {
@@ -23,8 +26,11 @@ class userService {
 
     loginUser = (user) => {
         return fetch(this.loginUrl, {
-            method: "GET",
+            method: "POST",
             body: JSON.stringify(user),
+            headers: {
+                "content-type": "application/json"
+            },
             credentials: "include"
         }).then(response => response.json())
     };
