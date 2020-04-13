@@ -9,7 +9,7 @@ class RegisterComponent extends React.Component{
     state = {
         username: "",
         password: "",
-        verify: ""
+        verifyPassword: ""
     };
 
     updateUsername = (e) => {
@@ -26,7 +26,7 @@ class RegisterComponent extends React.Component{
 
     updateVerify = (e) => {
         this.setState({
-            verify: e.target.value
+            verifyPassword: e.target.value
         })
     };
 
@@ -52,7 +52,7 @@ class RegisterComponent extends React.Component{
                                className="form-control"
                                id="usernameFld"
                                placeholder="Alice"
-                               value={this.state.user.username}
+                               value={this.state.username}
                                onChange={this.updateUsername}
                         />
                     </div>
@@ -69,7 +69,7 @@ class RegisterComponent extends React.Component{
                                className="form-control "
                                id="passwordFld"
                                placeholder="123qwe#$%"
-                               value={this.state.user.password}
+                               value={this.state.password}
                                onChange={this.updatePassword}
                         />
                     </div>
@@ -86,7 +86,7 @@ class RegisterComponent extends React.Component{
                                className="form-control "
                                id="verifyPasswordFld"
                                placeholder="123qwe#$%"
-                               value={this.state.user.verify}
+                               value={this.state.verifyPassword}
                                onChange={this.updateVerify}
                         />
                     </div>

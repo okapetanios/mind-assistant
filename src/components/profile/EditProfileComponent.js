@@ -1,14 +1,24 @@
 import React from "react";
+import {connect} from "react-redux";
+import userService from "../../services/userService";
+import {findCurrentUser, logoutUser} from "../../actions/userActions";
+
+const UserService = new userService();
 
 class EditProfileComponent extends React.Component{
+    componentDidMount() {
+        this.props.findCurrentUser()
+    }
+
     logout = () => {
+        this.props.logoutUser();
         this.props.history.push("/")
     };
 
     render() {
         return (
             <div className={"container"}>
-                <h1>{this.props.profileId}'s Profile</h1>
+                <h1>{this.props.user.username}'s Profile</h1>
                 <div className="form-group row">
                     <label htmlFor="usernameFld"
                            className="col col-form-label">
@@ -90,4 +100,22 @@ class EditProfileComponent extends React.Component{
     }
 }
 
-export default EditProfileComponent
+const stateToPropertyMapper = (state) => ({
+    user: state.user.user
+});
+const dispatchToPropertyMapper = (dispatch) => ({
+    findCurrentUser: () => {
+        UserService.findCurrentUser().then(user => {
+            dispatch(findCurrentUser(user))
+        })
+    },
+    logoutUser: () => {
+        UserService.logoutUser().then(user => {
+            dispatch(logoutUser)
+        })
+    }
+});
+export default connect(
+    stateToPropertyMapper,
+    dispatchToPropertyMapper
+)(EditProfileComponent)

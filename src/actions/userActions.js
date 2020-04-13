@@ -28,3 +28,21 @@ export const findAllUsers = (users) => ({
     type: FIND_ALL_USERS,
     users: users
 });
+
+export const FIND_CURRENT_USER = "FIND_CURRENT_USER";
+export const findCurrentUser = (user) => ({
+    type: FIND_CURRENT_USER,
+    user: user
+});
+
+export const LOGOUT_USER = "LOGOUT_USER";
+export const logoutUser = () => ({
+    type: LOGOUT_USER,
+    user: {}
+});
+
+export const LOGIN_USER = "LOGIN_USER";
+export const loginUser = (user) => ({
+    type: LOGIN_USER,
+    user: user
+});
