@@ -1,9 +1,9 @@
 import {HEROKU_URL} from "../const/Constants";
 
 class noteService {
-    url = HEROKU_URL + "/notes";
-    userURL = (userId) => `${HEROKU_URL}/users/${userId}/notes`;
-    folderURL = (folderId) => `${HEROKU_URL}/folders/${folderId}/notes`;
+    url = HEROKU_URL + "/api/notes";
+    userURL = (userId) => `${HEROKU_URL}/api/users/${userId}/notes`;
+    folderURL = (folderId) => `${HEROKU_URL}/api/folders/${folderId}/notes`;
 
     findNotesForUser = (userId) => {
         return fetch(this.userURL(userId)).then(response => response.json())

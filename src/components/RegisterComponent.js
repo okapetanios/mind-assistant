@@ -1,35 +1,60 @@
 import React from "react";
-import {Link} from "react-router-dom";
+import userService from "../services/userService";
+import {createUser} from "../actions/userActions";
+import {connect} from "react-redux";
 
-class LoginComponent extends React.Component{
+const UserService = new userService();
+
+class RegisterComponent extends React.Component{
+    state = {
+        username: "",
+        password: "",
+        verifyPassword: ""
+    };
+
+    updateUsername = (e) => {
+        this.setState({
+            username: e.target.value
+        })
+    };
+
+    updatePassword = (e) => {
+        this.setState({
+            password: e.target.value
+        })
+    };
+
+    updateVerify = (e) => {
+        this.setState({
+            verifyPassword: e.target.value
+        })
+    };
+
+    register = () => {
+        const user = {username: this.state.username, password: this.state.password};
+        this.props.createUser(user);
+        this.props.history.push("/profile")
+    };
 
     render() {
         return (
             <div className="container">
-                {/*Button to close form and go to home page*/}
-                <div className="form-group row">
-                    <label className="col-sm-2 col-form-label"></label>
-                    <div className="col-sm-10">
-                        <div>
-                            <a href="/"
-                               className="float-right wbdv-link wbdv-cancel">
-                                Cancel</a>
-                        </div>
-                    </div>
-                </div>
-
-                <h1>Sign Up</h1>
+                <h1>Register</h1>
 
                 {/*Username field with example*/}
                 <div className="form-group row">
                     <label htmlFor="usernameFld"
                            className="col-sm-2 col-form-label">
-                        Username</label>
+                        Username
+                    </label>
                     <div className="col-sm-10">
                         <input type="text"
-                               className="form-control wbdv-field wbdv-username"
+                               className="form-control"
                                id="usernameFld"
-                               placeholder="Alice"/>
+                               placeholder="Alice"
+                               value={this.state.username}
+                               onChange={this.updateUsername}
+                        />
                     </div>
                 </div>
 
@@ -37,12 +62,16 @@ class LoginComponent extends React.Component{
                 <div className="form-group row">
                     <label htmlFor="passwordFld"
                            className="col-sm-2 col-form-label">
-                        Password</label>
+                        Password
+                    </label>
                     <div className="col-sm-10">
                         <input type="password"
-                               className="form-control wbdv-field wbdv-password"
+                               className="form-control "
                                id="passwordFld"
-                               placeholder="123qwe#$%"/>
+                               placeholder="123qwe#$%"
+                               value={this.state.password}
+                               onChange={this.updatePassword}
+                        />
                     </div>
                 </div>
 
@@ -50,26 +79,29 @@ class LoginComponent extends React.Component{
                 <div className="form-group row">
                     <label htmlFor="verifyPasswordFld"
                            className="col-sm-2 col-form-label">
-                        Verify Password</label>
+                        Verify Password
+                    </label>
                     <div className="col-sm-10">
                         <input type="password"
-                               className="form-control wbdv-field wbdv-password-verify"
+                               className="form-control "
                                id="verifyPasswordFld"
-                               placeholder="123qwe#$%"/>
+                               placeholder="123qwe#$%"
+                               value={this.state.verifyPassword}
+                               onChange={this.updateVerify}
+                        />
                     </div>
                 </div>
 
                 {/*Buttons for signing up or logging in*/}
                 <div className="form-group row">
-                    <label className="col-sm-2 col-form-label"></label>
+                    <div className="col-sm-2 col-form-label"></div>
                     <div className="col-sm-10">
-                        <a className="btn btn-primary btn-block wbdv-button wbdv-register"
-                           href="/profile"
-                           role="button">
-                            Sign up</a>
+                        <button className="btn btn-primary btn-block"
+                           onClick={this.register}>
+                            Sign Up
+                        </button>
                         <div>
-                            <a href="/login"
-                               className="wbdv-link wbdv-login">
+                            <a href="/login">
                                 Login</a>
                         </div>
                     </div>
@@ -79,4 +111,17 @@ class LoginComponent extends React.Component{
     }
 }
 
-export default LoginComponent
+const stateToPropertyMapper = (state) => ({
+    user: state.user.user
+});
+const dispatchToPropertyMapper = (dispatch) => ({
+    createUser: (user) => {
+        UserService.createUser(user).then(status => {
+            dispatch(createUser(user))
+        })
+    }
+});
+export default connect(
+    stateToPropertyMapper,
+    dispatchToPropertyMapper
+)(RegisterComponent)

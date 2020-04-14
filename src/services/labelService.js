@@ -1,9 +1,9 @@
 import {HEROKU_URL} from "../const/Constants";
 
 class labelService {
-    url = HEROKU_URL + "/labels";
-    userURL = (userId) => `${HEROKU_URL}/users/${userId}/labels`;
-    folderURL = (folderId) => `${HEROKU_URL}/folders/${folderId}/labels`;
+    url = HEROKU_URL + "/api/labels";
+    userURL = (userId) => `${HEROKU_URL}/api/users/${userId}/labels`;
+    folderURL = (folderId) => `${HEROKU_URL}/api/folders/${folderId}/labels`;
 
     findLabelsForUser = (userId) => {
         return fetch(this.userURL(userId)).then(response => response.json())

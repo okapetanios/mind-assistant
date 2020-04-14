@@ -1,7 +1,33 @@
 import React from "react";
-import {Link} from "react-router-dom";
+import {connect} from "react-redux";
+import userService from "../services/userService";
+import {loginUser} from "../actions/userActions";
+
+const UserService = new userService();
 
 class LoginComponent extends React.Component{
+    state = {
+        username: "",
+        password: ""
+    };
+
+    updateUsername = (e) => {
+        this.setState({
+            username: e.target.value
+        })
+    };
+
+    updatePassword = (e) => {
+        this.setState({
+            password: e.target.value
+        })
+    };
+
+    login = () => {
+        const user = {username: this.state.username, password: this.state.password};
+        this.props.loginUser(user);
+        this.props.history.push("/profile")
+    };
 
     render() {
         return (
@@ -12,7 +38,7 @@ class LoginComponent extends React.Component{
                     <div className="col-sm-10">
                         <div>
                             <a href="/"
-                               className="float-right wbdv-link wbdv-cancel">
+                               className="float-right">
                                 Cancel</a>
                         </div>
                     </div>
@@ -27,9 +53,12 @@ class LoginComponent extends React.Component{
                         Username</label>
                     <div className="col-sm-10">
                         <input type="text"
-                               className="form-control wbdv-field wbdv-username"
+                               className="form-control "
                                id="inputUsername"
-                               placeholder="Alice"/>
+                               placeholder="Alice"
+                               value={this.state.username}
+                               onChange={this.updateUsername}
+                        />
                     </div>
                 </div>
 
@@ -40,9 +69,12 @@ class LoginComponent extends React.Component{
                         Password</label>
                     <div className="col-sm-10">
                         <input type="password"
-                               className="form-control wbdv-field wbdv-password"
+                               className="form-control"
                                id="inputPassword"
-                               placeholder="123qwe#$%"/>
+                               placeholder="123qwe#$%"
+                               value={this.state.password}
+                               onChange={this.updatePassword}
+                        />
                     </div>
                 </div>
 
@@ -50,20 +82,21 @@ class LoginComponent extends React.Component{
                 <div className="form-group row">
                     <label className="col-sm-2 col-form-label"></label>
                     <div className="col-sm-10">
-                        <a className="btn btn-primary btn-block wbdv-button wbdv-login"
-                           href="/profile"
-                           role="button">
-                            Sign in</a>
+                        <button className="btn btn-primary btn-block "
+                           onClick={this.login}>
+                            Sign in
+                        </button>
                         <div className="row">
                             <div className="col-6">
-                                <a href="#"
-                                   className="wbdv-link wbdv-forgot-password">
-                                    Forgot Password?</a>
+                                <a href="#">
+                                    Forgot Password?
+                                </a>
                             </div>
                             <div className="col-6">
                                 <a href="/register"
-                                   className="float-right wbdv-link wbdv-register">
-                                    Sign up</a>
+                                   className="float-right">
+                                    Sign up
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -73,4 +106,17 @@ class LoginComponent extends React.Component{
     }
 }
 
-export default LoginComponent
+const stateToPropertyMapper = (state) => ({
+    user: state.user.user
+});
+const dispatchToPropertyMapper = (dispatch) => ({
+    loginUser: (user) => {
+        UserService.loginUser(user).then(status => {
+            dispatch(loginUser(user))
+        })
+    }
+});
+export default connect(
+    stateToPropertyMapper,
+    dispatchToPropertyMapper
+)(LoginComponent)
