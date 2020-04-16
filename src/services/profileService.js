@@ -1,8 +1,8 @@
 import {HEROKU_URL} from "../const/Constants";
 
 class ProfileService {
-    url = HEROKU_URL + "/profiles";
-    userURL = (userId) => `${HEROKU_URL}/users/${userId}/profiles`;
+    url = HEROKU_URL + "/api/profiles";
+    userURL = (userId) => `${HEROKU_URL}/api/users/${userId}/profiles`;
 
     createProfileForUser = (userId, profile) => {
         return fetch(this.userURL(userId), {
