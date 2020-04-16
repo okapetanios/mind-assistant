@@ -1,6 +1,7 @@
 import React, { Component } from "react";
-import '../App.css';
+// import '../App.css';
 import NoteListComponent from '../components/NoteListComponent'
+import FolderListComponent from '../components/FolderListComponent'
 
 class Home extends Component {
 
@@ -8,9 +9,12 @@ class Home extends Component {
     render() {
         return (
             <div className="App">
-                <header className="App-header">
-            <NoteListComponent/>
-                </header>
+                <div className="col-3">
+                    <FolderListComponent/>
+                </div>
+                <div className="col-9">
+                    <NoteListComponent/>
+                </div>
             </div>
         )
     }

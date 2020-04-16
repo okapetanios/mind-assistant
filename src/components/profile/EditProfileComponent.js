@@ -22,7 +22,7 @@ class EditProfileComponent extends React.Component{
                 <div className="form-group row">
                     <label htmlFor="usernameFld"
                            className="col col-form-label">
-                        Username: "TBD USERS USERNAME"
+                        Username: {this.props.user.username}
                     </label>
                 </div>
                 <div className="form-group row">
