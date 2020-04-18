@@ -9,11 +9,13 @@ class Home extends Component {
     render() {
         return (
             <div className="App">
-                <div className="col-3">
-                    <FolderListComponent/>
-                </div>
-                <div className="col-9">
-                    <NoteListComponent/>
+                <div className="row">
+                    <div className="col-4">
+                        <FolderListComponent/>
+                    </div>
+                    <div className="col-6">
+                        <NoteListComponent/>
+                    </div>
                 </div>
             </div>
         )
