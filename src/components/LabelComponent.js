@@ -11,26 +11,14 @@ class LabelComponent extends React.Component {
 
     render() {
         return (
-            <div>
-                <a className="label">I'm a label</a>
-                <input
-                    type="text"
-                    className="form-control new-label"
-                    placeholder="New Label"
-                    onChange={this.handleOnChange}/>
-                <button
-                    className="btn btn-success btn-sm mx-1"
-                    onClick={this.saveLabelTitle}>Save
-                </button>
-            </div>
+            <ul>
+                <li>
+                    <div>
+                        <a className="label">I'm a label</a>
+                    </div>
+                </li>
+            </ul>
         )
-        // Render option to create a label
-    }
-
-    componentDidMount() {
-        this.setState({
-                          someKey: 'otherValue'
-                      });
     }
 }
 

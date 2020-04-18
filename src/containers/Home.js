@@ -10,10 +10,10 @@ class Home extends Component {
         return (
             <div className="App">
                 <div className="row">
-                    <div className="col-2">
+                    <div className="col-4">
                         <FolderListComponent/>
                     </div>
-                    <div className="col-10">
+                    <div className="col-6">
                         <NoteListComponent/>
                     </div>
                 </div>
