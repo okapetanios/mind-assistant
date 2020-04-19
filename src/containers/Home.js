@@ -17,10 +17,6 @@ class Home extends Component {
         super(props);
     }
 
-    state = {
-        student: this.props.user.role === "student"
-    };
-
     componentDidMount() {
         this.props.findCurrentUser();
         this.props.getRandomJoke();
@@ -32,7 +28,7 @@ class Home extends Component {
                 <div className={"container-fluid"}>
                     <br/>
                     <div className={"ma-welcome"}>
-                        <h1>Hello {this.props.user.username}!</h1>
+                        <h1>Hello {this.props.user.fname}!</h1>
                     </div>
                     <br/>
                     <div className={"ma-dad-joke"}>
@@ -40,7 +36,8 @@ class Home extends Component {
                         {this.props.joke}
                     </div>
                     <br/>
-                    {!this.state.student && <div className="row">
+                    {this.props.user.role !== "student" &&
+                    <div className="row">
                         <div className="col-1">
 
                         </div>
@@ -51,7 +48,8 @@ class Home extends Component {
                             <NoteListComponent/>
                         </div>
                     </div>}
-                    {this.state.student && <div>
+                    {this.props.user.role === "student" &&
+                    <div>
                         <FolderListComponent/>
                     </div>}
                 </div>

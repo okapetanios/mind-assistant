@@ -1,11 +1,14 @@
 import React from 'react';
-import FolderComponent from './FolderComponent';
 import '../../App.css';
-import {findCurrentUser} from "../../actions/userActions";
 import {connect} from "react-redux";
 import userService from "../../services/userService";
+import {findCurrentUser} from "../../actions/userActions";
+import folderService from "../../services/folderService";
+import FolderComponent from "./FolderComponent";
+import {findFoldersForUSER} from "../../actions/folderActions";
 
 const UserService = new userService();
+const FolderService = new folderService();
 
 class FolderListComponent extends React.Component {
     constructor(props) {
@@ -27,7 +30,9 @@ class FolderListComponent extends React.Component {
     }
 
     componentDidMount() {
-        this.props.findCurrentUser()
+        this.props.findCurrentUser();
+        this.props.findFoldersForUser();
+        console.log(this.props.folders)
     }
 
     createFolder = () => {
@@ -53,26 +58,29 @@ class FolderListComponent extends React.Component {
 
     render() {
         return (
-            <ul className="list-group">
-                <li className="list-group-item">
+            <div>
+                <div className={"row"}>
                     <input
                         onChange={this.titleChanged}
                         className="form-control"/>
+                </div>
+                <div className={"row"}>
                     <button onClick={this.createFolder} className="btn btn-primary btn-block">
                         Add Folder
                     </button>
-                </li>
-                {this.state.folders.map(
-                    folder =>
-                        <FolderComponent
-                            deleteFolder={this.deleteFolder}
-                            folder={folder}
-                            key={folder.id}/>
-                    )
-                }
-            </ul>
+                </div>
+                <div className={"row"}>
+                    {this.state.folders && this.state.folders.map(folder =>
+                        <div key={folder.id}>
+                            <FolderComponent
+                                deleteFolder={this.deleteFolder}
+                                folder={folder}
+                            />
+                        </div>
+                    )}
+                </div>
+            </div>
         )
-
     }
 }
 
@@ -84,6 +92,11 @@ const dispatchToPropertyMapper = (dispatch) => ({
     findCurrentUser: () => {
         UserService.findCurrentUser().then(user => {
             dispatch(findCurrentUser(user))
+        })
+    },
+    findFoldersForUser: (userId) => {
+        FolderService.findFoldersForUser(userId).then(folders => {
+            dispatch(findFoldersForUSER(folders))
         })
     }
 });

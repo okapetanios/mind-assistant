@@ -33,15 +33,24 @@ class App extends React.Component {
         super(props);
         this.state = {
             keyword: '',
-            user: {username: 'Test'},
+            user: {username: 'Log In'},
             loggedIn: false
         }
     }
 
-    // componentDidMount() {
+    componentDidMount() {
+        UserService.findCurrentUser()
+            .then(user => this.setState({
+                user: user,
+                loggedIn: true
+            }))
+    }
+
+    // componentDidUpdate(prevProps, prevState, snapshot) {
     //     UserService.findCurrentUser()
     //         .then(user => this.setState({
-    //             user: user
+    //             user: user,
+    //             loggedIn: true
     //         }))
     // }
 
