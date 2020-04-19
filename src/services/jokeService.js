@@ -19,6 +19,15 @@ class JokeService {
             }
         })
             .then(response => response.json())
+    };
+
+    findRandomJoke = () => {
+        return fetch(`${this.url}/`, {
+            headers: {
+                Accept: "application/json"
+            }
+        })
+            .then(response => response.json())
     }
 }
 

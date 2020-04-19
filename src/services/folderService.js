@@ -5,7 +5,10 @@ class folderService {
     userURL = (userId) => `${HEROKU_URL}/api/users/${userId}/folders`;
 
     findFoldersForUser = (userId) => {
-        return fetch(this.userURL(userId)).then(response => response.json())
+        return fetch(this.userURL(userId),{
+            method: "GET",
+            credentials: "include"
+        }).then(response => response.json())
     };
 
     createFolder = (userId, folder) => {
@@ -14,7 +17,8 @@ class folderService {
             body: JSON.stringify(folder),
             headers: {
                 "content-type": "application/json"
-            }
+            },
+            credentials: "include"
         }).then(response => response.json())
     };
 
@@ -24,22 +28,30 @@ class folderService {
             body: JSON.stringify(folder),
             headers: {
                 "content-type": "application/json"
-            }
+            },
+            credentials: "include"
         }).then(response => response.json())
     };
 
     deleteFolder = (folderId) => {
         return fetch(`${this.url}/${folderId}`, {
-            method: "DELETE"
+            method: "DELETE",
+            credentials: "include"
         }).then(response => response.json())
     };
 
     findAllFolders = () => {
-        return fetch(this.url).then(response => response.json())
+        return fetch(this.url,{
+            method: "GET",
+            credentials: "include"
+        }).then(response => response.json())
     };
 
     findFolderById = (folderId) => {
-        return fetch(`${this.url}/${folderId}`).then(response => response.json())
+        return fetch(`${this.url}/${folderId}`,{
+            method: "GET",
+            credentials: "include"
+        }).then(response => response.json())
     };
 }
 

@@ -1,5 +1,5 @@
 export const FIND_FOLDERS_FOR_USER = "FIND_FOLDERS_FOR_USER";
-export const findFoldersForUSER = (folders) => ({
+export const findFoldersForUser = (folders) => ({
     type: FIND_FOLDERS_FOR_USER,
     folders: folders
 });

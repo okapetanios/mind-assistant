@@ -7,7 +7,10 @@ class userService {
     loginUrl = HEROKU_URL + "/login";
 
     findUserById = (userId) => {
-        return fetch(`${this.url}/${userId}`).then(response => response.json())
+        return fetch(`${this.url}/${userId}`,{
+            method: "GET",
+            credentials: "include"
+        }).then(response => response.json())
     };
 
     findCurrentUser = () => {
@@ -43,7 +46,10 @@ class userService {
                 "content-type": "application/json"
             },
             credentials: "include"
-        }).then(response => response.json())
+        }).then(response => {
+            console.log(response.headers);
+            return response.json()
+        })
     };
 
     updateUser = (userId, user) => {
@@ -52,18 +58,23 @@ class userService {
             body: JSON.stringify(user),
             headers: {
                 "content-type": "application/json"
-            }
+            },
+            credentials: "include"
         }).then(response => response.json())
     };
 
     deleteUser = (userId) => {
         return fetch(`${this.url}/${userId}`, {
-            method: "DELETE"
+            method: "DELETE",
+            credentials: "include"
         }).then(response => response.json())
     };
 
     findAllUsers = () => {
-        return fetch(this.url).then(response => response.json())
+        return fetch(this.url,{
+            method: "GET",
+            credentials: "include"
+        }).then(response => response.json())
     };
 }
 

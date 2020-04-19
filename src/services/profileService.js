@@ -10,12 +10,16 @@ class ProfileService {
             body: JSON.stringify(profile),
             headers: {
                 "content-type": "application/json"
-            }
+            },
+            credentials: "include"
         }).then(response => response.json())
     };
 
     findProfileByUser = (userId) => {
-        return fetch(this.userURL(userId)).then(response => response.json())
+        return fetch(this.userURL(userId),{
+            method: "GET",
+            credentials: "include"
+        }).then(response => response.json())
     };
 
     updateProfile = (userId, profile) => {
@@ -24,12 +28,16 @@ class ProfileService {
             body: JSON.stringify(profile),
             headers: {
                 "content-type": "application/json"
-            }
+            },
+            credentials: "include"
         }).then(response => response.json())
     };
 
     findAllProfiles = () => {
-        return fetch(this.url).then(response => response.json())
+        return fetch(this.url,{
+            method: "GET",
+            credentials: "include"
+        }).then(response => response.json())
     };
 }
 
