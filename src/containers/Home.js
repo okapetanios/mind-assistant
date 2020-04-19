@@ -6,8 +6,11 @@ import {findCurrentUser, logoutUser} from "../actions/userActions";
 import {connect} from "react-redux";
 import userService from "../services/userService";
 import LabelListComponent from "../components/label/LabelListComponent";
+import jokeService from "../services/jokeService";
+import {getJoke} from "../actions/jokeActions";
 
 const UserService = new userService();
+const JokeService = new jokeService();
 
 class Home extends Component {
     constructor(props) {
@@ -16,14 +19,22 @@ class Home extends Component {
 
     componentDidMount() {
         this.props.findCurrentUser();
+        this.props.getRandomJoke();
     }
 
     render() {
         return (
             <div className="App">
+                <br/>
                 <div className={"ma-welcome"}>
                     <h1>Hello {this.props.user.username}!</h1>
                 </div>
+                <br/>
+                <div className={"ma-dad-joke"}>
+                    <h3>Random Dad Joke</h3>
+                    {this.props.joke}
+                </div>
+                <br/>
                 <div className="row">
                     <div className="col-4">
                         <LabelListComponent/>
@@ -39,12 +50,18 @@ class Home extends Component {
 }
 
 const stateToPropertyMapper = (state) => ({
-    user: state.user.user
+    user: state.user.user,
+    joke: state.jokes.joke
 });
 const dispatchToPropertyMapper = (dispatch) => ({
     findCurrentUser: () => {
         UserService.findCurrentUser().then(user => {
             dispatch(findCurrentUser(user))
+        })
+    },
+    getRandomJoke: () => {
+        JokeService.findRandomJoke().then(joke => {
+            dispatch(getJoke(joke))
         })
     }
 });
