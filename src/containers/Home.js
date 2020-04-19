@@ -17,6 +17,10 @@ class Home extends Component {
         super(props);
     }
 
+    state = {
+        student: this.props.user.role === "student"
+    };
+
     componentDidMount() {
         this.props.findCurrentUser();
         this.props.getRandomJoke();
@@ -25,23 +29,31 @@ class Home extends Component {
     render() {
         return (
             <div className="App">
-                <br/>
-                <div className={"ma-welcome"}>
-                    <h1>Hello {this.props.user.username}!</h1>
-                </div>
-                <br/>
-                <div className={"ma-dad-joke"}>
-                    <h3>Random Dad Joke</h3>
-                    {this.props.joke}
-                </div>
-                <br/>
-                <div className="row">
-                    <div className="col-4">
-                        <LabelListComponent/>
+                <div className={"container-fluid"}>
+                    <br/>
+                    <div className={"ma-welcome"}>
+                        <h1>Hello {this.props.user.username}!</h1>
                     </div>
-                    <div className="col-6">
-                        <NoteListComponent/>
+                    <br/>
+                    <div className={"ma-dad-joke"}>
+                        <h3>Random Dad Joke</h3>
+                        {this.props.joke}
                     </div>
+                    <br/>
+                    {!this.state.student && <div className="row">
+                        <div className="col-1">
+
+                        </div>
+                        <div className="col-2">
+                            <LabelListComponent/>
+                        </div>
+                        <div className="col-6">
+                            <NoteListComponent/>
+                        </div>
+                    </div>}
+                    {this.state.student && <div>
+                        <FolderListComponent/>
+                    </div>}
                 </div>
             </div>
         )

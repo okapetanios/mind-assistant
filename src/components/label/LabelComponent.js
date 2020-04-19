@@ -1,25 +1,8 @@
-import React from 'react';
-import '../../App.css';
+import React from "react";
 
-class LabelComponent extends React.Component {
-    constructor() {
-        super();
-        this.state = {
-            someKey: 'someValue'
-        };
-    }
+const LabelComponent = ({label}) =>
+    <li className="list-group-item">
+        <h6>{label.title}</h6>
+    </li>;
 
-    render() {
-        return (
-            <ul>
-                <li>
-                    <div>
-                        <a className="label">I'm a label</a>
-                    </div>
-                </li>
-            </ul>
-        )
-    }
-}
-
-export default LabelComponent;
+export default LabelComponent

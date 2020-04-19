@@ -30,25 +30,22 @@ class LabelListComponent extends React.Component {
 
     componentDidMount() {
         this.props.findCurrentUser();
-        this.setState({
-            user: this.props.user
-        });
-        this.props.findLabelsForUser(this.state.user.id)
+        this.props.findLabelsForUser(this.props.user.id)
     }
 
     createLabel = () => {
         this.state.label.id = (new Date()).getTime();
         this.setState({
-                          labels: [this.state.label, ...this.state.labels]
-                      })
+            labels: [this.state.label, ...this.state.labels]
+        })
     };
 
     titleChanged = (event) => {
         this.setState({
-                          label: {
-                              title: event.target.value
-                          }
-                      })
+            label: {
+                title: event.target.value
+            }
+        })
     };
 
     deleteLabel = (id) => {
@@ -59,26 +56,33 @@ class LabelListComponent extends React.Component {
 
     render() {
         return (
-            <ul className="list-group">
-                <li className="list-group-item">
+            <div>
+                <ul className="list-group">
+                    {this.state.labels && this.state.labels.map(label =>
+                        <div key={label.id}>
+                            <LabelComponent
+                                label={label}
+                            />
+                        </div>
+                    )
+                    }
+                </ul>
+                <br/>
+                <div>
                     <input
+                        type={"text"}
                         onChange={this.titleChanged}
-                        className="form-control"/>
-                    <button onClick={this.createLabel} className="btn btn-primary btn-block">
+                        className="form-control"
+                        placeholder={"New Label"}
+                    />
+                    <button onClick={this.createLabel}
+                            className="btn btn-primary btn-block">
                         Add Label
                     </button>
-                </li>
-                {this.state.labels.map(
-                    label =>
-                        <LabelComponent
-                            deleteLabel={this.deleteLabel}
-                            label={label}
-                            key={label.id}/>
-                    )
-                }
-            </ul>
-        )
+                </div>
 
+            </div>
+        )
     }
 }
 

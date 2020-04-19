@@ -1,5 +1,5 @@
 import React from 'react';
-import LabelComponent from '../label/LabelComponent';
+import LabelClassComponent from '../label/LabelClassComponent';
 import '../../App.css';
 
 class NoteComponent extends React.Component {
@@ -43,7 +43,7 @@ class NoteComponent extends React.Component {
                             <button onClick={this.createLabel} className="btn btn-primary">
                                 Add Label
                             </button>
-                            <LabelComponent/>
+                            <LabelClassComponent/>
                         </div>
                         {/* TODO ADD LABEL */}
                     </div>
