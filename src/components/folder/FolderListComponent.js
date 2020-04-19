@@ -5,7 +5,7 @@ import userService from "../../services/userService";
 import {findCurrentUser} from "../../actions/userActions";
 import folderService from "../../services/folderService";
 import FolderComponent from "./FolderComponent";
-import {findFoldersForUSER} from "../../actions/folderActions";
+import {findFoldersForUser} from "../../actions/folderActions";
 
 const UserService = new userService();
 const FolderService = new folderService();
@@ -31,8 +31,7 @@ class FolderListComponent extends React.Component {
 
     componentDidMount() {
         this.props.findCurrentUser();
-        this.props.findFoldersForUser();
-        console.log(this.props.folders)
+        this.props.findFoldersForUser(this.props.user.id);
     }
 
     createFolder = () => {
@@ -58,22 +57,24 @@ class FolderListComponent extends React.Component {
 
     render() {
         return (
-            <div>
+            <div className={"container"}>
                 <div className={"row"}>
                     <input
                         onChange={this.titleChanged}
-                        className="form-control"/>
+                        className="form-control"
+                        placeholder={"New Folder"}
+                    />
                 </div>
                 <div className={"row"}>
                     <button onClick={this.createFolder} className="btn btn-primary btn-block">
                         Add Folder
                     </button>
                 </div>
+                <br/>
                 <div className={"row"}>
-                    {this.state.folders && this.state.folders.map(folder =>
+                    {this.props.folders && this.props.folders.map(folder =>
                         <div key={folder.id}>
                             <FolderComponent
-                                deleteFolder={this.deleteFolder}
                                 folder={folder}
                             />
                         </div>
@@ -96,7 +97,7 @@ const dispatchToPropertyMapper = (dispatch) => ({
     },
     findFoldersForUser: (userId) => {
         FolderService.findFoldersForUser(userId).then(folders => {
-            dispatch(findFoldersForUSER(folders))
+            dispatch(findFoldersForUser(folders))
         })
     }
 });

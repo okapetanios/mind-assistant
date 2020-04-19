@@ -14,7 +14,7 @@ class LabelClassComponent extends React.Component {
             <ul>
                 <li>
                     <div>
-                        <a className="label">I'm a label</a>
+                        <p className="label">I'm a label</p>
                     </div>
                 </li>
             </ul>

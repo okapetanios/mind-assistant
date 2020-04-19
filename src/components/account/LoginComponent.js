@@ -26,7 +26,6 @@ class LoginComponent extends React.Component{
     login = () => {
         const user = {username: this.state.username, password: this.state.password};
         this.props.loginUser(user);
-        this.props.login();
         this.props.history.push("/profile")
     };
 
@@ -89,9 +88,9 @@ class LoginComponent extends React.Component{
                         </button>
                         <div className="row">
                             <div className="col-6">
-                                <a href="#">
-                                    Forgot Password?
-                                </a>
+                                {/*<a href="#">*/}
+                                {/*    Forgot Password?*/}
+                                {/*</a>*/}
                             </div>
                             <div className="col-6">
                                 <a href="/register"

@@ -1,9 +1,9 @@
 import React from 'react';
-import {connect} from 'react-redux'
+// import {connect} from 'react-redux'
 import '../../App.css';
 
 const FolderComponent = ({folder}) =>
-    <div className="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2">
+    <div className="col">
         <div className="card text-white bg-dark mb-3" sytle={"width:18rem;"}>
             <img className="card-img-top"
                  alt="Folder"

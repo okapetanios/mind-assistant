@@ -1,22 +1,17 @@
 import React, { Component } from "react";
 import "./Home.css"
-import NoteListComponent from '../components/note/NoteListComponent'
-import FolderListComponent from '../components/folder/FolderListComponent'
-import {findCurrentUser, logoutUser} from "../actions/userActions";
 import {connect} from "react-redux";
 import userService from "../services/userService";
-import LabelListComponent from "../components/label/LabelListComponent";
+import {findCurrentUser} from "../actions/userActions";
 import jokeService from "../services/jokeService";
 import {getJoke} from "../actions/jokeActions";
+import DefaultLayoutComponent from "../components/DefaultLayoutComponent";
+import FolderListComponent from '../components/folder/FolderListComponent'
 
 const UserService = new userService();
 const JokeService = new jokeService();
 
 class Home extends Component {
-    constructor(props) {
-        super(props);
-    }
-
     componentDidMount() {
         this.props.findCurrentUser();
         this.props.getRandomJoke();
@@ -37,16 +32,8 @@ class Home extends Component {
                     </div>
                     <br/>
                     {this.props.user.role !== "student" &&
-                    <div className="row">
-                        <div className="col-1">
-
-                        </div>
-                        <div className="col-2">
-                            <LabelListComponent/>
-                        </div>
-                        <div className="col-6">
-                            <NoteListComponent/>
-                        </div>
+                    <div>
+                        <DefaultLayoutComponent/>
                     </div>}
                     {this.props.user.role === "student" &&
                     <div>

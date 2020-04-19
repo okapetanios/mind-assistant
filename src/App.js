@@ -46,14 +46,6 @@ class App extends React.Component {
             }))
     }
 
-    // componentDidUpdate(prevProps, prevState, snapshot) {
-    //     UserService.findCurrentUser()
-    //         .then(user => this.setState({
-    //             user: user,
-    //             loggedIn: true
-    //         }))
-    // }
-
     reducers = combineReducers({
         jokes: jokeReducer,
         profile: profileReducer,
@@ -71,20 +63,9 @@ class App extends React.Component {
         })
     };
 
-    login = () =>{
-        this.setState({
-            loggedIn: true
-        })
-        // UserService.findCurrentUser()
-        //     .then(user => this.setState({
-        //         user: user,
-        //         loggedIn: true
-        //     }))
-    };
-
     logout = () => {
         UserService.logoutUser().then(user => this.setState({
-            user: {},
+            user: {username: 'Log In'},
             loggedIn: false
         }))
     };
@@ -145,16 +126,6 @@ class App extends React.Component {
                     </nav>
 
                     <Switch>
-
-
-                        <Route exact path={"/"}
-                               render={(props) =>
-                                   <Home {...props}
-                                   />
-                               }
-                        />
-
-
                         <Route
                             exact path={["/search",
                             "/search/:criteria"]}
@@ -193,7 +164,6 @@ class App extends React.Component {
                             render={(props) =>
                                 <LoginComponent
                                     {...props}
-                                    login={this.login}
                                 />
                             }/>
                         <Route
@@ -201,12 +171,15 @@ class App extends React.Component {
                             render={(props) =>
                                 <RegisterComponent
                                     {...props}
-                                    login={this.login}
                                 />
                             }/>
-                        <Route path={"/"}>
-                            <Home/>
-                        </Route>
+                        <Route
+                            path={"/"}
+                            render={(props) =>
+                                <Home
+                                    {...props}
+                                />
+                            }/>
                     </Switch>
                 </div>
             </Router>
