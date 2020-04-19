@@ -9,12 +9,12 @@ import {
     Link
 } from "react-router-dom";
 import Home from "./containers/Home";
-import SearchComponent from "./components/SearchComponent";
-import SearchDetailsComponent from "./components/SearchDetailsComponent";
+import SearchComponent from "./components/search jokes/SearchComponent";
+import SearchDetailsComponent from "./components/search jokes/SearchDetailsComponent";
 import EditProfileComponent from "./components/profile/EditProfileComponent";
 import PublicProfileComponent from "./components/profile/PublicProfileComponent"
-import LoginComponent from "./components/LoginComponent";
-import RegisterComponent from "./components/RegisterComponent";
+import LoginComponent from "./components/account/LoginComponent";
+import RegisterComponent from "./components/account/RegisterComponent";
 import { combineReducers, createStore } from "redux";
 import { Provider } from "react-redux";
 import jokeReducer from "./reducers/jokeReducer";
@@ -23,15 +23,27 @@ import userReducer from "./reducers/userReducer";
 import folderReducer from "./reducers/folderReducer";
 import noteReducer from "./reducers/noteReducer";
 import labelReducer from "./reducers/labelReducer";
+import userService from "./services/userService";
+
+const UserService = new userService();
 
 
 class App extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            keyword: ''
+            keyword: '',
+            user: {username: 'Test'},
+            loggedIn: false
         }
     }
+
+    // componentDidMount() {
+    //     UserService.findCurrentUser()
+    //         .then(user => this.setState({
+    //             user: user
+    //         }))
+    // }
 
     reducers = combineReducers({
         jokes: jokeReducer,
@@ -44,8 +56,29 @@ class App extends React.Component {
 
     store = createStore(this.reducers);
 
-    keyWordChange = event =>
-        this.setState({ keyword: event.target.value });
+    keyWordChange = event => {
+        this.setState({
+            keyword: event.target.value
+        })
+    };
+
+    login = () =>{
+        this.setState({
+            loggedIn: true
+        })
+        // UserService.findCurrentUser()
+        //     .then(user => this.setState({
+        //         user: user,
+        //         loggedIn: true
+        //     }))
+    };
+
+    logout = () => {
+        UserService.logoutUser().then(user => this.setState({
+            user: {},
+            loggedIn: false
+        }))
+    };
 
     render() {
         let provider = <><Provider store={this.store}>
@@ -77,13 +110,26 @@ class App extends React.Component {
                             </form>
                             <Dropdown>
                                 <Dropdown.Toggle variant="dark" id="dropdown-basic">
-                                    Log In
+                                    {this.state.user.username}
                                 </Dropdown.Toggle>
                                 <Dropdown.Menu>
-                                    <Dropdown.Item href="/login">Login</Dropdown.Item>
-                                    <Dropdown.Item href="/register">Register</Dropdown.Item>
-                                    <Dropdown.Item href="/profile">Profile</Dropdown.Item>
-                                    <Dropdown.Item href="#">Logout</Dropdown.Item>
+                                    <Dropdown.Item hidden={this.state.loggedIn}
+                                                   href="/login">
+                                        Login
+                                    </Dropdown.Item>
+                                    <Dropdown.Item hidden={this.state.loggedIn}
+                                                   href="/register">
+                                        Register
+                                    </Dropdown.Item>
+                                    <Dropdown.Item hidden={!this.state.loggedIn}
+                                                   href="/profile">
+                                        Profile
+                                    </Dropdown.Item>
+                                    <Dropdown.Item onClick={this.logout}
+                                                   hidden={!this.state.loggedIn}
+                                                   href={"/"}>
+                                        Logout
+                                    </Dropdown.Item>
                                 </Dropdown.Menu>
                             </Dropdown>
                         </div>
@@ -138,6 +184,7 @@ class App extends React.Component {
                             render={(props) =>
                                 <LoginComponent
                                     {...props}
+                                    login={this.login}
                                 />
                             }/>
                         <Route
@@ -145,6 +192,7 @@ class App extends React.Component {
                             render={(props) =>
                                 <RegisterComponent
                                     {...props}
+                                    login={this.login}
                                 />
                             }/>
                         <Route path={"/"}>

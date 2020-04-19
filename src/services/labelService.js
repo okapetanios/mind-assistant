@@ -6,7 +6,10 @@ class labelService {
     folderURL = (folderId) => `${HEROKU_URL}/api/folders/${folderId}/labels`;
 
     findLabelsForUser = (userId) => {
-        return fetch(this.userURL(userId)).then(response => response.json())
+        return fetch(this.userURL(userId),{
+            method: "GET",
+            credentials: "include"
+        }).then(response => response.json())
     };
 
     createLabelForUser = (userId, label) => {
@@ -15,12 +18,16 @@ class labelService {
             body: JSON.stringify(label),
             headers: {
                 "content-type": "application/json"
-            }
+            },
+            credentials: "include"
         }).then(response => response.json())
     };
 
     findLabelsForFolder = (folderId) => {
-        return fetch(this.folderURL(folderId)).then(response => response.json())
+        return fetch(this.folderURL(folderId),{
+            method: "GET",
+            credentials: "include"
+        }).then(response => response.json())
     };
 
     createLabelForFolder = (folderId, label) => {
@@ -29,7 +36,8 @@ class labelService {
             body: JSON.stringify(label),
             headers: {
                 "content-type": "application/json"
-            }
+            },
+            credentials: "include"
         }).then(response => response.json())
     };
 
@@ -39,22 +47,30 @@ class labelService {
             body: JSON.stringify(label),
             headers: {
                 "content-type": "application/json"
-            }
+            },
+            credentials: "include"
         }).then(response => response.json())
     };
 
     deleteLabel = (labelId) => {
         return fetch(`${this.url}/${labelId}`, {
-            method: "DELETE"
+            method: "DELETE",
+            credentials: "include"
         }).then(response => response.json())
     };
 
     findAllLabels = () => {
-        return fetch(this.url).then(response => response.json())
+        return fetch(this.url,{
+            method: "GET",
+            credentials: "include"
+        }).then(response => response.json())
     };
 
     findLabelById = (labelId) => {
-        return fetch(`${this.url}/${labelId}`).then(response => response.json())
+        return fetch(`${this.url}/${labelId}`,{
+            method: "GET",
+            credentials: "include"
+        }).then(response => response.json())
     };
 }
 

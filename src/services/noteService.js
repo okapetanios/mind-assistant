@@ -6,7 +6,10 @@ class noteService {
     folderURL = (folderId) => `${HEROKU_URL}/api/folders/${folderId}/notes`;
 
     findNotesForUser = (userId) => {
-        return fetch(this.userURL(userId)).then(response => response.json())
+        return fetch(this.userURL(userId),{
+            method: "GET",
+            credentials: "include"
+        }).then(response => response.json())
     };
 
     createNoteForUser = (userId, note) => {
@@ -15,12 +18,16 @@ class noteService {
             body: JSON.stringify(note),
             headers: {
                 "content-type": "application/json"
-            }
+            },
+            credentials: "include"
         }).then(response => response.json())
     };
 
     findNotesForFolder = (folderId) => {
-        return fetch(this.folderURL(folderId)).then(response => response.json())
+        return fetch(this.folderURL(folderId),{
+            method: "GET",
+            credentials: "include"
+        }).then(response => response.json())
     };
 
     createNoteForFolder = (folderId, note) => {
@@ -29,7 +36,8 @@ class noteService {
             body: JSON.stringify(note),
             headers: {
                 "content-type": "application/json"
-            }
+            },
+            credentials: "include"
         }).then(response => response.json())
     };
 
@@ -39,22 +47,30 @@ class noteService {
             body: JSON.stringify(note),
             headers: {
                 "content-type": "application/json"
-            }
+            },
+            credentials: "include"
         }).then(response => response.json())
     };
 
     deleteNote = (noteId) => {
         return fetch(`${this.url}/${noteId}`, {
-            method: "DELETE"
+            method: "DELETE",
+            credentials: "include"
         }).then(response => response.json())
     };
 
     findAllNotes = () => {
-        return fetch(this.url).then(response => response.json())
+        return fetch(this.url,{
+            method: "GET",
+            credentials: "include"
+        }).then(response => response.json())
     };
 
     findNoteById = (noteId) => {
-        return fetch(`${this.url}/${noteId}`).then(response => response.json())
+        return fetch(`${this.url}/${noteId}`,{
+            method: "GET",
+            credentials: "include"
+        }).then(response => response.json())
     };
 }
 
