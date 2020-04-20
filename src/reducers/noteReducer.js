@@ -6,7 +6,7 @@ import {
     UPDATE_NOTE
 } from "../actions/noteActions";
 
-const noteReducer = (state={notes:[]}, action) => {
+const noteReducer = (state={notes:[{id: 1, title: "No Current Notes"}]}, action) => {
     switch (action.type) {
         case FIND_NOTES_FOR_GROUP:
             return {
