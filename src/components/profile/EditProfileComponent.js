@@ -10,21 +10,28 @@ class EditProfileComponent extends React.Component{
         this.props.findCurrentUser()
     }
 
+    state = {
+        user: this.props.user
+    };
+
     logout = () => {
         this.props.logoutUser();
         this.props.history.push("/")
     };
 
+    //TODO
+    //add onChange functions for all fields
+
+    //TODO
+    //submit changes
+
     render() {
         return (
             <div className={"container"}>
                 <h1>{this.props.user.username}'s Profile</h1>
-                <div className="form-group row">
-                    <label htmlFor="usernameFld"
-                           className="col col-form-label">
-                        Username: {this.props.user.username}
-                    </label>
-                </div>
+                {/*TODO*/}
+                {/*add change display image link*/}
+                {/*add preview of image*/}
                 <div className="form-group row">
                     <label htmlFor="editInputPassword"
                            className="col-sm-2 col-form-label">
@@ -34,7 +41,7 @@ class EditProfileComponent extends React.Component{
                         <input type="password"
                                className="form-control "
                                id="editInputPassword"
-                               placeholder="Password"/>
+                               placeholder="New Password (if applicable)"/>
                     </div>
                 </div>
                 <div className="form-group row">
@@ -46,7 +53,8 @@ class EditProfileComponent extends React.Component{
                         <input type="text"
                                className="form-control "
                                id="editFirstName"
-                               placeholder="First Name"/>
+                               placeholder={"First Name"}
+                               value={this.props.user.fname}/>
                     </div>
                 </div>
                 <div className="form-group row">
@@ -58,7 +66,8 @@ class EditProfileComponent extends React.Component{
                         <input type="text"
                                className="form-control "
                                id="editLastName"
-                               placeholder="Last Name"/>
+                               placeholder={"Last Name"}
+                               value={this.props.user.lname}/>
                     </div>
                 </div>
                 <div className="form-group row">
@@ -67,12 +76,18 @@ class EditProfileComponent extends React.Component{
                         Role
                     </label>
                     <div className="col-sm-10">
-                        <select className="form-control" id="editRole">
-                            <option>Student</option>
-                            <option>Other</option>
+                        <select className="form-control"
+                                id="editRole"
+                                placeholder={"student"}
+                                value={this.props.user.role}
+                        >
+                            <option value={"student"}>Student</option>
+                            <option value={"general"}>Other</option>
                         </select>
                     </div>
                 </div>
+                {/*TODO*/}
+                {/*add employer or school depending on selected role*/}
                 <div className="form-group row">
                     <div className="col-sm-2 col-form-label"></div>
                     <div className="col-sm-10">
