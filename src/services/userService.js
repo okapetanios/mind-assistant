@@ -18,12 +18,15 @@ class userService {
             method: "GET",
             credentials: "include"
         }).then(response => response.json())
-            .catch(err => {console.log(err); return {
-                id: 1,
-                username: 'login',
-                fname: 'Anonymous',
-                role: 'general'
-            }});
+            .catch(err => {
+                console.log(err);
+                return {
+                    id: 1,
+                    username: 'login',
+                    fname: 'Anonymous',
+                    role: 'general'
+                }
+            });
     };
 
     logoutUser = () => {
@@ -31,7 +34,15 @@ class userService {
             method: "POST",
             credentials: "include"
         }).then(response => response.json())
-            .catch(err =>console.log(err))
+            .catch(err =>{
+                console.log(err);
+                return {
+                    id: 1,
+                    username: 'login',
+                    fname: 'Anonymous',
+                    role: 'general'
+                }
+            });
     };
 
     loginUser = (user) => {
@@ -43,6 +54,15 @@ class userService {
             },
             credentials: "include"
         }).then(response => response.json())
+            .catch(err =>{
+                console.log(err);
+                return {
+                    id: 1,
+                    username: 'login',
+                    fname: 'Anonymous',
+                    role: 'general'
+                }
+            });
     };
 
     createUser = (user) => {
