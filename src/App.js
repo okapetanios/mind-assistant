@@ -104,20 +104,23 @@ class App extends React.Component {
                                     {this.state.user.username}
                                 </Dropdown.Toggle>
                                 <Dropdown.Menu>
-                                    <Dropdown.Item hidden={this.state.loggedIn}
+                                    <Dropdown.Item
+                                        // hidden={this.state.loggedIn}
                                                    href="/login">
                                         Login
                                     </Dropdown.Item>
-                                    <Dropdown.Item hidden={this.state.loggedIn}
+                                    <Dropdown.Item
+                                        // hidden={this.state.loggedIn}
                                                    href="/register">
                                         Register
                                     </Dropdown.Item>
-                                    <Dropdown.Item hidden={!this.state.loggedIn}
+                                    <Dropdown.Item
+                                        // hidden={!this.state.loggedIn}
                                                    href="/profile">
                                         Profile
                                     </Dropdown.Item>
                                     <Dropdown.Item onClick={this.logout}
-                                                   hidden={!this.state.loggedIn}
+                                                   // hidden={!this.state.loggedIn}
                                                    href={"/"}>
                                         Logout
                                     </Dropdown.Item>
