@@ -1,5 +1,6 @@
 import React from 'react';
 import '../../App.css';
+import './Folder.css'
 import {Link} from "react-router-dom";
 
 const FolderComponent = ({folder, deleteFolder}) =>
@@ -12,7 +13,8 @@ const FolderComponent = ({folder, deleteFolder}) =>
             <div className="card-body">
                 <div className={"row"}>
                     <div className={"col"}>
-                        <Link to={`/folder/${folder.title}`}>
+                        <Link className={"ma-link"}
+                            to={`/folder/${folder.title}`}>
                             <h3 className="card-title">{folder.title}</h3>
                         </Link>
                     </div>
