@@ -1,14 +1,15 @@
 import React from "react";
 import {connect} from "react-redux";
 import userService from "../../services/userService";
-import {findCurrentUser, logoutUser, updateUser} from "../../actions/userActions";
+import profileService from "../../services/profileService";
+import {deleteUser, findCurrentUser, logoutUser, updateUser} from "../../actions/userActions";
 
 const UserService = new userService();
+// const ProfileService = new profileService();
 
 class EditProfileComponent extends React.Component{
     componentDidMount() {
         this.props.findCurrentUser();
-        console.log(this.props.user.id);
     }
 
     state = {
@@ -62,6 +63,12 @@ class EditProfileComponent extends React.Component{
             role: this.state.newRole === "" ? this.props.user.role:this.state.newRole
         };
         this.props.updateUser(this.props.user.id, user);
+    };
+
+    deleteUser = () => {
+        console.log(this.props.user.id);
+        this.props.deleteUser(this.props.user.id);
+        this.logout()
     };
 
     //TODO:
@@ -138,7 +145,11 @@ class EditProfileComponent extends React.Component{
                     <div className="col-sm-10">
                         <button className="btn btn-primary btn-block"
                                 onClick={this.updateUser}>
-                            Submit
+                            Update Account
+                        </button>
+                        <button className="btn btn-danger btn-block"
+                                onClick={this.deleteUser}>
+                            Delete Account
                         </button>
                         <div className="row">
                             <div className="col-6">
@@ -176,8 +187,13 @@ const dispatchToPropertyMapper = (dispatch) => ({
         })
     },
     updateUser: (userId, user) => {
-        UserService.updateUser(userId, user).then(user => {
-            dispatch(updateUser(user.id, user))
+        UserService.updateUser(userId, user).then(status => {
+            dispatch(updateUser(userId, user))
+        })
+    },
+    deleteUser: (userId) => {
+        UserService.deleteUser(userId).then(status => {
+            dispatch(deleteUser(userId))
         })
     }
 });
