@@ -64,12 +64,14 @@ class NoteListComponent extends React.Component {
                         createFolderNote={this.createFolderNote}
                     />
                 </li>
+                <br/>
                 {this.props.notes.map(note =>
                     <div key={note.id}>
                         <NoteComponent
                             deleteNote={this.deleteNote}
                             note={note}
                         />
+                        <br/>
                     </div>
                 )}
             </ul>
