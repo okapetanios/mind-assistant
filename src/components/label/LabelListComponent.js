@@ -22,7 +22,7 @@ class LabelListComponent extends React.Component {
     //Add functionality to choose label to change note display
 
     componentDidMount() {
-        this.props.findCurrentUser();
+        // this.props.findCurrentUser();
         // this.props.findLabelsForUser(this.props.user.id);
         this.props.findLabelsForUser(102);
         // console.log(this.props.user);
@@ -36,7 +36,7 @@ class LabelListComponent extends React.Component {
             this.setState({
                 user: this.props.user
             });
-            this.props.findLabelsForUser(this.props.user.id);
+            // this.props.findLabelsForUser(this.props.user.id);
         }
     }
 
@@ -66,7 +66,7 @@ class LabelListComponent extends React.Component {
         return (
             <div>
                 <ul className="list-group">
-                    {this.props.labels >0 && this.props.labels.map(label =>
+                    {this.props.labels.map(label =>
                         <div key={label.id}>
                             <LabelComponent
                                 label={label}

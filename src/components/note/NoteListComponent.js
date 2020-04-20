@@ -21,10 +21,11 @@ class NoteListComponent extends React.Component {
     //Add functionality to determine if user or folder should be created
 
     componentDidMount() {
-        this.props.findCurrentUser();
+        // this.props.findCurrentUser();
+        console.log(this.props.user.id);
         // this.props.findNotesForUser(this.props.user.id);
-        this.props.findNotesForUser(102);
-        // console.log(this.props.user);
+        // this.props.findNotesForUser(102);
+        console.log(this.props.user);
         // console.log(this.props.notes);
     };
 
@@ -35,7 +36,7 @@ class NoteListComponent extends React.Component {
             this.setState({
                 user: this.props.user
             });
-            this.props.findNotesForUser(this.props.user.id);
+            // this.props.findNotesForUser(this.props.user.id);
         }
     }
 
@@ -65,7 +66,7 @@ class NoteListComponent extends React.Component {
                     />
                 </li>
                 <br/>
-                {this.props.notes >0  && this.props.notes.map(note =>
+                {this.props.notes && this.props.notes.map(note =>
                     <div key={note.id}>
                         <NoteComponent
                             deleteNote={this.deleteNote}
