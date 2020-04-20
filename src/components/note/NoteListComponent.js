@@ -6,14 +6,14 @@ import {createNote, deleteNote, findNotesForGroup} from "../../actions/noteActio
 import {connect} from "react-redux";
 import userService from "../../services/userService";
 import noteService from "../../services/noteService";
+import NewNoteComponent from "./NewNoteComponent";
 
 const UserService = new userService();
 const NoteService = new noteService();
 
 class NoteListComponent extends React.Component {
     state = {
-        newTitle: "New Note",
-        newText: "Note Body"
+        user: {}
     };
 
     //TODO:
@@ -39,34 +39,14 @@ class NoteListComponent extends React.Component {
         }
     }
 
-    titleChanged = (e) => {
-        this.setState({
-            newTitle: e.target.value
-        })
-    };
-
-    textChanged = (e) => {
-        this.setState({
-            newText: e.target.value
-        })
-    };
-
-    createUserNote= () => {
-        const note = {
-            title: this.state.newTitle,
-            text: this.state.newText
-        };
+    createUserNote= (note) => {
         this.props.createNoteForUser(this.props.user.id, note)
     };
 
     //TODO:
     //Figure out how to access folder id
     //Below information is a placeholder and not accurate
-    createFolderNote= () => {
-        const note = {
-            title: this.state.newTitle,
-            text: this.state.newText
-        };
+    createFolderNote= (note) => {
         const folderId = this.props.folder.id;
         this.props.createNoteForFolder(folderId, note)
     };
@@ -79,18 +59,15 @@ class NoteListComponent extends React.Component {
         return (
             <ul className="list-group">
                 <li className="list-group-item">
-                    <button className="btn btn-primary"
-                            onClick={this.createUserNote}
-                    >
-                        Add Note
-                    </button>
+                    <NewNoteComponent
+                        createUserNote={this.createUserNote}
+                        createFolderNote={this.createFolderNote}
+                    />
                 </li>
                 {this.props.notes.map(note =>
                     <div key={note.id}>
                         <NoteComponent
                             deleteNote={this.deleteNote}
-                            titleChange={this.titleChanged}
-                            textChange={this.textChanged}
                             note={note}
                         />
                     </div>

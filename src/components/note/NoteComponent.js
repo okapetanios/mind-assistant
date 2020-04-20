@@ -4,8 +4,22 @@ import '../../App.css';
 
 class NoteComponent extends React.Component {
     state = {
-        note: this.props.note
-    }
+        note: this.props.note,
+        newTitle: "New Note",
+        newText: "Note Body"
+    };
+
+    titleChanged = (e) => {
+        this.setState({
+            newTitle: e.target.value
+        })
+    };
+
+    textChanged = (e) => {
+        this.setState({
+            newText: e.target.value
+        })
+    };
 
     handleOnChange = event => {
         this.setState({note: event.target.value});
