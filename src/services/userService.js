@@ -21,7 +21,7 @@ class userService {
             .catch(err => {console.log(err); return {
                 id: 1,
                 username: 'login',
-                fname: 'anonymous',
+                fname: 'Anonymous',
                 role: 'general'
             }});
     };
@@ -31,6 +31,7 @@ class userService {
             method: "POST",
             credentials: "include"
         }).then(response => response.json())
+            .catch(err =>console.log(err))
     };
 
     loginUser = (user) => {
