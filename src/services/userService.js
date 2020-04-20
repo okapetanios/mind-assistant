@@ -22,7 +22,7 @@ class userService {
                 console.log(err);
                 return {
                     id: 1,
-                    username: 'login',
+                    username: 'Log In',
                     fname: 'Anonymous',
                     role: 'general'
                 }
@@ -38,7 +38,7 @@ class userService {
                 console.log(err);
                 return {
                     id: 1,
-                    username: 'login',
+                    username: 'Log In',
                     fname: 'Anonymous',
                     role: 'general'
                 }
@@ -58,7 +58,7 @@ class userService {
                 console.log(err);
                 return {
                     id: 1,
-                    username: 'login',
+                    username: 'Log In',
                     fname: 'Anonymous',
                     role: 'general'
                 }
