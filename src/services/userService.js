@@ -18,6 +18,12 @@ class userService {
             method: "GET",
             credentials: "include"
         }).then(response => response.json())
+            .catch(err => {console.log(err); return {
+                id: 1,
+                username: 'login',
+                fname: 'anonymous',
+                role: 'general'
+            }});
     };
 
     logoutUser = () => {

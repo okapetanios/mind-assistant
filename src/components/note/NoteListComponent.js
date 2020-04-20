@@ -65,7 +65,7 @@ class NoteListComponent extends React.Component {
                     />
                 </li>
                 <br/>
-                {this.props.notes.map(note =>
+                {this.props.notes >0  && this.props.notes.map(note =>
                     <div key={note.id}>
                         <NoteComponent
                             deleteNote={this.deleteNote}
