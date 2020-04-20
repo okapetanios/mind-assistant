@@ -1,77 +1,142 @@
 import React from 'react';
 import NoteComponent from './NoteComponent';
 import '../../App.css';
+import {findCurrentUser} from "../../actions/userActions";
+import {createNote, deleteNote, findNotesForGroup} from "../../actions/noteActions";
+import {connect} from "react-redux";
+import userService from "../../services/userService";
+import noteService from "../../services/noteService";
+
+const UserService = new userService();
+const NoteService = new noteService();
 
 class NoteListComponent extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {
+    state = {
+        newTitle: "New Note",
+        newText: "Note Body"
+    };
 
-      note: {
-        id: -1,
-        title: 'New Note'
-      },
-      notes: [
-        {id: 123, title: "Note 1", text: 'wow'},
-        {id: 124, title: "Note 2", text: 'wow cool'},
-        {id: 125, title: "Note 3", text: 'wow this'}
-      ],
-        label: {
-            id: -1,
-            title: 'New Label'
-        },
-        labels: [
-            {id: 123, title: "Label 1"},
-            {id: 124, title: "Label 2"},
-            {id: 125, title: "Label 3"}
-        ],
+    //TODO:
+    //Figure out why the current user doesn't load on mount
+    //Add functionality to determine if user or folder should be created
+
+    componentDidMount() {
+        this.props.findCurrentUser();
+        // this.props.findNotesForUser(this.props.user.id);
+        this.props.findNotesForUser(102);
+        // console.log(this.props.user);
+        // console.log(this.props.notes);
+    };
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if(this.props.user !== prevState.user){
+            // console.log(this.props.user);
+            // console.log(this.props.notes);
+            this.setState({
+                user: this.props.user
+            });
+            this.props.findNotesForUser(this.props.user.id);
+        }
     }
 
-  }
+    titleChanged = (e) => {
+        this.setState({
+            newTitle: e.target.value
+        })
+    };
 
-  createNote= () => {
-    this.state.note.id = (new Date()).getTime();
-    this.setState({
-                    notes: [this.state.note, ...this.state.notes]
-                  })
-  }
+    textChanged = (e) => {
+        this.setState({
+            newText: e.target.value
+        })
+    };
 
-  textChanged = (event) => {
-    this.setState({
-                    note: {
-                      text: event.target.value
-                    }
-                  })
-  }
+    createUserNote= () => {
+        const note = {
+            title: this.state.newTitle,
+            text: this.state.newText
+        };
+        this.props.createNoteForUser(this.props.user.id, note)
+    };
 
-  deleteNote = (id) => {
-    this.setState({
-                    Notes: this.state.notes.filter(note => note.id !== id)
-                  })
-  }
+    //TODO:
+    //Figure out how to access folder id
+    //Below information is a placeholder and not accurate
+    createFolderNote= () => {
+        const note = {
+            title: this.state.newTitle,
+            text: this.state.newText
+        };
+        const folderId = this.props.folder.id;
+        this.props.createNoteForFolder(folderId, note)
+    };
 
-  render() {
-    return (
-        <ul className="list-group">
-          <li className="list-group-item">
-            <button onClick={this.createNote} className="btn btn-primary">
-              Add Note
-            </button>
-          </li>
-          {this.state.notes.map(
-              note =>
-                  <NoteComponent
-                      deleteNote={this.deleteNote}
-                      textChange={this.textChanged}
-                      {...this.props} note={note}
-                      key={note.id}/>
-          )
-          }
-        </ul>
-    )
+    deleteNote = (id) => {
+        this.props.deleteNote(id)
+    };
 
-  }
+    render() {
+        return (
+            <ul className="list-group">
+                <li className="list-group-item">
+                    <button className="btn btn-primary"
+                            onClick={this.createUserNote}
+                    >
+                        Add Note
+                    </button>
+                </li>
+                {this.props.notes.map(note =>
+                    <div key={note.id}>
+                        <NoteComponent
+                            deleteNote={this.deleteNote}
+                            titleChange={this.titleChanged}
+                            textChange={this.textChanged}
+                            note={note}
+                        />
+                    </div>
+                )}
+            </ul>
+        )
+    }
 }
 
-export default NoteListComponent;
-
+const stateToPropertyMapper = (state) => ({
+    user: state.user.user,
+    notes: state.notes.notes
+});
+const dispatchToPropertyMapper = (dispatch) => ({
+    findCurrentUser: () => {
+        UserService.findCurrentUser().then(user => {
+            dispatch(findCurrentUser(user))
+        })
+    },
+    findNotesForUser: (userId) => {
+        NoteService.findNotesForUser(userId).then(notes => {
+            dispatch(findNotesForGroup(notes))
+        })
+    },
+    createNoteForUser: (userId, note) => {
+        NoteService.createNoteForUser(userId,note).then(note => {
+            dispatch(createNote(note))
+        })
+    },
+    findNotesForFolder: (folderId) => {
+        NoteService.findNotesForFolder(folderId).then(notes => {
+            dispatch(findNotesForGroup(notes))
+        })
+    },
+    createNoteForFolder: (folderId, note) => {
+        NoteService.createNoteForFolder(folderId,note).then(note => {
+            dispatch(createNote(note))
+        })
+    },
+    deleteNote: (noteId) => {
+        NoteService.deleteNote(noteId).then(status => {
+            dispatch(deleteNote(noteId))
+        })
+    }
+});
+export default connect(
+    stateToPropertyMapper,
+    dispatchToPropertyMapper
+)(NoteListComponent)
