@@ -13,22 +13,18 @@ const LabelService = new labelService();
 class LabelListComponent extends React.Component {
     state = {
         newTitle: "New Label",
-        user: {},
-        labels: [
-            {id: 123, title: "Label 1"},
-            {id: 124, title: "Label 2"},
-            {id: 125, title: "Label 3"}
-        ]
+        user: {}
     };
 
     //TODO:
     //Figure out why the current user doesn't load on mount
     //Add functionality to determine if user or folder should be created
+    //Add functionality to choose label to change note display
 
     componentDidMount() {
         this.props.findCurrentUser();
         // this.props.findLabelsForUser(this.props.user.id);
-        this.props.findLabelsForUser(2);
+        this.props.findLabelsForUser(102);
         // console.log(this.props.user);
         // console.log(this.props.labels);
     }
@@ -39,7 +35,8 @@ class LabelListComponent extends React.Component {
             // console.log(this.props.labels);
             this.setState({
                 user: this.props.user
-            })
+            });
+            this.props.findLabelsForUser(this.props.user.id);
         }
     }
 
@@ -73,6 +70,7 @@ class LabelListComponent extends React.Component {
                         <div key={label.id}>
                             <LabelComponent
                                 label={label}
+                                deleteLabel={this.deleteLabel}
                             />
                         </div>
                     )}
