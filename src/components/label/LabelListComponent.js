@@ -11,26 +11,22 @@ const UserService = new userService();
 const LabelService = new labelService();
 
 class LabelListComponent extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            user: {},
-            label: {
-                id: -1,
-                title: 'New Label'
-            },
-            labels: [
-                {id: 123, title: "Label 1"},
-                {id: 124, title: "Label 2"},
-                {id: 125, title: "Label 3"}
-            ]
-        }
-
-    }
+    state = {
+        // user: {},
+        label: {
+            id: -1,
+            title: 'New Label'
+        },
+        labels: [
+            {id: 123, title: "Label 1"},
+            {id: 124, title: "Label 2"},
+            {id: 125, title: "Label 3"}
+        ]
+    };
 
     componentDidMount() {
         this.props.findCurrentUser();
-        this.props.findLabelsForUser(this.props.user.id)
+        this.props.findLabelsForUser(this.props.user.id);
     }
 
     createLabel = () => {
@@ -58,7 +54,7 @@ class LabelListComponent extends React.Component {
         return (
             <div>
                 <ul className="list-group">
-                    {this.state.labels && this.state.labels.map(label =>
+                    {this.props.labels > 0 && this.props.labels.map(label =>
                         <div key={label.id}>
                             <LabelComponent
                                 label={label}
