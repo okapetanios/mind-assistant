@@ -66,7 +66,7 @@ class LabelListComponent extends React.Component {
         return (
             <div>
                 <ul className="list-group">
-                    {this.props.labels && this.props.labels.map(label =>
+                    {this.props.labels >0 && this.props.labels.map(label =>
                         <div key={label.id}>
                             <LabelComponent
                                 label={label}
