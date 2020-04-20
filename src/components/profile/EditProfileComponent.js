@@ -1,11 +1,9 @@
 import React from "react";
 import {connect} from "react-redux";
 import userService from "../../services/userService";
-import profileService from "../../services/profileService";
 import {deleteUser, findCurrentUser, logoutUser, updateUser} from "../../actions/userActions";
 
 const UserService = new userService();
-// const ProfileService = new profileService();
 
 class EditProfileComponent extends React.Component{
     componentDidMount() {
@@ -51,6 +49,7 @@ class EditProfileComponent extends React.Component{
     //TODO:
     //Add functionality for update profile
     //Not currently working. Only adding new users
+    //Update based on different user types
     updateUser = () => {
         const password = this.state.newPassword === "" ? this.props.user.password:this.state.newPassword;
         console.log(password);
@@ -70,9 +69,6 @@ class EditProfileComponent extends React.Component{
         this.props.deleteUser(this.props.user.id);
         this.logout()
     };
-
-    //TODO:
-    //Add delete account option
 
     render() {
         return (
