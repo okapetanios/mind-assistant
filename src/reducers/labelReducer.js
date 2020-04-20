@@ -6,7 +6,7 @@ import {
     UPDATE_LABEL
 } from "../actions/labelActions";
 
-const labelReducer = (state={labels:[]}, action) => {
+const labelReducer = (state={labels:[{id: 1, title: "No Current Labels"}]}, action) => {
     switch (action.type) {
         case FIND_LABELS_FOR_GROUP:
             return {
