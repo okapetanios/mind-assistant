@@ -12,7 +12,7 @@ const FolderComponent = ({folder, deleteFolder}) =>
             <div className="card-body">
                 <div className={"row"}>
                     <div className={"col"}>
-                        <Link to={`/${folder.title}`}>
+                        <Link to={`/folder/${folder.title}`}>
                             <h3 className="card-title">{folder.title}</h3>
                         </Link>
                     </div>

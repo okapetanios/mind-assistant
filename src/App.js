@@ -128,14 +128,6 @@ class App extends React.Component {
 
                     <Switch>
                         <Route
-                            exact path={"/:folderTitle"}
-                            render={(props) =>
-                                <DefaultLayoutComponent
-                                    {...props}
-                                    folderTitle={props.match.params.folderTitle}
-                                />
-                            }/>
-                        <Route
                             exact path={["/search",
                             "/search/:criteria"]}
                             render={(props) =>
@@ -180,6 +172,14 @@ class App extends React.Component {
                             render={(props) =>
                                 <RegisterComponent
                                     {...props}
+                                />
+                            }/>
+                        <Route
+                            exact path={"/folder/:folderTitle"}
+                            render={(props) =>
+                                <DefaultLayoutComponent
+                                    {...props}
+                                    folderTitle={props.match.params.folderTitle}
                                 />
                             }/>
                         <Route
