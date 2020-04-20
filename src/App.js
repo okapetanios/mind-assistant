@@ -24,6 +24,7 @@ import folderReducer from "./reducers/folderReducer";
 import noteReducer from "./reducers/noteReducer";
 import labelReducer from "./reducers/labelReducer";
 import userService from "./services/userService";
+import DefaultLayoutComponent from "./components/DefaultLayoutComponent";
 
 const UserService = new userService();
 
@@ -126,6 +127,14 @@ class App extends React.Component {
                     </nav>
 
                     <Switch>
+                        <Route
+                            exact path={"/:folderTitle"}
+                            render={(props) =>
+                                <DefaultLayoutComponent
+                                    {...props}
+                                    folderTitle={props.match.params.folderTitle}
+                                />
+                            }/>
                         <Route
                             exact path={["/search",
                             "/search/:criteria"]}

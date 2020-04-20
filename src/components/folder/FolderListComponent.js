@@ -5,54 +5,33 @@ import userService from "../../services/userService";
 import {findCurrentUser} from "../../actions/userActions";
 import folderService from "../../services/folderService";
 import FolderComponent from "./FolderComponent";
-import {findFoldersForUser} from "../../actions/folderActions";
+import {createFolder, deleteFolder, findFoldersForUser} from "../../actions/folderActions";
 
 const UserService = new userService();
 const FolderService = new folderService();
 
 class FolderListComponent extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-
-            folder: {
-                id: -1,
-                title: 'New Folder'
-            },
-
-            folders: [
-                {id: 123, title: "Folder 1"},
-                {id: 124, title: "Folder 2"},
-                {id: 125, title: "Folder 3"}
-            ]
-        }
-
-    }
+    state = {
+        newTitle: ""
+    };
 
     componentDidMount() {
         this.props.findCurrentUser();
         this.props.findFoldersForUser(this.props.user.id);
     }
 
-    createFolder = () => {
-        this.state.folder.id = (new Date()).getTime();
+    titleChanged = (e) => {
         this.setState({
-                          folders: [this.state.folder, ...this.state.folders]
-                      })
+            newTitle: e.target.value
+        })
     };
 
-    titleChanged = (event) => {
-        this.setState({
-                          folder: {
-                              title: event.target.value
-                          }
-                      })
+    createFolder = () => {
+        this.props.createFolder(this.props.user.id, {title: this.state.newTitle})
     };
 
     deleteFolder = (id) => {
-        this.setState({
-            folders: this.state.folders.filter(folder => folder.id !== id)
-        })
+        this.props.deleteFolder(id)
     };
 
     render() {
@@ -76,6 +55,7 @@ class FolderListComponent extends React.Component {
                         <div key={folder.id}>
                             <FolderComponent
                                 folder={folder}
+                                deleteFolder={this.deleteFolder}
                             />
                         </div>
                     )}
@@ -98,6 +78,16 @@ const dispatchToPropertyMapper = (dispatch) => ({
     findFoldersForUser: (userId) => {
         FolderService.findFoldersForUser(userId).then(folders => {
             dispatch(findFoldersForUser(folders))
+        })
+    },
+    createFolder: (userId, folder) => {
+        FolderService.createFolder(userId,folder).then(folder => {
+            dispatch(createFolder(folder))
+        })
+    },
+    deleteFolder: (folderId) => {
+        FolderService.deleteFolder(folderId).then(status => {
+            dispatch(deleteFolder(folderId))
         })
     }
 });
