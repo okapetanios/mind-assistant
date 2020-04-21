@@ -35,7 +35,7 @@ class App extends React.Component {
         super(props);
         this.state = {
             keyword: '',
-            user: {username: 'login'},
+            user: {id: 0, username: 'login'},
             loggedIn: false
         }
     }
@@ -80,6 +80,7 @@ class App extends React.Component {
             loggedIn: false
         }))
     };
+
 
     render() {
         let provider = <><Provider store={this.store}>

@@ -16,7 +16,7 @@ class Home extends Component {
         this.props.findCurrentUser();
         this.props.getRandomJoke();
     }
-
+  
     state = {
         user: {id: 0}
     };
@@ -28,6 +28,7 @@ class Home extends Component {
             });
         }
     }
+
 
     render() {
         return (
