@@ -2,7 +2,7 @@ import React from 'react';
 import NoteComponent from './NoteComponent';
 import '../../App.css';
 import {findCurrentUser} from "../../actions/userActions";
-import {createNote, deleteNote, findNotesForGroup} from "../../actions/noteActions";
+import {createNote, deleteNote, findNotesForGroup, updateNote} from "../../actions/noteActions";
 import {connect} from "react-redux";
 import userService from "../../services/userService";
 import noteService from "../../services/noteService";
@@ -13,49 +13,27 @@ const NoteService = new noteService();
 
 class NoteListComponent extends React.Component {
     state = {
-        user: {
-            id: 0,
-            username: "Testing",
-            fname: "",
-            lname: "",
-            role: ""
-        },
-        notes: [{
-            id: 1,
-            title: "test",
-            note: "test"
-        }]
+        editingNoteId: 0,
+        user: {id: 0}
     };
-    //TODO:
-    //Figure out why the current user doesn't load on mount
-    //Add functionality to determine if user or folder should be created
 
+    //TODO:
+    //Add functionality to determine if user or folder should be created
     componentDidMount() {
         this.props.findCurrentUser();
-        // console.log(this.props.user.id);
-        // this.props.findNotesForUser(102);
-        // console.log(this.props.user);
-        // console.log(this.props.notes);
-        console.log(this.props.user)
-        this.props.findNotesForUser(this.props.user.id);
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
         if(this.state.user.id === 0 && this.props.user.id >0){
-            console.log(this.props.user);
             this.setState({
                 user: this.props.user
             });
+            this.props.findNotesForUser(this.props.user.id)
         }
     }
 
     createUserNote= (note) => {
-        console.log(this.props.user.id)
         this.props.createNoteForUser(this.props.user.id, note)
-        console.log(this.props.notes)
-        this.setState({
-            notes: [note, ...this.state.notes]
-        })
     };
 
     //TODO:
@@ -70,6 +48,13 @@ class NoteListComponent extends React.Component {
         this.props.deleteNote(id)
     };
 
+    saveNote = (note) => {
+        this.setState({
+            editing: ''
+                      });
+        this.props.updateNote(note.id,note)
+    }
+
     render() {
         return (
             <ul className="list-group">
@@ -80,10 +65,12 @@ class NoteListComponent extends React.Component {
                     />
                 </li>
                 <br/>
-                {this.state.user.notes && this.state.user.notes.map(note =>
+                {this.props.notes.length >0 && this.props.notes.map(note =>
                     <div key={note.id}>
                         <NoteComponent
+                            editing={this.state.editingNoteId === note.id}
                             deleteNote={this.deleteNote}
+                            saveNote={this.saveNote}
                             note={note}
                         />
                         <br/>
@@ -110,7 +97,6 @@ const dispatchToPropertyMapper = (dispatch) => ({
         })
     },
     createNoteForUser: (userId, note) => {
-        console.log(userId)
         NoteService.createNoteForUser(userId,note).then(note => {
             dispatch(createNote(note))
         })
@@ -128,6 +114,11 @@ const dispatchToPropertyMapper = (dispatch) => ({
     deleteNote: (noteId) => {
         NoteService.deleteNote(noteId).then(status => {
             dispatch(deleteNote(noteId))
+        })
+    },
+    updateNote: (noteId, note) => {
+        NoteService.updateNote(noteId,note).then(status => {
+            dispatch(updateNote(noteId,note))
         })
     }
 });

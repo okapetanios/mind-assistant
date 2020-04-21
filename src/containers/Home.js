@@ -7,7 +7,6 @@ import jokeService from "../services/jokeService";
 import {getJoke} from "../actions/jokeActions";
 import DefaultLayoutComponent from "../components/DefaultLayoutComponent";
 import FolderListComponent from '../components/folder/FolderListComponent';
-import NoteListComponent from '../components/note/NoteListComponent';
 
 const UserService = new userService();
 const JokeService = new jokeService();
@@ -40,7 +39,6 @@ class Home extends Component {
                     {this.props.user.role === "student" &&
                     <div>
                         <FolderListComponent/>
-                        <NoteListComponent/>
                     </div>}
                 </div>
             </div>
