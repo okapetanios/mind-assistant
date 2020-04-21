@@ -218,10 +218,10 @@ class EditProfileComponent extends React.Component{
                     </div>
 
                     <div className={"row"}>
-                        <div className={"col-3"}>
+                        <div className={"col-lg-4 col-md-5 col-sm-10"}>
                             <img alt={"Display"} className={"mr-3"}
-                                 width={250}
-                                 height={250}
+                                 width="auto"
+                                 height={180}
                                  src={this.state.newSrc === "" ?
                                      (this.props.profile.picture || ""):
                                      this.state.newSrc}/>
@@ -229,10 +229,10 @@ class EditProfileComponent extends React.Component{
                         <div className={"col"}>
                             <div className="form-group row">
                                 <label htmlFor="editSrc"
-                                       className="col-sm-2 col-form-label">
+                                       className="col-lg-2 col-sm-2 col-form-label">
                                     Image Source
                                 </label>
-                                <div className="col-sm-10">
+                                <div className="col-lg-10 col-sm-10">
                                     <input className="form-control "
                                            id="editSrc"
                                            placeholder={"Image URL here"}
