@@ -4,8 +4,15 @@ import '../../App.css';
 
 class NoteComponent extends React.Component {
     state = {
-        note: this.props.note
+        note: this.props.note,
+        editing: this.props.editing
     };
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if (prevProps.editing !== this.props.editing) {
+            this.setState({
+                              editing: this.props.editing
+                          })
+        }}
 
     handleOnChange = event => {
         this.setState({note: event.target.value});
@@ -19,13 +26,64 @@ class NoteComponent extends React.Component {
         return (
             <div>
                 <li className={"list-group-item"}>
+                    {!this.state.editing &&
+                     <div className={"row"}>
+                         <div className={"col"}>
+                             <div>
+                                 <select className="form-control"
+                                         id="editRole"
+                                         placeholder={"private"}
+                                         onChange={(e) => {
+                                             const newStatus = e.target.value;
+                                             this.setState(prevState => {
+                                                 prevState.note.status = newStatus;
+                                                 return prevState;
+                                             })
+                                         }}>
+                                     <option value={"private"}>Private</option>
+                                     <option value={"public"}>Public</option>
+                                 </select>
+                             </div>
+                         </div>
+                         <input className="form-control"
+                                type="text"
+                                placeholder="Note Title"
+                                onChange={(e) => {
+                                    const newText = e.target.value;
+                                    this.setState(prevState => {
+                                        prevState.note.title = newText;
+                                        return prevState;
+                                    })
+                                }}/>
+                         <input className="form-control"
+                                type="text"
+                                placeholder="Note Text"
+                                onChange={(e) => {
+                                    const newText = e.target.value;
+                                    this.setState(prevState => {
+                                        prevState.note.note = newText;
+                                        return prevState;
+                                    })
+                                }}/>
+                         <button
+                             className="btn btn-success"
+                             onClick={() => this.props.saveNote(this.state.note)}>
+                             Update
+                         </button>
+                     </div>
+                    }
                     <div className={"row"}>
                         <div className={"col"}>
+                            {this.props.note.status}
                             <h3>{this.props.note.title}</h3>
                         </div>
-                        <div className={"col-2 float-right"}>
-                            {this.props.note.status}
-                        </div>
+                         <div className={"col-2 float-right"}>
+                             <button
+                                 className="btn btn-danger"
+                                 onClick={() => this.props.deleteNote(this.state.note.id)}>
+                                 Delete
+                             </button>
+                         </div>
                     </div>
                     <p>
                         {this.props.note.note}
