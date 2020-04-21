@@ -36,9 +36,9 @@ export const findCurrentUser = (user) => ({
 });
 
 export const LOGOUT_USER = "LOGOUT_USER";
-export const logoutUser = () => ({
+export const logoutUser = (user) => ({
     type: LOGOUT_USER,
-    user: {}
+    user: user
 });
 
 export const LOGIN_USER = "LOGIN_USER";

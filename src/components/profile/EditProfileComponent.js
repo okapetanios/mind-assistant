@@ -179,7 +179,7 @@ const dispatchToPropertyMapper = (dispatch) => ({
     },
     logoutUser: () => {
         UserService.logoutUser().then(user => {
-            dispatch(logoutUser)
+            dispatch(logoutUser(user))
         })
     },
     updateUser: (userId, user) => {
