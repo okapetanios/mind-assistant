@@ -13,7 +13,7 @@ const NoteService = new noteService();
 
 class NoteListComponent extends React.Component {
     state = {
-        editingNoteId: 0,
+        editingNoteId: '',
         user: {id: 0}
     };
 
@@ -68,7 +68,18 @@ class NoteListComponent extends React.Component {
                 {this.props.notes.length >0 && this.props.notes.map(note =>
                     <div key={note.id}>
                         <NoteComponent
-                            editing={this.state.editingNoteId === note.id}
+                            edit={() => {
+                                this.setState({
+                                                  editingNoteId: note.id
+                                              })
+                            }}
+
+                            select={() => {
+                                this.setState({
+                                                  activeNoteId: note.id
+                                              })
+                            }}
+                            editing={note.id === this.state.editingNoteId}
                             deleteNote={this.deleteNote}
                             saveNote={this.saveNote}
                             note={note}
