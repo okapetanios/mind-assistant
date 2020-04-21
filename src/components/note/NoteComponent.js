@@ -72,6 +72,7 @@ class NoteComponent extends React.Component {
                                            return prevState;
                                        })
                                    }}/>
+
                          <button
                              className="btn btn-success"
                              onClick={() => {
@@ -82,6 +83,13 @@ class NoteComponent extends React.Component {
                              })}}>
                              Update
                          </button>
+                         <div className={"col-2 float-right"}>
+                             <button
+                                 className="btn btn-danger"
+                                 onClick={() => this.props.deleteNote(this.state.note.id)}>
+                                 Delete
+                             </button>
+                         </div>
                      </div>
                      :
                      <div>
@@ -89,13 +97,6 @@ class NoteComponent extends React.Component {
                              <div className={"col"}>
                                  {this.props.note.status}
                                  <h3>{this.props.note.title}</h3>
-                             </div>
-                             <div className={"col-2 float-right"}>
-                                 <button
-                                     className="btn btn-danger"
-                                     onClick={() => this.props.deleteNote(this.state.note.id)}>
-                                     Delete
-                                 </button>
                              </div>
                          </div>
                          <p>
