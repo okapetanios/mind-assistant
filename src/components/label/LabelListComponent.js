@@ -13,7 +13,7 @@ const LabelService = new labelService();
 class LabelListComponent extends React.Component {
     state = {
         newTitle: "New Label",
-        user: {}
+        user: {id: 0},
     };
 
     //TODO:
@@ -22,21 +22,15 @@ class LabelListComponent extends React.Component {
     //Add functionality to choose label to change note display
 
     componentDidMount() {
-        // this.props.findCurrentUser();
-        // this.props.findLabelsForUser(this.props.user.id);
-        this.props.findLabelsForUser(102);
-        // console.log(this.props.user);
-        // console.log(this.props.labels);
+        this.props.findCurrentUser();
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        if(this.props.user !== prevState.user){
-            // console.log(this.props.user);
-            // console.log(this.props.labels);
+        if(this.state.user.id === 0 && this.props.user.id > 0){
             this.setState({
                 user: this.props.user
             });
-            // this.props.findLabelsForUser(this.props.user.id);
+            this.props.findLabelsForUser(this.props.user.id);
         }
     }
 
@@ -66,7 +60,7 @@ class LabelListComponent extends React.Component {
         return (
             <div>
                 <ul className="list-group">
-                    {this.props.labels.map(label =>
+                    {this.props.labels.length > 0 && this.props.labels.map(label =>
                         <div key={label.id}>
                             <LabelComponent
                                 label={label}
