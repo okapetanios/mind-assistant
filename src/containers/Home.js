@@ -12,14 +12,20 @@ const UserService = new userService();
 const JokeService = new jokeService();
 
 class Home extends Component {
+    state = {
+        user: {id: 0, fname: "Anonymous"}
+    };
+
     componentDidMount() {
         this.props.findCurrentUser();
         this.props.getRandomJoke();
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        if(this.props.user.id !== prevProps.user.id){
-            this.forceUpdate()
+        if(this.props.user.id !== this.state.user.id){
+            this.setState({
+                user: this.props.user
+            })
         }
     }
 

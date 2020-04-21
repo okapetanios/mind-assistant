@@ -17,7 +17,6 @@ class EditProfileComponent extends React.Component{
     componentDidUpdate(prevProps, prevState, snapshot) {
         if(this.props.user.id !== prevProps.user.id){
             this.props.findProfile(this.props.user.id);
-            console.log(this.props.profile)
         }
     }
 
@@ -86,7 +85,6 @@ class EditProfileComponent extends React.Component{
     };
 
     deleteUser = () => {
-        console.log(this.props.user.id);
         this.props.deleteUser(this.props.user.id);
         this.logout()
     };
