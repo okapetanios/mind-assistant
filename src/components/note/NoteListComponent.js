@@ -12,22 +12,31 @@ const UserService = new userService();
 const NoteService = new noteService();
 
 class NoteListComponent extends React.Component {
+    // state = {
+    //     user: {}
+    // };
     state = {
-        user: {}
+        newTitle: ""
     };
 
     //TODO:
     //Figure out why the current user doesn't load on mount
     //Add functionality to determine if user or folder should be created
 
+    // componentDidMount() {
+    //     // this.props.findCurrentUser();
+    //     // console.log(this.props.user.id);
+    //     // // this.props.findNotesForUser(this.props.user.id);
+        // console.log(this.props.findNotesForUser(this.props.user.id));
+    //     // // this.props.findNotesForUser(102);
+    //     // console.log(this.props.user);
+    //     // console.log(this.props.notes);
+    // };
     componentDidMount() {
         // this.props.findCurrentUser();
-        console.log(this.props.user.id);
+        console.log(this.props.user)
         // this.props.findNotesForUser(this.props.user.id);
-        // this.props.findNotesForUser(102);
-        console.log(this.props.user);
-        // console.log(this.props.notes);
-    };
+    }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
         if(this.props.user !== prevState.user){
