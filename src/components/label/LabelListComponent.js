@@ -16,6 +16,7 @@ class LabelListComponent extends React.Component {
         user: {id: 0},
     };
 
+    //bl;a
     //TODO:
     //Figure out why the current user doesn't load on mount
     //Add functionality to determine if user or folder should be created
