@@ -87,9 +87,11 @@ class App extends React.Component {
                 <div>
                     <nav className="navbar navbar-expand navbar-dark bg-dark">
                         <a className="navbar-brand" href="/">Mind-Assistant</a>
-                        <a className="nav-link" href="/privacy-policy">Privacy Policy</a>
                         <div className="collapse navbar-collapse">
                             <ul className="navbar-nav mr-auto">
+                                <li className="nav-item">
+                                    <a className="nav-link" href="/privacy-policy">Privacy Policy</a>
+                                </li>
                             </ul>
                             <Form inline>
                                 <FormControl type="text" placeholder="Search for Users" className="mr-sm-2"/>
