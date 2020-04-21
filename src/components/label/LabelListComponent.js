@@ -5,24 +5,29 @@ import {findCurrentUser} from "../../actions/userActions";
 import {connect} from "react-redux";
 import userService from "../../services/userService";
 import labelService from "../../services/labelService";
-import {createLabel, deleteLabel, findLabelsForGroup} from "../../actions/labelActions";
+import {createLabel, deleteLabel, findLabelsForGroup, updateLabel} from "../../actions/labelActions";
 
 const UserService = new userService();
 const LabelService = new labelService();
 
 class LabelListComponent extends React.Component {
     state = {
-        newTitle: "New Label",
         user: {id: 0},
+        folderId: 0,
+        newTitle: "New Label",
+        activeLabel: "",
+        editingId: "",
+        editTitle: "",
+        status: ""
     };
 
     //TODO:
-    //Figure out why the current user doesn't load on mount
     //Add functionality to determine if user or folder should be created
     //Add functionality to choose label to change note display
 
     componentDidMount() {
         this.props.findCurrentUser();
+        console.log(this.props.folderId)
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
@@ -34,8 +39,55 @@ class LabelListComponent extends React.Component {
         }
     }
 
+    //TODO: Figure out push
+    //change to title?
+    selectLabel = (labelId) => {
+        // this.props.history.push(`/labels/${labelId}`);
+        this.setState({
+            activeLabel: labelId
+        });
+    };
+
+    newTitle = (e) => {
+        this.setState({
+            newTitle: e.target.value
+        })
+    };
+
+    editTitle = (e) => {
+        this.setState({
+            editTitle: e.target.value
+        })
+    };
+
+    editStatus = (e) => {
+        this.setState({
+            status: e.target.value
+        })
+    };
+
+    editLabel = (label) => {
+        this.setState({
+            editingId: label.id,
+            editTitle: label.title,
+            status: label.status
+        })
+    };
+
+    cancelEdit = () => {
+        this.setState({
+            editingId: "",
+            editTitle: "",
+            status: ""
+        })
+    };
+
+
     createUserLabel = () => {
-        this.props.createLabelForUser(this.props.user.id, {title: this.state.newTitle})
+        this.props.createLabelForUser(this.props.user.id, {title: this.state.newTitle});
+        this.setState({
+            newTitle: "New Label"
+        })
     };
 
     //TODO:
@@ -46,14 +98,17 @@ class LabelListComponent extends React.Component {
         this.props.createLabelForFolder(folderId, {title: this.state.newTitle})
     };
 
-    titleChanged = (e) => {
-        this.setState({
-            newTitle: e.target.value
-        })
+    deleteLabel = (labelId) => {
+        this.props.deleteLabel(labelId)
     };
 
-    deleteLabel = (id) => {
-        this.props.deleteLabel(id)
+    updateLabel = (labelId) => {
+        const label = {id: labelId, title: this.state.editTitle, status: this.state.status};
+        this.props.deleteLabel(labelId, label);
+        this.setState({
+            editTitle: "",
+            status: ""
+        })
     };
 
     render() {
@@ -64,6 +119,16 @@ class LabelListComponent extends React.Component {
                         <div key={label.id}>
                             <LabelComponent
                                 label={label}
+                                active={label.id === this.state.activeLabel}
+                                select={this.selectLabel}
+                                editing={label.id === this.state.editingId}
+                                edit={this.editLabel}
+                                editTitle={this.editTitle}
+                                newTitle={this.state.editTitle}
+                                editStatus={this.editStatus}
+                                newStatus={this.state.status}
+                                cancel={this.cancelEdit}
+                                save={this.updateLabel}
                                 deleteLabel={this.deleteLabel}
                             />
                         </div>
@@ -73,9 +138,10 @@ class LabelListComponent extends React.Component {
                 <div>
                     <input
                         type={"text"}
-                        onChange={this.titleChanged}
+                        onChange={this.newTitle}
                         className="form-control"
                         placeholder={"New Label"}
+                        value={this.state.newTitle}
                     />
                     <button onClick={this.createUserLabel}
                             className="btn btn-primary btn-block">
@@ -115,6 +181,11 @@ const dispatchToPropertyMapper = (dispatch) => ({
     deleteLabel: (labelId) => {
         LabelService.deleteLabel(labelId).then(status => {
             dispatch(deleteLabel(labelId))
+        })
+    },
+    updateLabel: (labelId, label) => {
+        LabelService.updateLabel(labelId, label).then(status => {
+            dispatch(updateLabel(labelId, label))
         })
     }
 });

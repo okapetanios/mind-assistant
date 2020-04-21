@@ -27,6 +27,8 @@ class PublicProfileComponent extends React.Component {
         }
     }
 
+    //TODO: Add public labels to profile page
+
     render() {
         return (
             <div className={"container-fluid"}>
@@ -46,11 +48,11 @@ class PublicProfileComponent extends React.Component {
                     <h3>Saved Public Notes</h3>
                     <ul className="list-group">
                         {this.state.notes.map(note =>
-                                                  <li className="list-group-item"
-                                                      key={note.id}>
-                                                      <h6>{note.title}</h6>
-                                                      <p>{note.note}</p>
-                                                  </li>
+                            <li className="list-group-item"
+                                key={note.id}>
+                                <h6>{note.title}</h6>
+                                <p>{note.note}</p>
+                            </li>
                         )}
                     </ul>
                 </div>
