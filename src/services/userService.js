@@ -21,7 +21,7 @@ class userService {
             .catch(err => {
                 console.log(err);
                 return {
-                    id: 1,
+                    id: 0,
                     username: 'Log In',
                     fname: 'Anonymous',
                     role: 'general'
@@ -37,7 +37,7 @@ class userService {
             .catch(err =>{
                 console.log(err);
                 return {
-                    id: 1,
+                    id: 0,
                     username: 'Log In',
                     fname: 'Anonymous',
                     role: 'general'
@@ -57,7 +57,7 @@ class userService {
             .catch(err =>{
                 console.log(err);
                 return {
-                    id: 1,
+                    id: 0,
                     username: 'Log In',
                     fname: 'Anonymous',
                     role: 'general'
