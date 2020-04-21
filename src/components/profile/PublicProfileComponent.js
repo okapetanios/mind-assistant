@@ -38,7 +38,7 @@ class PublicProfileComponent extends React.Component {
                          src={this.state.profile.picture}
                          alt="Display"
                          width={250}
-                         height={250}/>
+                         height="auto"/>
                     <div className="media-body">
                         <h1>{this.state.profile.user.fname} {this.state.profile.user.lname}</h1>
                         <h6>{this.state.profile.user.username}</h6>

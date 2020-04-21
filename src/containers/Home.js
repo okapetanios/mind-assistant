@@ -17,6 +17,7 @@ class Home extends Component {
         this.props.getRandomJoke();
     }
 
+
     render() {
         return (
             <div className="App">
