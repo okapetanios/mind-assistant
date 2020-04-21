@@ -5,14 +5,16 @@ import '../../App.css';
 class NoteComponent extends React.Component {
     state = {
         note: this.props.note,
-        editing: this.props.editing
+        showing: false
     };
+
     componentDidUpdate(prevProps, prevState, snapshot) {
         if (prevProps.editing !== this.props.editing) {
             this.setState({
                               editing: this.props.editing
                           })
-        }}
+        }
+    }
 
     handleOnChange = event => {
         this.setState({note: event.target.value});
@@ -23,10 +25,15 @@ class NoteComponent extends React.Component {
     //Add in edit functionality
     //Edit label functionality
     render() {
+        const {showing} = this.state;
         return (
             <div>
                 <li className={"list-group-item"}>
-                    {!this.state.editing &&
+                    <button onClick={() => this.setState({showing: !showing})}>
+                        Edit
+                    </button>
+                    {showing
+                     ?
                      <div className={"row"}>
                          <div className={"col"}>
                              <div>
@@ -47,7 +54,7 @@ class NoteComponent extends React.Component {
                          </div>
                          <input className="form-control"
                                 type="text"
-                                placeholder="Note Title"
+                                placeholder="Change Title"
                                 onChange={(e) => {
                                     const newText = e.target.value;
                                     this.setState(prevState => {
@@ -55,81 +62,53 @@ class NoteComponent extends React.Component {
                                         return prevState;
                                     })
                                 }}/>
-                         <input className="form-control"
-                                type="text"
-                                placeholder="Note Text"
-                                onChange={(e) => {
-                                    const newText = e.target.value;
-                                    this.setState(prevState => {
-                                        prevState.note.note = newText;
-                                        return prevState;
-                                    })
-                                }}/>
+                         <textarea className="form-control"
+                                   type="text"
+                                   placeholder="Change Note"
+                                   onChange={(e) => {
+                                       const newText = e.target.value;
+                                       this.setState(prevState => {
+                                           prevState.note.note = newText;
+                                           return prevState;
+                                       })
+                                   }}/>
                          <button
                              className="btn btn-success"
-                             onClick={() => this.props.saveNote(this.state.note)}>
+                             onClick={() => {
+                                 this.props.saveNote(this.state.note);
+                                 this.setState(prevState =>  {
+                                     prevState.showing = false
+                                     return prevState
+                             })}}>
                              Update
                          </button>
                      </div>
-                    }
-                    <div className={"row"}>
-                        <div className={"col"}>
-                            {this.props.note.status}
-                            <h3>{this.props.note.title}</h3>
-                        </div>
-                         <div className={"col-2 float-right"}>
-                             <button
-                                 className="btn btn-danger"
-                                 onClick={() => this.props.deleteNote(this.state.note.id)}>
-                                 Delete
-                             </button>
+                     :
+                     <div>
+                         <div className={"row"}>
+                             <div className={"col"}>
+                                 {this.props.note.status}
+                                 <h3>{this.props.note.title}</h3>
+                             </div>
+                             <div className={"col-2 float-right"}>
+                                 <button
+                                     className="btn btn-danger"
+                                     onClick={() => this.props.deleteNote(this.state.note.id)}>
+                                     Delete
+                                 </button>
+                             </div>
                          </div>
-                    </div>
-                    <p>
-                        {this.props.note.note}
-                    </p>
-                    <div className={"row"}>
-                        {this.props.note.label}
-                    </div>
+                         <p>
+                             {this.props.note.note}
+                         </p>
+                         <div className={"row"}>
+                             {this.props.note.label}
+                         </div>
+                     </div>
+                    }
                 </li>
             </div>
-            // <div>
-            //     <li className="list-group-item">
-            //         <div className="card">
-            //             <div className="form-group">
-            //                 <h5 className="select">Visibility</h5>
-            //                 <select className="form" id="exampleFormControlSelect1">
-            //                     <option>Public</option>
-            //                     <option>Private</option>
-            //                 </select>
-            //             </div>
-            //             <textarea className="form-control"
-            //                       type="text"
-            //                       placeholder="Note text"
-            //                       onChange={(e) => {
-            //                           const newText = e.target.value;
-            //                           this.setState(prevState => {
-            //                               prevState.note.text = newText;
-            //                               return prevState;
-            //                           })
-            //                       }}/>
-            //             <button
-            //                 className="btn btn-success saveBtn">
-            //                 Save
-            //             </button>
-            //             <div className="card-body">
-            //                 <p className="card-text">{this.state.note.text}</p>
-            //                 {/* LabeListComponent instead of Label Conmponent */}
-            //                 <button onClick={this.createLabel} className="btn btn-primary">
-            //                     Add Label
-            //                 </button>
-            //                 <LabelClassComponent/>
-            //             </div>
-            //             {/* TODO ADD LABEL */}
-            //         </div>
-            //
-            //     </li>
-            // </div>
+
         )
     }
 }
