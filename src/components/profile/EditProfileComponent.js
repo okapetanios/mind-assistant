@@ -1,17 +1,20 @@
 import React from "react";
 import {connect} from "react-redux";
 import userService from "../../services/userService";
-import {findCurrentUser, logoutUser} from "../../actions/userActions";
+import {deleteUser, findCurrentUser, logoutUser, updateUser} from "../../actions/userActions";
 
 const UserService = new userService();
 
 class EditProfileComponent extends React.Component{
     componentDidMount() {
-        this.props.findCurrentUser()
+        this.props.findCurrentUser();
     }
 
     state = {
-        user: this.props.user
+        newPassword: "",
+        newFname: "",
+        newLname: "",
+        newRole: "student"
     };
 
     logout = () => {
@@ -19,11 +22,53 @@ class EditProfileComponent extends React.Component{
         this.props.history.push("/")
     };
 
-    //TODO
-    //add onChange functions for all fields
+    pwChange = (e) => {
+        this.setState({
+            newPassword: e.target.value
+        })
+    };
 
-    //TODO
-    //submit changes
+    fnameChange = (e) => {
+        this.setState({
+            newFname: e.target.value
+        })
+    };
+
+    lnameChange = (e) => {
+        this.setState({
+            newLname: e.target.value
+        })
+    };
+
+    roleChange = (e) => {
+        this.setState({
+            newRole: e.target.value
+        })
+    };
+
+    //TODO:
+    //Add functionality for update profile
+    //Not currently working. Only adding new users
+    //Update based on different user types
+    updateUser = () => {
+        const password = this.state.newPassword === "" ? this.props.user.password:this.state.newPassword;
+        console.log(password);
+        console.log(this.props.user.id);
+        const user = {
+            username: this.props.user.username,
+            password: this.state.newPassword === "" ? this.props.user.password:this.state.newPassword,
+            fname: this.state.newFname === "" ? this.props.user.fname:this.state.newFname,
+            lname: this.state.newLname === "" ? this.props.user.lname:this.state.newLname,
+            role: this.state.newRole === "" ? this.props.user.role:this.state.newRole
+        };
+        this.props.updateUser(this.props.user.id, user);
+    };
+
+    deleteUser = () => {
+        console.log(this.props.user.id);
+        this.props.deleteUser(this.props.user.id);
+        this.logout()
+    };
 
     render() {
         return (
@@ -41,7 +86,9 @@ class EditProfileComponent extends React.Component{
                         <input type="password"
                                className="form-control "
                                id="editInputPassword"
-                               placeholder="New Password (if applicable)"/>
+                               onChange={this.pwChange}
+                               placeholder="New Password (if applicable)"
+                        />
                     </div>
                 </div>
                 <div className="form-group row">
@@ -50,11 +97,11 @@ class EditProfileComponent extends React.Component{
                         First Name
                     </label>
                     <div className="col-sm-10">
-                        <input type="text"
-                               className="form-control "
+                        <input className="form-control "
                                id="editFirstName"
                                placeholder={"First Name"}
-                               value={this.props.user.fname}/>
+                               onChange={this.fnameChange}
+                               value={this.state.newFname === "" ? (this.props.user.fname || ""):this.state.newFname}/>
                     </div>
                 </div>
                 <div className="form-group row">
@@ -63,11 +110,11 @@ class EditProfileComponent extends React.Component{
                         Last Name
                     </label>
                     <div className="col-sm-10">
-                        <input type="text"
-                               className="form-control "
+                        <input className="form-control "
                                id="editLastName"
                                placeholder={"Last Name"}
-                               value={this.props.user.lname}/>
+                               onChange={this.lnameChange}
+                               value={this.state.newLname === "" ? (this.props.user.lname || ""):this.state.newLname}/>
                     </div>
                 </div>
                 <div className="form-group row">
@@ -79,7 +126,8 @@ class EditProfileComponent extends React.Component{
                         <select className="form-control"
                                 id="editRole"
                                 placeholder={"student"}
-                                value={this.props.user.role}
+                                onChange={this.roleChange}
+                                value={this.state.newRole === "" ? this.props.user.role:this.state.newRole}
                         >
                             <option value={"student"}>Student</option>
                             <option value={"general"}>Other</option>
@@ -91,8 +139,13 @@ class EditProfileComponent extends React.Component{
                 <div className="form-group row">
                     <div className="col-sm-2 col-form-label"></div>
                     <div className="col-sm-10">
-                        <button className="btn btn-primary btn-block">
-                            Submit
+                        <button className="btn btn-primary btn-block"
+                                onClick={this.updateUser}>
+                            Update Account
+                        </button>
+                        <button className="btn btn-danger btn-block"
+                                onClick={this.deleteUser}>
+                            Delete Account
                         </button>
                         <div className="row">
                             <div className="col-6">
@@ -126,7 +179,17 @@ const dispatchToPropertyMapper = (dispatch) => ({
     },
     logoutUser: () => {
         UserService.logoutUser().then(user => {
-            dispatch(logoutUser)
+            dispatch(logoutUser(user))
+        })
+    },
+    updateUser: (userId, user) => {
+        UserService.updateUser(userId, user).then(status => {
+            dispatch(updateUser(userId, user))
+        })
+    },
+    deleteUser: (userId) => {
+        UserService.deleteUser(userId).then(status => {
+            dispatch(deleteUser(userId))
         })
     }
 });

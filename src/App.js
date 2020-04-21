@@ -35,17 +35,26 @@ class App extends React.Component {
         super(props);
         this.state = {
             keyword: '',
-            user: {username: 'Log In'},
+            user: {username: 'login'},
             loggedIn: false
         }
     }
 
     componentDidMount() {
         UserService.findCurrentUser()
-            .then(user => this.setState({
-                user: user,
-                loggedIn: true
-            }))
+            .then(user => {
+                if(user.id === 1) {
+                    this.setState({
+                        user: user,
+                        loggedIn: false
+                    })
+                } else {
+                    this.setState({
+                        user: user,
+                        loggedIn: true
+                    })
+                }
+            });
     }
 
     reducers = combineReducers({
@@ -106,23 +115,20 @@ class App extends React.Component {
                                     {this.state.user.username}
                                 </Dropdown.Toggle>
                                 <Dropdown.Menu>
-                                    <Dropdown.Item
-                                        // hidden={this.state.loggedIn}
+                                    <Dropdown.Item hidden={this.state.loggedIn}
                                                    href="/login">
                                         Login
                                     </Dropdown.Item>
-                                    <Dropdown.Item
-                                        // hidden={this.state.loggedIn}
+                                    <Dropdown.Item hidden={this.state.loggedIn}
                                                    href="/register">
                                         Register
                                     </Dropdown.Item>
-                                    <Dropdown.Item
-                                        // hidden={!this.state.loggedIn}
+                                    <Dropdown.Item hidden={!this.state.loggedIn}
                                                    href="/profile">
                                         Profile
                                     </Dropdown.Item>
                                     <Dropdown.Item onClick={this.logout}
-                                                   // hidden={!this.state.loggedIn}
+                                                   hidden={!this.state.loggedIn}
                                                    href={"/"}>
                                         Logout
                                     </Dropdown.Item>
