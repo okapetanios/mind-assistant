@@ -28,14 +28,14 @@ class NoteComponent extends React.Component {
         const {showing} = this.state;
         return (
             <div>
-                <li className={"list-group-item"}>
-                    <button onClick={() => this.setState({showing: !showing})}>
-                        Edit
+                <li className="list-group-item">
+                    <button className="btn btn-outline" onClick={() => this.setState({showing: !showing})}>
+                        <i className="fas fa-pencil-alt"></i>
                     </button>
                     {showing
                      ?
-                     <div className={"row"}>
-                         <div className={"col"}>
+                     <div className="row">
+                         <div className="col">
                              <div>
                                  <select className="form-control"
                                          id="editRole"
@@ -77,24 +77,25 @@ class NoteComponent extends React.Component {
                              className="btn btn-success"
                              onClick={() => {
                                  this.props.saveNote(this.state.note);
-                                 this.setState(prevState =>  {
+                                 this.setState(prevState => {
                                      prevState.showing = false
                                      return prevState
-                             })}}>
-                             Update
+                                 })
+                             }}>
+                             <i className="fas fa-check"></i>
                          </button>
                          <div className={"col-2 float-right"}>
                              <button
                                  className="btn btn-danger"
                                  onClick={() => this.props.deleteNote(this.state.note.id)}>
-                                 Delete
+                                 <i className="fas fa-times"></i>
                              </button>
                          </div>
                      </div>
                      :
                      <div>
-                         <div className={"row"}>
-                             <div className={"col"}>
+                         <div className="row">
+                             <div className="col">
                                  {this.props.note.status}
                                  <h3>{this.props.note.title}</h3>
                              </div>
@@ -102,7 +103,7 @@ class NoteComponent extends React.Component {
                          <p>
                              {this.props.note.note}
                          </p>
-                         <div className={"row"}>
+                         <div className="row">
                              {this.props.note.label}
                          </div>
                      </div>

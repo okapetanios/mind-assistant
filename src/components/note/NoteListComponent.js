@@ -68,17 +68,6 @@ class NoteListComponent extends React.Component {
                 {this.props.notes.length >0 && this.props.notes.map(note =>
                     <div key={note.id}>
                         <NoteComponent
-                            edit={() => {
-                                this.setState({
-                                                  editingNoteId: note.id
-                                              })
-                            }}
-
-                            select={() => {
-                                this.setState({
-                                                  activeNoteId: note.id
-                                              })
-                            }}
                             editing={note.id === this.state.editingNoteId}
                             deleteNote={this.deleteNote}
                             saveNote={this.saveNote}
