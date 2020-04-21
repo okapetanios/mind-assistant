@@ -21,9 +21,9 @@ class PublicProfileComponent extends React.Component {
             console.log(this.props.profile);
             console.log(this.props.profile.user.notes);
             this.setState({
-                profile: this.props.profile,
-                notes: this.props.profile.user.notes.filter(note => note.status === "public")
-            });
+                              profile: this.props.profile,
+                              notes: this.props.profile.user.notes.filter(note => note.status === "public")
+                          });
         }
     }
 
@@ -33,24 +33,24 @@ class PublicProfileComponent extends React.Component {
                 <br/>
                 <div className="media">
                     <img src={this.state.profile.picture} className="mr-3" alt=""/>
-                        <div className="media-body">
-                            <h1>{this.state.profile.user.fname} {this.state.profile.user.lname}</h1>
-                            <h6>{this.state.profile.user.username}</h6>
-                            <br/>
-                            About:
-                            <p>{this.state.profile.bio}</p>
-                        </div>
+                    <div className="media-body">
+                        <h1>{this.state.profile.user.fname} {this.state.profile.user.lname}</h1>
+                        <h6>{this.state.profile.user.username}</h6>
+                        <br/>
+                        About:
+                        <p>{this.state.profile.bio}</p>
+                    </div>
                 </div>
                 <br/>
                 <div className={"text-center"}>
                     <h3>Saved Public Notes</h3>
                     <ul className="list-group">
                         {this.state.notes.map(note =>
-                            <li className="list-group-item"
-                                key={note.id}>
-                                <h6>{note.title}</h6>
-                                <p>{note.note}</p>
-                            </li>
+                                                  <li className="list-group-item"
+                                                      key={note.id}>
+                                                      <h6>{note.title}</h6>
+                                                      <p>{note.note}</p>
+                                                  </li>
                         )}
                     </ul>
                 </div>

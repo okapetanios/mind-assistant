@@ -12,45 +12,50 @@ const UserService = new userService();
 const NoteService = new noteService();
 
 class NoteListComponent extends React.Component {
-    // state = {
-    //     user: {}
-    // };
     state = {
-        newTitle: ""
+        user: {
+            id: 0,
+            username: "Testing",
+            fname: "",
+            lname: "",
+            role: ""
+        },
+        notes: [{
+            id: 1,
+            title: "test",
+            note: "test"
+        }]
     };
-
     //TODO:
     //Figure out why the current user doesn't load on mount
     //Add functionality to determine if user or folder should be created
 
-    // componentDidMount() {
-    //     // this.props.findCurrentUser();
-    //     // console.log(this.props.user.id);
-    //     // // this.props.findNotesForUser(this.props.user.id);
-        // console.log(this.props.findNotesForUser(this.props.user.id));
-    //     // // this.props.findNotesForUser(102);
-    //     // console.log(this.props.user);
-    //     // console.log(this.props.notes);
-    // };
     componentDidMount() {
-        // this.props.findCurrentUser();
+        this.props.findCurrentUser();
+        // console.log(this.props.user.id);
+        // this.props.findNotesForUser(102);
+        // console.log(this.props.user);
+        // console.log(this.props.notes);
         console.log(this.props.user)
-        // this.props.findNotesForUser(this.props.user.id);
+        this.props.findNotesForUser(this.props.user.id);
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        if(this.props.user !== prevState.user){
-            // console.log(this.props.user);
-            // console.log(this.props.notes);
+        if(this.state.user.id === 0 && this.props.user.id >0){
+            console.log(this.props.user);
             this.setState({
                 user: this.props.user
             });
-            // this.props.findNotesForUser(this.props.user.id);
         }
     }
 
     createUserNote= (note) => {
+        console.log(this.props.user.id)
         this.props.createNoteForUser(this.props.user.id, note)
+        console.log(this.props.notes)
+        this.setState({
+            notes: [note, ...this.state.notes]
+        })
     };
 
     //TODO:
@@ -75,7 +80,7 @@ class NoteListComponent extends React.Component {
                     />
                 </li>
                 <br/>
-                {this.props.notes && this.props.notes.map(note =>
+                {this.state.user.notes && this.state.user.notes.map(note =>
                     <div key={note.id}>
                         <NoteComponent
                             deleteNote={this.deleteNote}
@@ -105,6 +110,7 @@ const dispatchToPropertyMapper = (dispatch) => ({
         })
     },
     createNoteForUser: (userId, note) => {
+        console.log(userId)
         NoteService.createNoteForUser(userId,note).then(note => {
             dispatch(createNote(note))
         })
