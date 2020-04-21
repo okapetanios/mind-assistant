@@ -74,7 +74,6 @@ class userService {
             },
             credentials: "include"
         }).then(response => {
-            console.log(response.headers);
             return response.json()
         })
     };

@@ -104,8 +104,9 @@ class LabelListComponent extends React.Component {
 
     updateLabel = (labelId) => {
         const label = {id: labelId, title: this.state.editTitle, status: this.state.status};
-        this.props.deleteLabel(labelId, label);
+        this.props.updateLabel(labelId, label);
         this.setState({
+            editingId: "",
             editTitle: "",
             status: ""
         })
