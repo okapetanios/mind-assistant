@@ -12,6 +12,12 @@ class RegisterComponent extends React.Component{
         verifyPassword: ""
     };
 
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if(this.props.user.id !== prevProps.user.id && this.props.user.id > 0 ){
+            this.props.history.push("/profile")
+        }
+    }
+
     updateUsername = (e) => {
         this.setState({
             username: e.target.value
@@ -30,10 +36,13 @@ class RegisterComponent extends React.Component{
         })
     };
 
+    navigate =() => {
+        this.props.history.push("/profile")
+    }
+
     register = () => {
         const user = {username: this.state.username, password: this.state.password};
         this.props.createUser(user);
-        this.props.history.push("/profile")
     };
 
     render() {
@@ -116,8 +125,11 @@ const stateToPropertyMapper = (state) => ({
 });
 const dispatchToPropertyMapper = (dispatch) => ({
     createUser: (user) => {
-        UserService.createUser(user).then(status => {
-            dispatch(createUser(user))
+        UserService.createUser(user).then(createdUser => {
+            dispatch(createUser(createdUser))
+            if(createdUser.id < 1){
+                alert("username exits, try another one")
+            }
         })
     }
 });
