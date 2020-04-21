@@ -36,7 +36,7 @@ class PublicProfileComponent extends React.Component {
                             <h1>{this.state.profile.user.username}'s Profile</h1>
                             <form>
                                 <div className="form-group">
-                                    <label htmlFor="editInputEmail">Username: "TBD USERS USERNAME"</label>
+                                    <label htmlFor="editInputEmail">Username: {"TBD USERS USERNAME"}</label>
                                 </div>
                                 <div className="form-group">
                                     <label htmlFor="editFirstName">First Name: "USER FIRSTNAME"</label>
