@@ -27,35 +27,6 @@ import NavBarComponent from "./components/NavBarComponent";
 
 
 class App extends React.Component {
-<<<<<<< HEAD
-=======
-    constructor(props) {
-        super(props);
-        this.state = {
-            keyword: '',
-            user: {id: 0, username: 'login'},
-            loggedIn: false
-        }
-    }
-
-    componentDidMount() {
-        UserService.findCurrentUser()
-            .then(user => {
-                if(user.id === 0) {
-                    this.setState({
-                        user: user,
-                        loggedIn: false
-                    })
-                } else {
-                    this.setState({
-                        user: user,
-                        loggedIn: true
-                    })
-                }
-            });
-    }
-
->>>>>>> b6a0665078d7dcf10e6e0bcf85a203ea762f00ac
     reducers = combineReducers({
         jokes: jokeReducer,
         profile: profileReducer,
@@ -67,23 +38,6 @@ class App extends React.Component {
 
     store = createStore(this.reducers);
 
-<<<<<<< HEAD
-=======
-    keyWordChange = event => {
-        this.setState({
-            keyword: event.target.value
-        })
-    };
-
-    logout = () => {
-        UserService.logoutUser().then(user => this.setState({
-            user: {username: 'Log In'},
-            loggedIn: false
-        }))
-    };
-
-
->>>>>>> b6a0665078d7dcf10e6e0bcf85a203ea762f00ac
     render() {
         let provider = <><Provider store={this.store}>
             <Router>
