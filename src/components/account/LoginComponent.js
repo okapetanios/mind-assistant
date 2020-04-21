@@ -27,6 +27,7 @@ class LoginComponent extends React.Component{
         const user = {username: this.state.username, password: this.state.password};
         this.props.loginUser(user);
         this.props.history.push("/")
+
     };
 
     render() {
