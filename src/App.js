@@ -15,6 +15,7 @@ import EditProfileComponent from "./components/profile/EditProfileComponent";
 import PublicProfileComponent from "./components/profile/PublicProfileComponent"
 import LoginComponent from "./components/account/LoginComponent";
 import RegisterComponent from "./components/account/RegisterComponent";
+import PrivacyComponent from "./components/privacy/PrivacyComponent"
 import { combineReducers, createStore } from "redux";
 import { Provider } from "react-redux";
 import jokeReducer from "./reducers/jokeReducer";
@@ -77,6 +78,7 @@ class App extends React.Component {
                 <div>
                     <nav className="navbar navbar-expand navbar-dark bg-dark">
                         <a className="navbar-brand" href="/">Mind-Assistant</a>
+                        <a className="nav-link" href="/privacy-policy">Privacy Policy</a>
                         <div className="collapse navbar-collapse">
                             <ul className="navbar-nav mr-auto">
                             </ul>
@@ -183,6 +185,13 @@ class App extends React.Component {
                                 <DefaultLayoutComponent
                                     {...props}
                                     folderTitle={props.match.params.folderTitle}
+                                />
+                            }/>
+                        <Route
+                            path={"/privacy-policy"}
+                            render={(props) =>
+                                <PrivacyComponent
+                                    {...props}
                                 />
                             }/>
                         <Route

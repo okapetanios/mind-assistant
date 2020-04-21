@@ -19,4 +19,5 @@ const DefaultLayoutComponent = () =>
         </div>
     </div>;
 
-export default DefaultLayoutComponent
+export default DefaultLayoutComponent;
+

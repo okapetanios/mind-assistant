@@ -51,6 +51,7 @@ class FolderListComponent extends React.Component {
                 </div>
                 <br/>
                 <div className={"row"}>
+                    {this.stat}
                     {this.props.folders && this.props.folders.map(folder =>
                         <div key={folder.id}>
                             <FolderComponent
