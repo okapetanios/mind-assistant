@@ -20,6 +20,15 @@ class ProfileService {
             method: "GET",
             credentials: "include"
         }).then(response => response.json())
+            .catch(err =>{
+                console.log(err);
+                const profile = {
+                    id: userId,
+                    bio: '',
+                    picture: 'https://i0.wp.com/www.repol.copl.ulaval.ca/wp-content/uploads/2019/01/default-user-icon.jpg'
+                };
+                return this.createProfileForUser(userId, profile)
+            });
     };
 
     updateProfile = (userId, profile) => {

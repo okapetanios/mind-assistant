@@ -1,20 +1,33 @@
 import React from "react";
 import {connect} from "react-redux";
 import userService from "../../services/userService";
+import profileService from "../../services/profileService";
 import {deleteUser, findCurrentUser, logoutUser, updateUser} from "../../actions/userActions";
+import {findProfile, updateProfile} from "../../actions/profileActions";
+import {Link} from "react-router-dom";
 
 const UserService = new userService();
+const ProfileService = new profileService();
 
 class EditProfileComponent extends React.Component{
     componentDidMount() {
         this.props.findCurrentUser();
     }
 
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if(this.props.user.id !== prevProps.user.id){
+            this.props.findProfile(this.props.user.id);
+            console.log(this.props.profile)
+        }
+    }
+
     state = {
         newPassword: "",
         newFname: "",
         newLname: "",
-        newRole: "student"
+        newRole: "student",
+        newSrc: "",
+        newBio: ""
     };
 
     logout = () => {
@@ -46,15 +59,26 @@ class EditProfileComponent extends React.Component{
         })
     };
 
+    srcChange = (e) => {
+        this.setState({
+            newSrc: e.target.value
+        })
+    };
+
+    bioChange = (e) => {
+        this.setState({
+            newBio: e.target.value
+        })
+    };
+
     //TODO:
-    //Add functionality for update profile
-    //Not currently working. Only adding new users
     //Update based on different user types
     updateUser = () => {
         const password = this.state.newPassword === "" ? this.props.user.password:this.state.newPassword;
         console.log(password);
         console.log(this.props.user.id);
         const user = {
+            id: this.props.user.id,
             username: this.props.user.username,
             password: this.state.newPassword === "" ? this.props.user.password:this.state.newPassword,
             fname: this.state.newFname === "" ? this.props.user.fname:this.state.newFname,
@@ -70,111 +94,201 @@ class EditProfileComponent extends React.Component{
         this.logout()
     };
 
+    updateProfile = () => {
+        const profile = {
+            id: this.props.user.id,
+            picture: this.state.newSrc === "" ? this.props.profile.picture:this.state.newSrc,
+            bio: this.state.newBio === "" ? this.props.profile.bio:this.state.newBio,
+            user: this.props.user
+        };
+        this.props.updateUser(this.props.user.id, profile);
+    };
+
     render() {
         return (
-            <div className={"container"}>
-                <h1>{this.props.user.username}'s Profile</h1>
-                {/*TODO*/}
-                {/*add change display image link*/}
-                {/*add preview of image*/}
-                <div className="form-group row">
-                    <label htmlFor="editInputPassword"
-                           className="col-sm-2 col-form-label">
-                        Password
-                    </label>
-                    <div className="col-sm-10">
-                        <input type="password"
-                               className="form-control "
-                               id="editInputPassword"
-                               onChange={this.pwChange}
-                               placeholder="New Password (if applicable)"
-                        />
+            <ul className={"container list-group"}>
+                <li className={"list-group-item"}>
+                    <div className="form-group row">
+                        <div className="col text-center">
+                            <h1>Account Information</h1>
+                        </div>
                     </div>
-                </div>
-                <div className="form-group row">
-                    <label htmlFor="editFirstName"
-                           className="col-sm-2 col-form-label">
-                        First Name
-                    </label>
-                    <div className="col-sm-10">
-                        <input className="form-control "
-                               id="editFirstName"
-                               placeholder={"First Name"}
-                               onChange={this.fnameChange}
-                               value={this.state.newFname === "" ? (this.props.user.fname || ""):this.state.newFname}/>
+                    <div className="form-group row">
+                        <label htmlFor="username"
+                               className="col-sm-2 col-form-label">
+                            Username
+                        </label>
+                        <div className="col-sm-10"
+                             id={"username"}>
+                            <input className="form-control "
+                                   id="username"
+                                   disabled={true}
+                                   value={this.props.user.username || ""}/>
+                        </div>
                     </div>
-                </div>
-                <div className="form-group row">
-                    <label htmlFor="editLastName"
-                           className="col-sm-2 col-form-label">
-                        Last Name
-                    </label>
-                    <div className="col-sm-10">
-                        <input className="form-control "
-                               id="editLastName"
-                               placeholder={"Last Name"}
-                               onChange={this.lnameChange}
-                               value={this.state.newLname === "" ? (this.props.user.lname || ""):this.state.newLname}/>
+                    <div className="form-group row">
+                        <label htmlFor="editInputPassword"
+                               className="col-sm-2 col-form-label">
+                            Password
+                        </label>
+                        <div className="col-sm-10">
+                            <input type="password"
+                                   className="form-control "
+                                   id="editInputPassword"
+                                   onChange={this.pwChange}
+                                   placeholder="New Password (if applicable)"
+                            />
+                        </div>
                     </div>
-                </div>
-                <div className="form-group row">
-                    <label htmlFor="editRole"
-                           className="col-sm-2 col-form-label">
-                        Role
-                    </label>
-                    <div className="col-sm-10">
-                        <select className="form-control"
-                                id="editRole"
-                                placeholder={"student"}
-                                onChange={this.roleChange}
-                                value={this.state.newRole === "" ? this.props.user.role:this.state.newRole}
-                        >
-                            <option value={"student"}>Student</option>
-                            <option value={"general"}>Other</option>
-                        </select>
+                    <div className="form-group row">
+                        <label htmlFor="editFirstName"
+                               className="col-sm-2 col-form-label">
+                            First Name
+                        </label>
+                        <div className="col-sm-10">
+                            <input className="form-control "
+                                   id="editFirstName"
+                                   placeholder={"First Name"}
+                                   onChange={this.fnameChange}
+                                   value={this.state.newFname === "" ? (this.props.user.fname || ""):this.state.newFname}/>
+                        </div>
                     </div>
-                </div>
-                {/*TODO*/}
-                {/*add employer or school depending on selected role*/}
-                <div className="form-group row">
-                    <div className="col-sm-2 col-form-label"></div>
-                    <div className="col-sm-10">
-                        <button className="btn btn-primary btn-block"
-                                onClick={this.updateUser}>
-                            Update Account
-                        </button>
-                        <button className="btn btn-danger btn-block"
-                                onClick={this.deleteUser}>
-                            Delete Account
-                        </button>
-                        <div className="row">
-                            <div className="col-6">
-                                <button className={"btn btn-link"}
-                                    onClick={this.logout}>
-                                    Logout
-                                </button>
-                            </div>
-                            <div className="col-6">
-                                <a href="/"
-                                   className="btn btn-link float-right">
-                                    Cancel
-                                </a>
+                    <div className="form-group row">
+                        <label htmlFor="editLastName"
+                               className="col-sm-2 col-form-label">
+                            Last Name
+                        </label>
+                        <div className="col-sm-10">
+                            <input className="form-control "
+                                   id="editLastName"
+                                   placeholder={"Last Name"}
+                                   onChange={this.lnameChange}
+                                   value={this.state.newLname === "" ? (this.props.user.lname || ""):this.state.newLname}/>
+                        </div>
+                    </div>
+                    <div className="form-group row">
+                        <label htmlFor="editRole"
+                               className="col-sm-2 col-form-label">
+                            Role
+                        </label>
+                        <div className="col-sm-10">
+                            <select className="form-control"
+                                    id="editRole"
+                                    placeholder={"student"}
+                                    onChange={this.roleChange}
+                                    value={this.state.newRole === "" ? this.props.user.role:this.state.newRole}
+                            >
+                                <option value={"student"}>Student</option>
+                                <option value={"general"}>Other</option>
+                            </select>
+                        </div>
+                    </div>
+                    {/*TODO*/}
+                    {/*add employer or school depending on selected role*/}
+                    <div className="form-group row">
+                        <div className="col-sm-2 col-form-label"></div>
+                        <div className="col-sm-10">
+                            <button className="btn btn-primary btn-block"
+                                    onClick={this.updateUser}>
+                                Update Account
+                            </button>
+                            <button className="btn btn-danger btn-block"
+                                    onClick={this.deleteUser}>
+                                Delete Account
+                            </button>
+                            <div className="row">
+                                <div className="col-6">
+                                    <button className={"btn btn-link"}
+                                            onClick={this.logout}>
+                                        Logout
+                                    </button>
+                                </div>
+                                <div className="col-6">
+                                    <a href="/"
+                                       className="btn btn-link float-right">
+                                        Cancel
+                                    </a>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
+                </li>
+                <li className={"list-group-item"}>
+                    <div className="form-group row">
+                        <div className="col text-center">
+                            <h1>Profile Information</h1>
+                        </div>
+                    </div>
+
+                    <div className={"row"}>
+                        <div className={"col-3"}>
+                            <img alt={"Display"} className={"mr-3"}
+                                 width={250}
+                                 height={250}
+                                 src={this.state.newSrc === "" ?
+                                     (this.props.profile.picture || ""):
+                                     this.state.newSrc}/>
+                        </div>
+                        <div className={"col"}>
+                            <div className="form-group row">
+                                <label htmlFor="editSrc"
+                                       className="col-sm-2 col-form-label">
+                                    Image Source
+                                </label>
+                                <div className="col-sm-10">
+                                    <input className="form-control "
+                                           id="editSrc"
+                                           placeholder={"Image URL here"}
+                                           onChange={this.srcChange}
+                                           value={this.state.newSrc === "" ? (this.props.profile.picture || ""):this.state.newSrc}/>
+                                </div>
+                            </div>
+                            <div className="form-group row">
+                                <label htmlFor="editBio"
+                                       className="col-sm-2 col-form-label">
+                                    Bio
+                                </label>
+                                <div className="col-sm-10">
+                                    <textarea className="form-control "
+                                              id="editBio"
+                                              rows={"3"}
+                                              placeholder={"About you"}
+                                              onChange={this.bioChange}
+                                              value={this.state.newBio === "" ? (this.props.profile.bio || ""):this.state.newBio}>
+                                    </textarea>
+                                </div>
+                            </div>
+                            <div className={"form-group-row"}>
+                                <button className="btn btn-primary btn-block"
+                                        onClick={this.updateProfile}>
+                                    Update Profile
+                                </button>
+                                <Link className="btn btn-success btn-block"
+                                        to={`/profile/${this.props.user.id}`}>
+                                    View Profile
+                                </Link>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </ul>
         );
     }
 }
 
 const stateToPropertyMapper = (state) => ({
-    user: state.user.user
+    user: state.user.user,
+    profile: state.profile.profile
 });
 const dispatchToPropertyMapper = (dispatch) => ({
     findCurrentUser: () => {
         UserService.findCurrentUser().then(user => {
             dispatch(findCurrentUser(user))
+        })
+    },
+    findProfile: (userId) => {
+        ProfileService.findProfileByUser(userId).then(profile => {
+            dispatch(findProfile(profile))
         })
     },
     logoutUser: () => {
@@ -190,6 +304,11 @@ const dispatchToPropertyMapper = (dispatch) => ({
     deleteUser: (userId) => {
         UserService.deleteUser(userId).then(status => {
             dispatch(deleteUser(userId))
+        })
+    },
+    updateProfile: (userId, profile) => {
+        UserService.updateProfile(userId, profile).then(status => {
+            dispatch(updateProfile(userId, profile))
         })
     }
 });

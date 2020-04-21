@@ -34,7 +34,11 @@ class PublicProfileComponent extends React.Component {
             <div className={"container-fluid"}>
                 <br/>
                 <div className="media">
-                    <img src={this.state.profile.picture} className="mr-3" alt=""/>
+                    <img className="mr-3"
+                         src={this.state.profile.picture}
+                         alt="Display"
+                         width={250}
+                         height={250}/>
                     <div className="media-body">
                         <h1>{this.state.profile.user.fname} {this.state.profile.user.lname}</h1>
                         <h6>{this.state.profile.user.username}</h6>
