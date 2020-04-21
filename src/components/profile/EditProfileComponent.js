@@ -74,9 +74,6 @@ class EditProfileComponent extends React.Component{
     //TODO:
     //Update based on different user types
     updateUser = () => {
-        const password = this.state.newPassword === "" ? this.props.user.password:this.state.newPassword;
-        console.log(password);
-        console.log(this.props.user.id);
         const user = {
             id: this.props.user.id,
             username: this.props.user.username,
@@ -101,7 +98,7 @@ class EditProfileComponent extends React.Component{
             bio: this.state.newBio === "" ? this.props.profile.bio:this.state.newBio,
             user: this.props.user
         };
-        this.props.updateUser(this.props.user.id, profile);
+        this.props.updateProfile(this.props.user.id, profile);
     };
 
     render() {
@@ -307,7 +304,7 @@ const dispatchToPropertyMapper = (dispatch) => ({
         })
     },
     updateProfile: (userId, profile) => {
-        UserService.updateProfile(userId, profile).then(status => {
+        ProfileService.updateProfile(userId, profile).then(status => {
             dispatch(updateProfile(userId, profile))
         })
     }
