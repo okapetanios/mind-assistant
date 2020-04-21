@@ -74,7 +74,16 @@ class userService {
             },
             credentials: "include"
         }).then(response => {
-            return response.json()
+            if(response.ok) {
+                return response.json()
+            }else{
+                return {
+                    id: 0,
+                    username: 'Log In',
+                    fname: 'Anonymous',
+                    role: 'general'
+                }
+            }
         })
     };
 
