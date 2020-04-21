@@ -1,12 +1,10 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
-import {Button, Dropdown, Form, FormControl,} from "react-bootstrap";
 import {
     BrowserRouter as Router,
     Switch,
-    Route,
-    Link
+    Route
 } from "react-router-dom";
 import Home from "./containers/Home";
 import SearchComponent from "./components/search jokes/SearchComponent";
@@ -24,39 +22,11 @@ import userReducer from "./reducers/userReducer";
 import folderReducer from "./reducers/folderReducer";
 import noteReducer from "./reducers/noteReducer";
 import labelReducer from "./reducers/labelReducer";
-import userService from "./services/userService";
 import DefaultLayoutComponent from "./components/DefaultLayoutComponent";
-
-const UserService = new userService();
+import NavBarComponent from "./components/NavBarComponent";
 
 
 class App extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            keyword: '',
-            user: {id: 0, username: 'login'},
-            loggedIn: false
-        }
-    }
-
-    componentDidMount() {
-        UserService.findCurrentUser()
-            .then(user => {
-                if(user.id === 0) {
-                    this.setState({
-                        user: user,
-                        loggedIn: false
-                    })
-                } else {
-                    this.setState({
-                        user: user,
-                        loggedIn: true
-                    })
-                }
-            });
-    }
-
     reducers = combineReducers({
         jokes: jokeReducer,
         profile: profileReducer,
@@ -68,77 +38,11 @@ class App extends React.Component {
 
     store = createStore(this.reducers);
 
-    keyWordChange = event => {
-        this.setState({
-            keyword: event.target.value
-        })
-    };
-
-    logout = () => {
-        UserService.logoutUser().then(user => this.setState({
-            user: {username: 'Log In'},
-            loggedIn: false
-        }))
-    };
-
-
     render() {
         let provider = <><Provider store={this.store}>
             <Router>
                 <div>
-                    <nav className="navbar navbar-expand navbar-dark bg-dark">
-                        <a className="navbar-brand" href="/">Mind-Assistant</a>
-                        <div className="collapse navbar-collapse">
-                            <ul className="navbar-nav mr-auto">
-                                <li className="nav-item">
-                                    <a className="nav-link" href="/privacy-policy">Privacy Policy</a>
-                                </li>
-                            </ul>
-                            <Form inline>
-                                <FormControl type="text" placeholder="Search for Users" className="mr-sm-2"/>
-                                <Button variant="outline-info">Search</Button>
-                            </Form>
-                            <Button variant="dark"></Button>
-                            <form className="form-inline my-2 my-lg-0">
-                                <input value={this.state.keyword}
-                                       onChange={this.keyWordChange}
-                                       className="form-control mr-sm-2"
-                                       type="search"
-                                       placeholder="Search for Dad Jokes"
-                                       aria-label="Search"/>
-                                <Link to={`/search/${this.state.keyword}`}>
-                                    <button className="btn btn-outline-success my-2 my-sm-0"
-                                            type="submit">
-                                        Search
-                                    </button>
-                                </Link>
-                            </form>
-                            <Dropdown>
-                                <Dropdown.Toggle variant="dark" id="dropdown-basic">
-                                    {this.state.user.username}
-                                </Dropdown.Toggle>
-                                <Dropdown.Menu>
-                                    <Dropdown.Item hidden={this.state.loggedIn}
-                                                   href="/login">
-                                        Login
-                                    </Dropdown.Item>
-                                    <Dropdown.Item hidden={this.state.loggedIn}
-                                                   href="/register">
-                                        Register
-                                    </Dropdown.Item>
-                                    <Dropdown.Item hidden={!this.state.loggedIn}
-                                                   href="/profile">
-                                        Profile
-                                    </Dropdown.Item>
-                                    <Dropdown.Item onClick={this.logout}
-                                                   hidden={!this.state.loggedIn}
-                                                   href={"/"}>
-                                        Logout
-                                    </Dropdown.Item>
-                                </Dropdown.Menu>
-                            </Dropdown>
-                        </div>
-                    </nav>
+                    <NavBarComponent/>
 
                     <Switch>
                         <Route

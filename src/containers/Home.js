@@ -16,19 +16,12 @@ class Home extends Component {
         this.props.findCurrentUser();
         this.props.getRandomJoke();
     }
-  
-    state = {
-        user: {id: 0}
-    };
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        if(this.props.user.id !== this.state.user.id){
-            this.setState({
-                user: this.props.user
-            });
+        if(this.props.user.id !== prevProps.user.id){
+            this.forceUpdate()
         }
     }
-
 
     render() {
         return (
@@ -36,7 +29,7 @@ class Home extends Component {
                 <div className={"container-fluid"}>
                     <br/>
                     <div className={"ma-welcome"}>
-                        <h1>Hello {this.state.user.fname}!</h1>
+                        <h1>Hello {this.props.user.fname}!</h1>
                     </div>
                     <br/>
                     <div className={"ma-dad-joke"}>
@@ -44,12 +37,12 @@ class Home extends Component {
                         {this.props.joke}
                     </div>
                     <br/>
-                    {this.state.user.role !== "student" &&
+                    {this.props.user.role !== "student" &&
                     <div>
                         <DefaultLayoutComponent/>
 
                     </div>}
-                    {this.state.user.role === "student" &&
+                    {this.props.user.role === "student" &&
                     <div>
                         <FolderListComponent/>
                     </div>}
