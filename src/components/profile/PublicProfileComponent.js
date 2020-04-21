@@ -12,12 +12,12 @@ class PublicProfileComponent extends React.Component {
     };
 
     state = {
-        profile: {id: 1, user: {username: "Testing"}},
-        notes: [{id: 1, title: "Test", note: "Note"}]
+        profile: {id: 0, user: {username: "Testing"}},
+        notes: [{id: 0, title: "Test", note: "Note"}]
     };
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        if(this.state.profile.id === 1 && this.props.profile.id > 0){
+        if(this.state.profile.id === 0 && this.props.profile.id > 0){
             console.log(this.props.profile);
             console.log(this.props.profile.user.notes);
             this.setState({

@@ -43,7 +43,7 @@ class App extends React.Component {
     componentDidMount() {
         UserService.findCurrentUser()
             .then(user => {
-                if(user.id === 1) {
+                if(user.id === 0) {
                     this.setState({
                         user: user,
                         loggedIn: false
