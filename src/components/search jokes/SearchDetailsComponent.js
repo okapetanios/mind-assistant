@@ -40,7 +40,7 @@ class SearchDetailsComponent extends React.Component {
                     <div className={"row"}>
                         <div className={"col"}>
                             <div className={"text-center"}>
-                                <h5>Users who have saved {this.props.criteria} jokes:</h5>
+                                <h5>Users relating to {this.props.criteria}:</h5>
                             </div>
                             <ul className={"list-group"}>
                                 {this.props.userList.length > 0 && this.props.userList.map(user =>
@@ -55,7 +55,7 @@ class SearchDetailsComponent extends React.Component {
                                 )}
                                 {this.props.userList.length === 0 &&
                                 <li className={"list-group-item"}>
-                                    <h5>No users have saved notes with requested keyword</h5>
+                                    <h5>No user information is connected to the requested keyword</h5>
                                 </li>}
                             </ul>
                         </div>
@@ -68,7 +68,11 @@ class SearchDetailsComponent extends React.Component {
                                     <li key={note.id}
                                         className={"list-group-item"}>
                                         <div className={"text-center"}>
-                                            <h5>{note.title}</h5>
+                                            <Link to={`/profile/${note.userId}`}>
+                                                <div className={"text-center"}>
+                                                    <h5>{note.title}</h5>
+                                                </div>
+                                            </Link>
                                         </div>
                                         <p>
                                             {note.note}
