@@ -59,6 +59,13 @@ class noteService {
         }).then(response => response.json())
     };
 
+    searchNotes = (criteria) => {
+        return fetch(`${this.url}/search?note=${criteria}`, {
+            method: "GET",
+            credentials: "include"
+        }).then(response => response.json())
+    };
+
     findAllNotes = () => {
         return fetch(this.url,{
             method: "GET",

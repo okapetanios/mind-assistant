@@ -2,7 +2,7 @@ import {
     CREATE_NOTE,
     DELETE_NOTE, FIND_ALL_NOTES,
     FIND_NOTE_BY_ID,
-    FIND_NOTES_FOR_GROUP,
+    FIND_NOTES_FOR_GROUP, SEARCH_NOTES,
     UPDATE_NOTE
 } from "../actions/noteActions";
 
@@ -28,6 +28,10 @@ const noteReducer = (state={notes:[]}, action) => {
         case DELETE_NOTE:
             return {
                 notes: state.notes.filter(note => note.id !== action.noteId)
+            };
+        case SEARCH_NOTES:
+            return {
+                notes: action.notes.filter(note => note.status === "public")
             };
         case FIND_ALL_NOTES:
             return {
