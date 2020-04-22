@@ -176,7 +176,7 @@ const dispatchToPropertyMapper = (dispatch) => ({
         })
     },
     findLabelsForFolder: (folderId) => {
-        LabelService.findLabelsForUser(folderId).then(labels => {
+        LabelService.findLabelsForFolder(folderId).then(labels => {
             dispatch(findLabelsForGroup(labels))
         })
     },
