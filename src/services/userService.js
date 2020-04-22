@@ -106,7 +106,7 @@ class userService {
     };
 
     searchUsers = (criteria) => {
-        return fetch(`${this.url}/search?user=${criteria}`, {
+        return fetch(`${this.url}/search?query=${criteria}`, {
             method: "GET",
             credentials: "include"
         }).then(response => response.json())

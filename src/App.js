@@ -115,6 +115,7 @@ class App extends React.Component {
                             render={(props) =>
                                 <Home
                                     {...props}
+                                    history={props.history}
                                 />
                             }/>
                     </Switch>

@@ -45,7 +45,9 @@ class Home extends Component {
                     <br/>
                     {this.props.user.role !== "student" &&
                     <div>
-                        <DefaultLayoutComponent/>
+                        <DefaultLayoutComponent
+                            history={this.props.history}
+                        />
 
                     </div>}
                     {this.props.user.role === "student" &&
