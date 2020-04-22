@@ -66,6 +66,8 @@ class NoteListComponent extends React.Component {
                 <li className="list-group-item">
                     <NewNoteComponent
                         createNote={this.createNote}
+                        folderId={this.props.folderId}
+                        labelId={this.props.labelId}
                     />
                 </li>
                 <br/>
@@ -77,6 +79,8 @@ class NoteListComponent extends React.Component {
                             deleteNote={this.deleteNote}
                             saveNote={this.saveNote}
                             note={note}
+                            folderId={this.props.folderId}
+                            labelId={this.props.labelId}
                         />
                         <br/>
                     </div>

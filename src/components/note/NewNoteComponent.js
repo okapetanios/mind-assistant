@@ -1,6 +1,7 @@
 import React from 'react';
 import '../../App.css';
 import AddLabelComponent from "../label/AddLabelComponent";
+import NoteComponent from "./NoteComponent";
 
 class NewNoteComponent extends React.Component {
     state = {
@@ -39,7 +40,8 @@ class NewNoteComponent extends React.Component {
         const note = {
             title: this.state.newTitle,
             note: this.state.newText,
-            status: this.state.newStatus
+            status: this.state.newStatus,
+            labels: [{}]
         };
         this.props.createNote(note);
     };
@@ -85,7 +87,10 @@ class NewNoteComponent extends React.Component {
                         />
                     </div>
                 </div>
-                {this.state.addLabel && <AddLabelComponent/>}
+                {this.state.addLabel && <AddLabelComponent
+                    folderId={this.props.folderId}
+                    labelId={this.props.labelId}
+                />}
                 <div className="row">
                     <div className="col-sm-2">
                         Current Labels:

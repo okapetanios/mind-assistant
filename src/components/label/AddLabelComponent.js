@@ -9,6 +9,17 @@ const UserService = new userService();
 const LabelService = new labelService();
 
 class AddLabelComponent extends React.Component {
+    componentDidMount() {
+        console.log("mount");
+        console.log(this.props.folderId);
+        console.log(this.props.labelId);
+        if(this.props.labelId > 0){
+            this.setState(prevState => ({
+                newLabels: [...prevState.newLabels, this.props.label]
+            }));
+        }
+    }
+
     state = {
         newLabel: "",
         existingLabel: "none",

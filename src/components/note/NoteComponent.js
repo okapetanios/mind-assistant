@@ -1,12 +1,26 @@
 import React from 'react';
-// import LabelClassComponent from '../label/LabelClassComponent';
 import '../../App.css';
 import AddLabelComponent from "../label/AddLabelComponent";
 
 class NoteComponent extends React.Component {
+    componentDidMount() {
+        console.log("mount");
+        console.log(this.props.folderId);
+        console.log(this.props.labelId);
+        if(this.props.labelId > 0){
+            const label = this.props.label;
+            this.setState(prevState => ({
+                labelIds: [...prevState.labelIds, this.props.labelId],
+                labels: [...prevState.labels, label]
+            }));
+        }
+    }
+
     state = {
+        folderId: this.props.folderId,
         note: this.props.note,
         showing: false,
+        labelIds: [],
         labels: []
     };
 
@@ -16,16 +30,20 @@ class NoteComponent extends React.Component {
                 editing: this.props.editing
             })
         }
+        console.log("update");
+        console.log(this.props.folderId);
+        console.log(this.props.labelId);
+        if(this.props.labelId > 0 && this.props.labelId !== prevProps.labelId){
+            this.setState(prevState => ({
+                labels: [...prevState.labels, this.props.labelId]
+            }));
+        }
     }
 
     handleOnChange = event => {
         this.setState({note: event.target.value});
     };
 
-    //TODO:
-    //Change the status to float right (not actually working currently)
-    //Add in edit functionality
-    //Edit label functionality
     render() {
         const {showing} = this.state;
         return (
@@ -59,7 +77,7 @@ class NoteComponent extends React.Component {
                                      <i className="fas fa-check"></i>
                                  </button>
                                  <button
-                                     className="btn btn-warning"
+                                     className="btn btn-warning float-right"
                                      onClick={() => {
                                          this.props.cancel()
                                          this.setState(prevState => {
@@ -111,7 +129,10 @@ class NoteComponent extends React.Component {
                                            }}/>
                              </div>
                          </div>
-                         <AddLabelComponent/>
+                         <AddLabelComponent
+                             folderId={this.state.folderId}
+                             labelId={this.props.labelId}
+                         />
                      </div>
                      :
                      <div>
