@@ -64,16 +64,13 @@ class NewNoteComponent extends React.Component {
         }));
     };
 
-    //TODO:
-    //Add functionality to determine if user or folder should be created
-    createNote = () => {
+    saveNote = () => {
         const note = {
             title: this.state.newTitle,
             note: this.state.newText,
             status: this.state.newStatus
         };
-        this.props.createUserNote(note);
-        // this.props.createFolderNote(note)
+        this.props.createNote(note);
     };
 
     render() {
@@ -179,7 +176,7 @@ class NewNoteComponent extends React.Component {
                     </div>
                 </div>
                 <button className="btn btn-primary btn-block"
-                        onClick={this.createNote}>
+                        onClick={this.saveNote}>
                     Add Note
                 </button>
             </div>

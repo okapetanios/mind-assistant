@@ -17,14 +17,15 @@ class NoteListComponent extends React.Component {
         user: {id: 0}
     };
 
-    //TODO:
-    //Add functionality to determine if user or folder should be created
     componentDidMount() {
         this.props.findCurrentUser();
+        if(this.props.folderId > 0){
+            this.props.findNotesForFolder(this.props.folderId);
+        }
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        if(this.state.user.id === 0 && this.props.user.id >0){
+        if(!this.props.folderId > 0 && this.state.user.id === 0 && this.props.user.id >0){
             this.setState({
                 user: this.props.user
             });
@@ -32,16 +33,13 @@ class NoteListComponent extends React.Component {
         }
     }
 
-    createUserNote= (note) => {
-        this.props.createNoteForUser(this.props.user.id, note)
-    };
-
-    //TODO:
-    //Figure out how to access folder id
-    //Below information is a placeholder and not accurate
-    createFolderNote= (note) => {
-        const folderId = this.props.folder.id;
-        this.props.createNoteForFolder(folderId, note)
+    createNote= (note) => {
+        const folderId = this.props.folderId;
+        if(folderId > 0){
+            this.props.createNoteForFolder(folderId, note);
+        } else {
+            this.props.createNoteForUser(this.props.user.id, note);
+        }
     };
 
     deleteNote = (id) => {
@@ -51,17 +49,16 @@ class NoteListComponent extends React.Component {
     saveNote = (note) => {
         this.setState({
             editing: ''
-                      });
+        });
         this.props.updateNote(note.id,note)
-    }
+    };
 
     render() {
         return (
             <ul className="list-group">
                 <li className="list-group-item">
                     <NewNoteComponent
-                        createUserNote={this.createUserNote}
-                        createFolderNote={this.createFolderNote}
+                        createNote={this.createNote}
                     />
                 </li>
                 <br/>
