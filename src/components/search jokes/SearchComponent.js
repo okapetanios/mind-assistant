@@ -12,7 +12,6 @@ class SearchComponent extends React.Component {
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        console.log(this.props.criteria);
         if(this.props.criteria !== prevProps.criteria){
             this.props.findJokesByKeyword(this.props.criteria)
         }
@@ -23,11 +22,11 @@ class SearchComponent extends React.Component {
             <div className={"container-fluid"}>
                 <ul className="list-group">
                     {this.props.jokes && this.props.jokes.map(joke =>
-                        <Link to={`/search/${this.props.criteria}/details/${joke.id}`}>
-                            <li className="list-group-item" key={joke.id} >
+                        <li className="list-group-item" key={joke.id}>
+                            <Link to={`/search/${this.props.criteria}/details/${joke.id}`}>
                                 {joke.joke}
-                            </li>
-                        </Link>
+                            </Link>
+                        </li>
                     )}
                     {this.props.jokes < 1 && <h1>No results found</h1>}
                 </ul>
