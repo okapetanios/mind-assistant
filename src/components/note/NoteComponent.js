@@ -59,7 +59,7 @@ class NoteComponent extends React.Component {
                                      <i className="fas fa-check"></i>
                                  </button>
                                  <button
-                                     className="btn btn-primary"
+                                     className="btn btn-warning"
                                      onClick={() => {
                                          this.props.cancel()
                                          this.setState(prevState => {
