@@ -3,25 +3,12 @@ import '../../App.css';
 import AddLabelComponent from "../label/AddLabelComponent";
 
 class NoteComponent extends React.Component {
-    componentDidMount() {
-        console.log("mount");
-        console.log(this.props.folderId);
-        console.log(this.props.labelId);
-        if(this.props.labelId > 0){
-            const label = this.props.label;
-            this.setState(prevState => ({
-                labelIds: [...prevState.labelIds, this.props.labelId],
-                labels: [...prevState.labels, label]
-            }));
-        }
-    }
-
     state = {
         folderId: this.props.folderId,
         note: this.props.note,
         showing: false,
-        labelIds: [],
-        labels: []
+        newLabels: [],
+        curLabels: []
     };
 
     componentDidUpdate(prevProps, prevState, snapshot) {
@@ -30,18 +17,13 @@ class NoteComponent extends React.Component {
                 editing: this.props.editing
             })
         }
-        console.log("update");
-        console.log(this.props.folderId);
-        console.log(this.props.labelId);
-        if(this.props.labelId > 0 && this.props.labelId !== prevProps.labelId){
-            this.setState(prevState => ({
-                labels: [...prevState.labels, this.props.labelId]
-            }));
-        }
     }
 
-    handleOnChange = event => {
-        this.setState({note: event.target.value});
+    updateLabels = (label) => {
+        this.setState(prevState => ({
+            curLabels: [...prevState.curLabels, label],
+            newLabels: [...prevState.newLabels, label.id]
+        }));
     };
 
     render() {
@@ -132,7 +114,23 @@ class NoteComponent extends React.Component {
                          <AddLabelComponent
                              folderId={this.state.folderId}
                              labelId={this.props.labelId}
+                             updateLabels={this.updateLabels}
                          />
+                         <div className="row">
+                             <div className="col-sm-1">
+                                 Labels:
+                             </div>
+                             <div className="col-sm">
+                                 <ul className={"nav nav-pills"} id={"ma-labels"}>
+                                     {this.state.curLabels.length === 0 && <p>None</p>}
+                                     {this.state.curLabels.length > 0 && this.state.curLabels.map(label =>
+                                         <li key={label.id} className={"nav-item"} >
+                                             {label.title}<button className={"btn btn-link"}></button>
+                                         </li>
+                                     )}
+                                 </ul>
+                             </div>
+                         </div>
                      </div>
                      :
                      <div>
@@ -163,9 +161,9 @@ class NoteComponent extends React.Component {
                              </div>
                              <div className="col-sm">
                                  <ul className={"nav nav-pills"} id={"ma-labels"}>
-                                     {this.state.labels.length === 0 && <p>None</p>}
-                                     {this.state.labels.length > 0 && this.state.labels.map(label =>
-                                         <li className={"nav-item"} key={label.id}>
+                                     {this.state.curLabels.length === 0 && <p>None</p>}
+                                     {this.state.curLabels.length > 0 && this.state.curLabels.map(label =>
+                                         <li key={label.id} className={"nav-item"} >
                                              {label.title}<button className={"btn btn-link"}></button>
                                          </li>
                                      )}

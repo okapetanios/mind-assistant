@@ -3,34 +3,13 @@ import '../../App.css';
 import {findCurrentUser} from "../../actions/userActions";
 import {connect} from "react-redux";
 import userService from "../../services/userService";
-import labelService from "../../services/labelService";
 
 const UserService = new userService();
-const LabelService = new labelService();
 
 class AddLabelComponent extends React.Component {
-    componentDidMount() {
-        console.log("mount");
-        console.log(this.props.folderId);
-        console.log(this.props.labelId);
-        if(this.props.labelId > 0){
-            this.setState(prevState => ({
-                newLabels: [...prevState.newLabels, this.props.label]
-            }));
-        }
-    }
-
     state = {
-        newLabel: "",
         existingLabel: "none",
-        newLabels: [],
         userLabels: this.props.labels
-    };
-
-    labelChange = (e) => {
-        this.setState({
-            newLabel: e.target.value
-        })
     };
 
     labelChanged = (e) => {
@@ -39,49 +18,15 @@ class AddLabelComponent extends React.Component {
         })
     };
 
-    //need to create a label before add to note
-    createLabel = () => {
-        // this.props.createUserLabel({title: this.state.newLabel});
-        // this.props.createFolderLabel({title: this.state.newLabel});
-        this.setState(prevState => ({
-            newLabel: "",
-            newLabels: [...prevState.newLabels, this.props.label]
-        }));
-    };
-
     //need to find the label before add
-    addLabel = (labelId) => {
-        // this.props.findLabel(labelId);
-        this.setState(prevState => ({
-            newLabel: "",
-            newLabels: [...prevState.newLabels, this.props.label]
-        }));
+    addLabel = (label) => {
+        // console.log(JSON.parse(label));
+        this.props.updateLabels(JSON.parse(label))
     };
 
     render() {
         return (
             <div>
-                <div className="form-group row">
-                    <label htmlFor="addNewLabel"
-                           className="col-sm-2 col-form-label">
-                        New Label
-                    </label>
-                    <div className="col-sm-9">
-                        <input type="text"
-                               className="form-control "
-                               id="addNewLabel"
-                               placeholder="New Label (if applicable)"
-                               onChange={this.labelChange}
-                               value={this.state.newLabel}
-                        />
-                    </div>
-                    <div className={"col-1"}>
-                        <button className={"btn btn-primary"}
-                                onClick={() => this.createLabel()}>
-                            <i className="fas fa-plus"></i>
-                        </button>
-                    </div>
-                </div>
                 <div className="form-group row">
                     <label htmlFor="addLabel"
                            className="col-sm-2 col-form-label">
@@ -95,7 +40,7 @@ class AddLabelComponent extends React.Component {
                                 onChange={this.labelChanged}>
                             <option value={"none"}>None</option>
                             {this.state.userLabels.length > 0 && this.state.userLabels.map(label =>
-                                <option key={label.id} value={label.id}>{label.title}</option>
+                                <option key={label.id} value={JSON.stringify(label)}>{label.title}</option>
                             )}
                         </select>
                     </div>
