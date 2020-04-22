@@ -1,5 +1,6 @@
 import React from 'react';
-import {Button, Dropdown, Form, FormControl,} from "react-bootstrap";
+import {Button, Dropdown} from "react-bootstrap";
+// import {Form, FormControl} from "react-bootstrap";
 import {Link} from "react-router-dom";
 import {connect} from "react-redux";
 import {findCurrentUser, logoutUser} from "../actions/userActions";
@@ -10,6 +11,7 @@ const UserService = new userService();
 class NavBarComponent extends React.Component {
     state = {
         keyword: '',
+        userId: '',
         user: {id: 0, username: 'Log In'},
         loggedIn: false
     };
@@ -33,6 +35,13 @@ class NavBarComponent extends React.Component {
         })
     };
 
+    userNameChange = event => {
+
+        this.setState({
+                          userId: event.target.value
+                      })
+    };
+
     logout = () => {
         this.props.logoutUser();
         this.setState({
@@ -51,10 +60,22 @@ class NavBarComponent extends React.Component {
                             <a className="nav-link" href="/privacy-policy">Privacy Policy</a>
                         </li>
                     </ul>
-                    <Form inline>
-                        <FormControl type="text" placeholder="Search for Users" className="mr-sm-2"/>
-                        <Button variant="outline-info">Search</Button>
-                    </Form>
+                    <form className="form-inline my-2 my-lg-0">
+                        <input value={this.state.username}
+                               onChange={this.userNameChange}
+                               className="form-control mr-sm-2"
+                               type="search"
+                               placeholder="Search for User"
+                               aria-label="Search"/>
+                        <Link to={`/profile/${this.state.userId}`}>
+                            <button className="btn btn-outline-primary my-2 my-sm-0"
+                                    type="submit">
+                                Search
+                        </button>
+                        </Link>
+                        {/*<FormControl type="text" placeholder="Search for Users" className="mr-sm-2"/>*/}
+                        {/*<Button variant="outline-info">Search</Button>*/}
+                    </form>
                     <Button variant="dark"></Button>
                     <form className="form-inline my-2 my-lg-0">
                         <input value={this.state.keyword}
