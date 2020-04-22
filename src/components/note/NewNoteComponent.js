@@ -87,7 +87,7 @@ class NewNoteComponent extends React.Component {
                 </div>
                 {this.state.addLabel && <AddLabelComponent/>}
                 <div className="row">
-                    <div className="col-sm-2">
+                    <div className="col-lg-2 col-sm-3">
                         Current Labels:
                     </div>
                     <div className="col-sm">
@@ -101,7 +101,7 @@ class NewNoteComponent extends React.Component {
                         </ul>
                     </div>
                     {!this.state.addLabel &&
-                    <div className="col-sm-2">
+                    <div className="col-sm-5">
                         <button className={"btn btn-primary float-right"}
                                 onClick={this.addLabel}>
                             Add Label
