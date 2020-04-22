@@ -42,7 +42,7 @@ class SearchDetailsComponent extends React.Component {
                         )}
                         {this.state.users.length === 0 &&
                         <li className={"list-group-item"}>
-                            <h5>No users have saved notes with requested keyword</h5>
+                            <h5 className={"text-center"}>No users have saved notes with requested keyword</h5>
                         </li>}
                     </ul>
                     <br/>
@@ -53,10 +53,10 @@ class SearchDetailsComponent extends React.Component {
                         {this.props.notes.length > 0 && this.props.notes.map(note =>
                             <li key={note.id}
                                 className={"list-group-item"}>
-                                <div className={"row"}>
+                                <div className={"text-center"}>
                                     <h5>{note.title}</h5>
                                 </div>
-                                <div className={"row"}>
+                                <div className={"text-center"}>
                                     {note.note}
                                 </div>
                             </li>
