@@ -7,8 +7,8 @@ class NoteComponent extends React.Component {
         folderId: this.props.folderId,
         note: this.props.note,
         showing: false,
-        newLabels: [],
-        curLabels: []
+        newLabels: this.props.newLabels,
+        curLabels: this.props.curLabels
     };
 
     componentDidUpdate(prevProps, prevState, snapshot) {
@@ -112,6 +112,9 @@ class NoteComponent extends React.Component {
                              </div>
                          </div>
                          <AddLabelComponent
+                             updateLabels={this.updateLabels}
+                             newLabels={this.state.newLabels}
+                             curLabels={this.state.curLabels}
                              folderId={this.state.folderId}
                              labelId={this.props.labelId}
                              updateLabels={this.updateLabels}
