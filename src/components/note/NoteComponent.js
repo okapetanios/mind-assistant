@@ -1,13 +1,14 @@
 import React from 'react';
-// import LabelClassComponent from '../label/LabelClassComponent';
 import '../../App.css';
 import AddLabelComponent from "../label/AddLabelComponent";
 
 class NoteComponent extends React.Component {
     state = {
+        folderId: this.props.folderId,
         note: this.props.note,
         showing: false,
-        labels: []
+        newLabels: [],
+        curLabels: []
     };
 
     componentDidUpdate(prevProps, prevState, snapshot) {
@@ -18,14 +19,13 @@ class NoteComponent extends React.Component {
         }
     }
 
-    handleOnChange = event => {
-        this.setState({note: event.target.value});
+    updateLabels = (label) => {
+        this.setState(prevState => ({
+            curLabels: [...prevState.curLabels, label],
+            newLabels: [...prevState.newLabels, label.id]
+        }));
     };
 
-    //TODO:
-    //Change the status to float right (not actually working currently)
-    //Add in edit functionality
-    //Edit label functionality
     render() {
         const {showing} = this.state;
         return (
@@ -59,7 +59,7 @@ class NoteComponent extends React.Component {
                                      <i className="fas fa-check"></i>
                                  </button>
                                  <button
-                                     className="btn btn-warning"
+                                     className="btn btn-warning float-right"
                                      onClick={() => {
                                          this.props.cancel()
                                          this.setState(prevState => {
@@ -111,7 +111,26 @@ class NoteComponent extends React.Component {
                                            }}/>
                              </div>
                          </div>
-                         <AddLabelComponent/>
+                         <AddLabelComponent
+                             folderId={this.state.folderId}
+                             labelId={this.props.labelId}
+                             updateLabels={this.updateLabels}
+                         />
+                         <div className="row">
+                             <div className="col-sm-1">
+                                 Labels:
+                             </div>
+                             <div className="col-sm">
+                                 <ul className={"nav nav-pills"} id={"ma-labels"}>
+                                     {this.state.curLabels.length === 0 && <p>None</p>}
+                                     {this.state.curLabels.length > 0 && this.state.curLabels.map(label =>
+                                         <li key={label.id} className={"nav-item"} >
+                                             {label.title}<button className={"btn btn-link"}></button>
+                                         </li>
+                                     )}
+                                 </ul>
+                             </div>
+                         </div>
                      </div>
                      :
                      <div>
@@ -142,9 +161,9 @@ class NoteComponent extends React.Component {
                              </div>
                              <div className="col-sm">
                                  <ul className={"nav nav-pills"} id={"ma-labels"}>
-                                     {this.state.labels.length === 0 && <p>None</p>}
-                                     {this.state.labels.length > 0 && this.state.labels.map(label =>
-                                         <li className={"nav-item"} key={label.id}>
+                                     {this.state.curLabels.length === 0 && <p>None</p>}
+                                     {this.state.curLabels.length > 0 && this.state.curLabels.map(label =>
+                                         <li key={label.id} className={"nav-item"} >
                                              {label.title}<button className={"btn btn-link"}></button>
                                          </li>
                                      )}

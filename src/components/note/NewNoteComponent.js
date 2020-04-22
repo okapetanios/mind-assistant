@@ -8,7 +8,8 @@ class NewNoteComponent extends React.Component {
         newText: "Note Body",
         newStatus: "private",
         addLabel: false,
-        newLabels: []
+        newLabels: [],
+        curLabels: []
     };
 
     titleChanged = (e) => {
@@ -29,6 +30,13 @@ class NewNoteComponent extends React.Component {
         })
     };
 
+    updateLabels = (label) => {
+        this.setState(prevState => ({
+            curLabels: [...prevState.curLabels, label],
+            newLabels: [...prevState.newLabels, label.id]
+        }));
+    };
+
     addLabel = () => {
         this.setState({
             addLabel: true
@@ -39,7 +47,8 @@ class NewNoteComponent extends React.Component {
         const note = {
             title: this.state.newTitle,
             note: this.state.newText,
-            status: this.state.newStatus
+            status: this.state.newStatus,
+            labels: this.state.newLabels
         };
         this.props.createNote(note);
     };
@@ -85,7 +94,11 @@ class NewNoteComponent extends React.Component {
                         />
                     </div>
                 </div>
-                {this.state.addLabel && <AddLabelComponent/>}
+                {this.state.addLabel && <AddLabelComponent
+                    folderId={this.props.folderId}
+                    labelId={this.props.labelId}
+                    updateLabels={this.updateLabels}
+                />}
                 <div className="row">
                     <div className="col-lg-2 col-sm-3">
                         Current Labels:
@@ -93,8 +106,8 @@ class NewNoteComponent extends React.Component {
                     <div className="col-sm">
                         <ul className={"nav nav-pills"} id={"ma-labels"}>
                             {this.state.newLabels.length === 0 && <p>None</p>}
-                            {this.state.newLabels.length > 0 && this.state.newLabels.map(label =>
-                                <li className={"nav-item"} key={label.id}>
+                            {this.state.curLabels.length > 0 && this.state.curLabels.map(label =>
+                                <li key={label.id} className={"nav-item"} >
                                     {label.title}<button className={"btn btn-link"}></button>
                                 </li>
                             )}
