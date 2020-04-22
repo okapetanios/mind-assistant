@@ -5,14 +5,18 @@ import userService from "../../services/userService";
 import {findCurrentUser} from "../../actions/userActions";
 import folderService from "../../services/folderService";
 import FolderComponent from "./FolderComponent";
-import {createFolder, deleteFolder, findFoldersForUser} from "../../actions/folderActions";
+import {createFolder, deleteFolder, findFoldersForUser, updateFolder} from "../../actions/folderActions";
 
 const UserService = new userService();
 const FolderService = new folderService();
 
+
 class FolderListComponent extends React.Component {
     state = {
-        newTitle: ""
+        newTitle: "",
+        showing: false,
+        editingId: "",
+        editTitle: ""
     };
 
     componentDidMount() {
@@ -32,6 +36,49 @@ class FolderListComponent extends React.Component {
 
     deleteFolder = (id) => {
         this.props.deleteFolder(id)
+    };
+
+    saveFolder = (folder) => {
+        this.setState({
+                          editing: ''
+                      });
+        this.props.updateFolder(folder.id,folder)
+    }
+
+    editTitle = (e) => {
+        this.setState({
+                          editTitle: e.target.value
+                      })
+    };
+
+    editFolder = (folder) => {
+        this.setState({
+                          editingId: folder.id,
+                          editTitle: folder.title
+                      })
+    };
+
+    editFolder = (folder) => {
+        this.setState({
+                          editingId: folder.id,
+                          editTitle: folder.title
+                      })
+    };
+
+    cancelEdit = () => {
+        this.setState({
+                          editingId: "",
+                          editTitle: ""
+                      })
+    };
+
+    updateFolder = (folderId) => {
+        const folder = {id: folderId, title: this.state.editTitle};
+        this.props.updateFolder(folderId, folder);
+        this.setState({
+                          editingId: "",
+                          editTitle: ""
+                      })
     };
 
     render() {
@@ -55,6 +102,14 @@ class FolderListComponent extends React.Component {
                     {this.props.folders && this.props.folders.map(folder =>
                         <div key={folder.id}>
                             <FolderComponent
+                                cancel={this.cancelEdit}
+                                save={this.updateFolder}
+                                editing={folder.id === this.state.editingId}
+                                edit={this.editFolder}
+                                editTitle={this.editTitle}
+                                newTitle={this.state.editTitle}
+                                editStatus={this.editStatus}
+                                saveFolder ={this.saveFolder}
                                 folder={folder}
                                 deleteFolder={this.deleteFolder}
                             />
@@ -89,6 +144,11 @@ const dispatchToPropertyMapper = (dispatch) => ({
     deleteFolder: (folderId) => {
         FolderService.deleteFolder(folderId).then(status => {
             dispatch(deleteFolder(folderId))
+        })
+    },
+    updateFolder: (folderId, folder) => {
+        FolderService.updateFolder(folderId,folder).then(status => {
+            dispatch(updateFolder(folderId,folder))
         })
     }
 });
