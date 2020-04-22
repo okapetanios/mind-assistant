@@ -7,10 +7,7 @@ const FolderComponent = ({folder, deleteFolder, select, editing, edit, editTitle
 
     <div className="col">
          <div className="card text-white bg-dark mb-3" sytle={"width:18rem;"}>
-             <img className="card-img-top"
-                  alt="Folder"
-                  src="https://lh3.googleusercontent.com/proxy/sI4ikPulkiMpP2-EQ_Q5KGiMa5lBHfDcbvo1KIE_3SGy7PPcGIkA36abvINWjnLiWC0nVMf5OtILylCDDKT2vz6LWGGYIQ9wtiY1LODoWcLzCLMwCIxnk6zKFyVGwD8aMP4zGmxwf3s4veDQNCTrCUzbCIE"
-             />
+             <i className="fas fa-4x fa-folder"/>
              {!editing &&
               <div className="card-body">
                   <div className={"row"}>

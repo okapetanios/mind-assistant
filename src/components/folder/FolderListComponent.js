@@ -10,6 +10,7 @@ import {createFolder, deleteFolder, findFoldersForUser, updateFolder} from "../.
 const UserService = new userService();
 const FolderService = new folderService();
 
+
 class FolderListComponent extends React.Component {
     state = {
         newTitle: "",
