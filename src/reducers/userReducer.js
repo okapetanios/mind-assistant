@@ -2,11 +2,10 @@ import {
     CREATE_USER,
     DELETE_USER,
     FIND_ALL_USERS,
-    FIND_CURRENT_USER,
-    FIND_USER, LOGIN_USER, LOGOUT_USER, SEARCH_USERS,
-    UPDATE_USER
+    FIND_USER,
+    UPDATE_USER,
+    FIND_CURRENT_USER, LOGIN_USER, LOGOUT_USER
 } from "../actions/userActions";
-import {SEARCH_NOTES} from "../actions/noteActions";
 
 const userReducer = (state={user:{}}, action) => {
     switch (action.type) {
