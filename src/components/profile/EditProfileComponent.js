@@ -24,7 +24,8 @@ class EditProfileComponent extends React.Component{
         newPassword: "",
         newFname: "",
         newLname: "",
-        newRole: "student",
+        newRole: "",
+        newSpecific: "",
         newSrc: "",
         newBio: ""
     };
@@ -58,6 +59,12 @@ class EditProfileComponent extends React.Component{
         })
     };
 
+    specificChange = (e) => {
+        this.setState({
+            newSpecific: e.target.value
+        })
+    };
+
     srcChange = (e) => {
         this.setState({
             newSrc: e.target.value
@@ -79,7 +86,7 @@ class EditProfileComponent extends React.Component{
             password: this.state.newPassword === "" ? this.props.user.password:this.state.newPassword,
             fname: this.state.newFname === "" ? this.props.user.fname:this.state.newFname,
             lname: this.state.newLname === "" ? this.props.user.lname:this.state.newLname,
-            role: this.state.newRole === "" ? this.props.user.role:this.state.newRole
+            role: this.state.newRole === "" ? this.props.user.role:this.state.newRole,
         };
         this.props.updateUser(this.props.user.id, user);
     };
@@ -101,149 +108,177 @@ class EditProfileComponent extends React.Component{
 
     render() {
         return (
-            <ul className={"container list-group"}>
-                <li className={"list-group-item"}>
-                    <div className="form-group row">
-                        <div className="col text-center">
-                            <h1>Account Information</h1>
-                        </div>
-                    </div>
-                    <div className="form-group row">
-                        <label htmlFor="username"
-                               className="col-sm-2 col-form-label">
-                            Username
-                        </label>
-                        <div className="col-sm-10"
-                             id={"username"}>
-                            <input className="form-control "
-                                   id="username"
-                                   disabled={true}
-                                   value={this.props.user.username || ""}/>
-                        </div>
-                    </div>
-                    <div className="form-group row">
-                        <label htmlFor="editInputPassword"
-                               className="col-sm-2 col-form-label">
-                            Password
-                        </label>
-                        <div className="col-sm-10">
-                            <input type="password"
-                                   className="form-control "
-                                   id="editInputPassword"
-                                   onChange={this.pwChange}
-                                   placeholder="New Password (if applicable)"
-                            />
-                        </div>
-                    </div>
-                    <div className="form-group row">
-                        <label htmlFor="editFirstName"
-                               className="col-sm-2 col-form-label">
-                            First Name
-                        </label>
-                        <div className="col-sm-10">
-                            <input className="form-control "
-                                   id="editFirstName"
-                                   placeholder={"First Name"}
-                                   onChange={this.fnameChange}
-                                   value={this.state.newFname === "" ? (this.props.user.fname || ""):this.state.newFname}/>
-                        </div>
-                    </div>
-                    <div className="form-group row">
-                        <label htmlFor="editLastName"
-                               className="col-sm-2 col-form-label">
-                            Last Name
-                        </label>
-                        <div className="col-sm-10">
-                            <input className="form-control "
-                                   id="editLastName"
-                                   placeholder={"Last Name"}
-                                   onChange={this.lnameChange}
-                                   value={this.state.newLname === "" ? (this.props.user.lname || ""):this.state.newLname}/>
-                        </div>
-                    </div>
-                    <div className="form-group row">
-                        <label htmlFor="editRole"
-                               className="col-sm-2 col-form-label">
-                            Role
-                        </label>
-                        <div className="col-sm-10">
-                            <select className="form-control"
-                                    id="editRole"
-                                    placeholder={"student"}
-                                    onChange={this.roleChange}
-                                    value={this.state.newRole === "" ? this.props.user.role:this.state.newRole}
-                            >
-                                <option value={"student"}>Student</option>
-                                <option value={"general"}>Other</option>
-                            </select>
-                        </div>
-                    </div>
-                    {/*TODO*/}
-                    {/*add employer or school depending on selected role*/}
-                    <div className="form-group row">
-                        <div className="col-sm-2 col-form-label"></div>
-                        <div className="col-sm-10">
-                            <button className="btn btn-primary btn-block"
-                                    onClick={this.updateUser}>
-                                Update Account
-                            </button>
-                            <button className="btn btn-danger btn-block"
-                                    onClick={this.deleteUser}>
-                                Delete Account
-                            </button>
-                            <div className="row">
-                                <div className="col-6">
-                                    <button className={"btn btn-link"}
-                                            onClick={this.logout}>
-                                        Logout
-                                    </button>
-                                </div>
-                                <div className="col-6">
-                                    <a href="/"
-                                       className="btn btn-link float-right">
-                                        Cancel
-                                    </a>
-                                </div>
+            <div className={"App"}>
+                {this.props.user.id > 0 &&
+                <ul className={"container list-group"}>
+                    <li className={"list-group-item"}>
+                        <div className="form-group row">
+                            <div className="col text-center">
+                                <h1>Account Information</h1>
                             </div>
                         </div>
-                    </div>
-                </li>
-                <li className={"list-group-item"}>
-                    <div className="form-group row">
-                        <div className="col text-center">
-                            <h1>Profile Information</h1>
-                        </div>
-                    </div>
-
-                    <div className={"row"}>
-                        <div className={"col-lg-4 col-md-5 col-sm-10"}>
-                            <img alt={"Display"} className={"mr-3"}
-                                 width="auto"
-                                 height={180}
-                                 src={this.state.newSrc === "" ?
-                                     (this.props.profile.picture || ""):
-                                     this.state.newSrc}/>
-                        </div>
-                        <div className={"col"}>
-                            <div className="form-group row">
-                                <label htmlFor="editSrc"
-                                       className="col-lg-2 col-sm-2 col-form-label">
-                                    Image Source
-                                </label>
-                                <div className="col-lg-10 col-sm-10">
-                                    <input className="form-control "
-                                           id="editSrc"
-                                           placeholder={"Image URL here"}
-                                           onChange={this.srcChange}
-                                           value={this.state.newSrc === "" ? (this.props.profile.picture || ""):this.state.newSrc}/>
-                                </div>
+                        <div className="form-group row">
+                            <label htmlFor="username"
+                                   className="col-sm-2 col-form-label">
+                                Username
+                            </label>
+                            <div className="col-sm-10"
+                                 id={"username"}>
+                                <input className="form-control "
+                                       id="username"
+                                       disabled={true}
+                                       value={this.props.user.username || ""}/>
                             </div>
+                        </div>
+                        <div className="form-group row">
+                            <label htmlFor="editInputPassword"
+                                   className="col-sm-2 col-form-label">
+                                Password
+                            </label>
+                            <div className="col-sm-10">
+                                <input type="password"
+                                       className="form-control "
+                                       id="editInputPassword"
+                                       onChange={this.pwChange}
+                                       placeholder="New Password (if applicable)"
+                                />
+                            </div>
+                        </div>
+                        <div className="form-group row">
+                            <label htmlFor="editFirstName"
+                                   className="col-sm-2 col-form-label">
+                                First Name
+                            </label>
+                            <div className="col-sm-10">
+                                <input className="form-control "
+                                       id="editFirstName"
+                                       placeholder={"First Name"}
+                                       onChange={this.fnameChange}
+                                       value={this.state.newFname === "" ? (this.props.user.fname || ""):this.state.newFname}/>
+                            </div>
+                        </div>
+                        <div className="form-group row">
+                            <label htmlFor="editLastName"
+                                   className="col-sm-2 col-form-label">
+                                Last Name
+                            </label>
+                            <div className="col-sm-10">
+                                <input className="form-control "
+                                       id="editLastName"
+                                       placeholder={"Last Name"}
+                                       onChange={this.lnameChange}
+                                       value={this.state.newLname === "" ? (this.props.user.lname || ""):this.state.newLname}/>
+                            </div>
+                        </div>
+                        <div className="form-group row">
+                            <label htmlFor="editRole"
+                                   className="col-sm-2 col-form-label">
+                                Role
+                            </label>
+                            <div className="col-sm-10">
+                                <select className="form-control"
+                                        id="editRole"
+                                        placeholder={"student"}
+                                        onChange={this.roleChange}
+                                        value={this.state.newRole === "" ? this.props.user.role:this.state.newRole}
+                                >
+                                    <option value={"student"}>Student</option>
+                                    <option value={"general"}>Other</option>
+                                </select>
+                            </div>
+                        </div>
+                        {(this.state.newRole === "" ? this.props.user.role:this.state.newRole) === "student" &&
                             <div className="form-group row">
-                                <label htmlFor="editBio"
+                                <label htmlFor="editSchool"
                                        className="col-sm-2 col-form-label">
-                                    Bio
+                                    School
                                 </label>
                                 <div className="col-sm-10">
+                                    <input className="form-control "
+                                           id="editSchool"
+                                           placeholder={"School"}
+                                           onChange={this.specificChange}
+                                           value={this.state.newSpecific === "" ? (this.props.user.school || ""):this.state.newSpecific}/>
+                                </div>
+                            </div>}
+                        {(this.state.newRole === "" ? "":this.state.newRole) !== "student" &&
+                            <div className="form-group row">
+                                <label htmlFor="editOccupation"
+                                       className="col-sm-2 col-form-label">
+                                    Occupation
+                                </label>
+                                <div className="col-sm-10">
+                                    <input className="form-control "
+                                           id="editOccupation"
+                                           placeholder={"Occupation"}
+                                           onChange={this.specificChange}
+                                           value={this.state.newSpecific === "" ? (this.props.user.occupation || ""):this.state.newSpecific}/>
+                                </div>
+                            </div>}
+                        <div className="form-group row">
+                            <div className="col-sm-2 col-form-label"></div>
+                            <div className="col-sm-10">
+                                <button className="btn btn-primary btn-block"
+                                        onClick={this.updateUser}>
+                                    Update Account
+                                </button>
+                                <button className="btn btn-danger btn-block"
+                                        onClick={this.deleteUser}>
+                                    Delete Account
+                                </button>
+                                <div className="row">
+                                    <div className="col-6">
+                                        <button className={"btn btn-link"}
+                                                onClick={this.logout}>
+                                            Logout
+                                        </button>
+                                    </div>
+                                    <div className="col-6">
+                                        <a href="/"
+                                           className="btn btn-link float-right">
+                                            Cancel
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li className={"list-group-item"}>
+                        <div className="form-group row">
+                            <div className="col text-center">
+                                <h1>Profile Information</h1>
+                            </div>
+                        </div>
+
+                        <div className={"row"}>
+                            <div className={"col-lg-4 col-md-5 col-sm-10"}>
+                                <img alt={"Display"} className={"mr-3"}
+                                     width="auto"
+                                     height={180}
+                                     src={this.state.newSrc === "" ?
+                                         (this.props.profile.picture || ""):
+                                         this.state.newSrc}/>
+                            </div>
+                            <div className={"col"}>
+                                <div className="form-group row">
+                                    <label htmlFor="editSrc"
+                                           className="col-lg-2 col-sm-2 col-form-label">
+                                        Image Source
+                                    </label>
+                                    <div className="col-lg-10 col-sm-10">
+                                        <input className="form-control "
+                                               id="editSrc"
+                                               placeholder={"Image URL here"}
+                                               onChange={this.srcChange}
+                                               value={this.state.newSrc === "" ? (this.props.profile.picture || ""):this.state.newSrc}/>
+                                    </div>
+                                </div>
+                                <div className="form-group row">
+                                    <label htmlFor="editBio"
+                                           className="col-sm-2 col-form-label">
+                                        Bio
+                                    </label>
+                                    <div className="col-sm-10">
                                     <textarea className="form-control "
                                               id="editBio"
                                               rows={"3"}
@@ -251,22 +286,39 @@ class EditProfileComponent extends React.Component{
                                               onChange={this.bioChange}
                                               value={this.state.newBio === "" ? (this.props.profile.bio || ""):this.state.newBio}>
                                     </textarea>
+                                    </div>
+                                </div>
+                                <div className={"form-group-row"}>
+                                    <button className="btn btn-primary btn-block"
+                                            onClick={this.updateProfile}>
+                                        Update Profile
+                                    </button>
+                                    <Link className="btn btn-success btn-block"
+                                          to={`/profile/${this.props.user.id}`}>
+                                        View Profile
+                                    </Link>
                                 </div>
                             </div>
-                            <div className={"form-group-row"}>
-                                <button className="btn btn-primary btn-block"
-                                        onClick={this.updateProfile}>
-                                    Update Profile
-                                </button>
-                                <Link className="btn btn-success btn-block"
-                                        to={`/profile/${this.props.user.id}`}>
-                                    View Profile
-                                </Link>
-                            </div>
                         </div>
-                    </div>
-                </li>
-            </ul>
+                    </li>
+                </ul>
+                }
+                {this.props.user.id === 0 &&
+                <div className={"container text center"}>
+                    <li className={"list-group-item text-center"}>
+                        <h1>Please Login to Access Profile</h1>
+                        <br/>
+                        <Link to={"/login"} className={"btn btn-primary"}>
+                            Login
+                        </Link>
+                        <button className={"btn btn-link"}></button>
+                        <Link to={"/register"} className={"btn btn-primary"}>
+                            Register
+                        </Link>
+                    </li>
+                </div>
+                }
+            </div>
         );
     }
 }
