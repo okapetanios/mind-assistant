@@ -25,7 +25,6 @@ import labelReducer from "./reducers/labelReducer";
 import DefaultLayoutComponent from "./components/DefaultLayoutComponent";
 import NavBarComponent from "./components/NavBarComponent";
 
-
 class App extends React.Component {
     reducers = combineReducers({
         jokes: jokeReducer,

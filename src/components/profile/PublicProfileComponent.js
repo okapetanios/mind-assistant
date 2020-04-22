@@ -13,16 +13,18 @@ class PublicProfileComponent extends React.Component {
 
     state = {
         profile: {id: 0, user: {username: "Testing"}},
-        notes: [{id: 0, title: "Test", note: "Note"}]
+        notes: [{id: 0, title: "Test", note: "Note"}],
+        labels: [{id:0, title: "Test"}]
     };
 
     componentDidUpdate(prevProps, prevState, snapshot) {
         if(this.state.profile.id === 0 && this.props.profile.id > 0){
-            console.log(this.props.profile);
-            console.log(this.props.profile.user.notes);
+            // console.log(this.props.profile);
+            // console.log(this.props.profile.user.notes);
             this.setState({
                               profile: this.props.profile,
-                              notes: this.props.profile.user.notes.filter(note => note.status === "public")
+                              notes: this.props.profile.user.notes.filter(note => note.status === "public"),
+                              labels: this.props.profile.user.labels.filter(label => label.status === "public")
                           });
         }
     }
@@ -32,6 +34,7 @@ class PublicProfileComponent extends React.Component {
     render() {
         return (
             <div className={"container-fluid"}>
+                
                 <br/>
                 <div className="media">
                     <img className="mr-3"
@@ -55,8 +58,20 @@ class PublicProfileComponent extends React.Component {
                             <li className="list-group-item"
                                 key={note.id}>
                                 <h6>{note.title}</h6>
-                                <p>{note.note}</p>
                             </li>
+                        )}
+                    </ul>
+                </div>
+                <br/>
+                <div className={"text-center"}>
+                    <h3>Saved Public Labels</h3>
+                    <ul className="list-group">
+                        {this.state.labels.map(label =>
+                                                  <li className="list-group-item"
+                                                      key={label.id}>
+                                                      <h6>{label.title}</h6>
+                                                      <p>{label.label}</p>
+                                                  </li>
                         )}
                     </ul>
                 </div>
