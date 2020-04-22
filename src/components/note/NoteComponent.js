@@ -26,6 +26,12 @@ class NoteComponent extends React.Component {
         }));
     };
 
+    saveNote = () => {
+            const note = this.state.note;
+            note.labels = this.state.newLabels;
+            this.props.saveNote(note);
+    }
+
     render() {
         const {showing} = this.state;
         return (
@@ -49,13 +55,11 @@ class NoteComponent extends React.Component {
                              <div className="col-sm-2">
                                  <button
                                      className="btn btn-success"
-                                     onClick={() => {
-                                         this.props.saveNote(this.state.note);
+                                     onClick={()=>{
+                                         this.saveNote()
                                          this.setState(prevState => {
-                                             prevState.showing = false
-                                             return prevState
-                                         })
-                                     }}>
+                                         prevState.showing = false
+                                         return prevState})}}>
                                      <i className="fas fa-check"></i>
                                  </button>
                                  <button
