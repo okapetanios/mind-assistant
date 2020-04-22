@@ -16,6 +16,10 @@ class SearchDetailsComponent extends React.Component {
         this.props.searchNotes(this.props.criteria);
     };
 
+    state = {
+        users: []
+    };
+
     render() {
         return (
             <div className={"App"}>
@@ -28,15 +32,18 @@ class SearchDetailsComponent extends React.Component {
                         <h5>Users who have saved {this.props.criteria} jokes:</h5>
                     </div>
                     <ul className={"list-group"}>
-                        {/*
-                    Below should be fetched from local API
-                    Find users that currently have the particular resultId saved as public note
-                    */}
+                        {this.state.users.length > 0 && this.state.users.map(user =>
+                            <li key={user.id}
+                                className={"list-group-item"}>
+                                <Link to={"/profile/user1"}>
+                                    <h5>{user.username}</h5>
+                                </Link>
+                            </li>
+                        )}
+                        {this.state.users.length === 0 &&
                         <li className={"list-group-item"}>
-                            <Link to={"/profile/user1"}>
-                                User 1
-                            </Link>
-                        </li>
+                            <h5>No users have saved notes with requested keyword</h5>
+                        </li>}
                     </ul>
                     <br/>
                     <div className={"text-center"}>
