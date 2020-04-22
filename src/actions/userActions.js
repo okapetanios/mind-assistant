@@ -46,3 +46,9 @@ export const loginUser = (user) => ({
     type: LOGIN_USER,
     user: user
 });
+
+export const SEARCH_USERS = "SEARCH_USERS";
+export const searchUsers = (users) => ({
+    type: SEARCH_USERS,
+    users: users
+});

@@ -24,12 +24,14 @@ import noteReducer from "./reducers/noteReducer";
 import labelReducer from "./reducers/labelReducer";
 import DefaultLayoutComponent from "./components/DefaultLayoutComponent";
 import NavBarComponent from "./components/NavBarComponent";
+import userListReducer from "./reducers/userListReducer";
 
 class App extends React.Component {
     reducers = combineReducers({
         jokes: jokeReducer,
         profile: profileReducer,
         user: userReducer,
+        userList: userListReducer,
         folders: folderReducer,
         notes: noteReducer,
         labels: labelReducer
