@@ -39,10 +39,13 @@ class LabelListComponent extends React.Component {
         }
     }
 
-    //TODO: Figure out push
-    //change to title?
     selectLabel = (labelId) => {
-        // this.props.history.push(`/labels/${labelId}`);
+        const folderId = this.props.folderId;
+        if(folderId > 0){
+            this.props.history.push(`/folder/${folderId}/label/${labelId}`);
+        } else {
+            this.props.history.push(`/label/${labelId}`);
+        }
         this.setState({
             activeLabel: labelId
         });

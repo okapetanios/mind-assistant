@@ -143,7 +143,7 @@ class NewNoteComponent extends React.Component {
                                 onChange={this.labelChanged}>
                             <option value={"none"}>None</option>
                             {this.state.userLabels.length > 0 && this.state.userLabels.map(label =>
-                                <option value={label.id}>{label.title}</option>
+                                <option key={label.id} value={label.id}>{label.title}</option>
                             )}
                         </select>
                     </div>

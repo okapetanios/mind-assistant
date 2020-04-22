@@ -3,7 +3,7 @@ import '../App.css';
 import LabelListComponent from "./label/LabelListComponent";
 import NoteListComponent from "./note/NoteListComponent";
 
-const DefaultLayoutComponent = () =>
+const DefaultLayoutComponent = ({folderId, labelId, history}) =>
     <div className="App">
         <br/>
         <div className={"row"}>
@@ -11,10 +11,18 @@ const DefaultLayoutComponent = () =>
 
             </div>
             <div className="col-2">
-                <LabelListComponent/>
+                <LabelListComponent
+                    folderId={folderId}
+                    labelId={labelId}
+                    history={history}
+                />
             </div>
             <div className="col-6">
-                <NoteListComponent/>
+                <NoteListComponent
+                    folderId={folderId}
+                    labelId={labelId}
+                    history={history}
+                />
             </div>
         </div>
     </div>;

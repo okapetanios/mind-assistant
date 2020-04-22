@@ -18,14 +18,13 @@ class FolderListComponent extends React.Component {
     componentDidMount() {
         this.props.findCurrentUser();
         this.props.findFoldersForUser(this.props.user.id);
-        console.log(this.props.folders)
     }
 
-    componentDidUpdate(prevProps, prevState, snapshot) {
-        if(this.props.folders.length > 0 && this.props.folders !== prevProps.folders){
-            console.log(this.props.folders)
-        }
-    }
+    // componentDidUpdate(prevProps, prevState, snapshot) {
+    //     if(this.props.folders.length > 0 && this.props.folders !== prevProps.folders){
+    //         console.log(this.props.folders)
+    //     }
+    // }
 
     titleChanged = (e) => {
         this.setState({

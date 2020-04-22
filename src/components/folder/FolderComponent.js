@@ -13,7 +13,7 @@ const FolderComponent = ({folder, deleteFolder, select, editing, edit, editTitle
                       <i className="fas fa-4x fa-folder"/>
                       <div className={"col"}>
                           <Link className={"ma-link"}
-                                to={`/folder/${folder.title}`}>
+                                to={`/folder/${folder.id}`}>
                               <h3 className="card-title">{folder.title}</h3>
                           </Link>
                       </div>
