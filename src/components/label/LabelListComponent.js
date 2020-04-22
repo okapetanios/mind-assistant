@@ -29,7 +29,7 @@ class LabelListComponent extends React.Component {
         this.props.findCurrentUser();
         if(this.props.folderId > 0){
             this.props.findLabelsForFolder(this.props.folderId);
-        } 
+        }
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {

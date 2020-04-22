@@ -112,6 +112,40 @@ class RegisterComponent extends React.Component {
                                 </div>
                             </div>
 
+                            {/*Password field with example*/}
+                            <div className="form-group row">
+                                <label htmlFor="passwordFld"
+                                       className="col-sm-2 col-form-label">
+                                    Password
+                                </label>
+                                <div className="col-sm-10">
+                                    <input type="password"
+                                           className="form-control "
+                                           id="passwordFld"
+                                           placeholder="123qwe#$%"
+                                           value={this.state.password}
+                                           onChange={this.updatePassword}
+                                    />
+                                </div>
+                            </div>
+
+                            {/*Verify password field with example*/}
+                            <div className="form-group row">
+                                <label htmlFor="verifyPasswordFld"
+                                       className="col-sm-2 col-form-label">
+                                    Verify Password
+                                </label>
+                                <div className="col-sm-10">
+                                    <input type="password"
+                                           className="form-control "
+                                           id="verifyPasswordFld"
+                                           placeholder="123qwe#$%"
+                                           value={this.state.verifyPassword}
+                                           onChange={this.updateVerify}
+                                    />
+                                </div>
+                            </div>
+
                             <div className="form-group row">
                                 <label htmlFor="firstNameFld"
                                        className="col-sm-2 col-form-label">
@@ -197,40 +231,6 @@ class RegisterComponent extends React.Component {
                                  </div>
                              </div>
                             }
-
-                            {/*Password field with example*/}
-                            <div className="form-group row">
-                                <label htmlFor="passwordFld"
-                                       className="col-sm-2 col-form-label">
-                                    Password
-                                </label>
-                                <div className="col-sm-10">
-                                    <input type="password"
-                                           className="form-control "
-                                           id="passwordFld"
-                                           placeholder="123qwe#$%"
-                                           value={this.state.password}
-                                           onChange={this.updatePassword}
-                                    />
-                                </div>
-                            </div>
-
-                            {/*Verify password field with example*/}
-                            <div className="form-group row">
-                                <label htmlFor="verifyPasswordFld"
-                                       className="col-sm-2 col-form-label">
-                                    Verify Password
-                                </label>
-                                <div className="col-sm-10">
-                                    <input type="password"
-                                           className="form-control "
-                                           id="verifyPasswordFld"
-                                           placeholder="123qwe#$%"
-                                           value={this.state.verifyPassword}
-                                           onChange={this.updateVerify}
-                                    />
-                                </div>
-                            </div>
 
                             {/*Buttons for signing up or logging in*/}
                             <div className="form-group row">
