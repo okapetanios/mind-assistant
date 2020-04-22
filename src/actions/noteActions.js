@@ -34,3 +34,9 @@ export const findAllNotes = (notes) => ({
     type: FIND_ALL_NOTES,
     notes: notes
 });
+
+export const SEARCH_NOTES = "SEARCH_NOTES";
+export const searchNotes = (notes) => ({
+    type: SEARCH_NOTES,
+    notes: notes
+});
