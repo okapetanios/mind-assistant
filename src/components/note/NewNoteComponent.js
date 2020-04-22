@@ -5,7 +5,9 @@ class NewNoteComponent extends React.Component {
     state = {
         newTitle: "New Note",
         newText: "Note Body",
-        newStatus: "private"
+        newStatus: "private",
+        newLabel: "",
+        newLabels: [{id: 1, title: "blah1"}, {id: 2, title: "blah2"}, {id: 3, title: "blah3"}]
     };
 
     //TODO:
@@ -26,6 +28,12 @@ class NewNoteComponent extends React.Component {
     statusChanged = (e) => {
         this.setState({
             newStatus: e.target.value
+        })
+    };
+
+   labelChanged = (e) => {
+        this.setState({
+            newLabel: e.target.value
         })
     };
 
@@ -65,7 +73,7 @@ class NewNoteComponent extends React.Component {
                     </label>
                     <div className="col-sm-10">
                         <select className="form-control"
-                                id="editRole"
+                                id="addStatus"
                                 placeholder={"private"}
                                 onChange={this.statusChanged}
                         >
@@ -75,11 +83,41 @@ class NewNoteComponent extends React.Component {
                     </div>
                 </div>
                 <div className="form-group row">
+                    <label htmlFor="addLabel"
+                           className="col-sm-2 col-form-label">
+                        Label
+                    </label>
+                    <div className="col-sm-10">
+                        <input type="text"
+                               className="form-control "
+                               id="addLabel"
+                               placeholder="New Label (if applicable)"
+                               onChange={this.labelChanged}
+                        />
+                    </div>
+                </div>
+                <div className="form-group row">
+                    <label htmlFor="ma-labels"
+                           className="col-sm-2 col-form-label">
+                        Current Labels
+                    </label>
+                    <div className="col-sm-10">
+                        <ul className={"nav nav-pills"} id={"ma-labels"}>
+                            {this.state.newLabels.length === 0 && <p>None</p>}
+                            {this.state.newLabels.length > 0 && this.state.newLabels.map(label =>
+                                <li className={"nav-item"} key={label.id}>
+                                    {label.title}<button className={"btn btn-link"}></button>
+                                </li>
+                            )}
+                        </ul>
+                    </div>
+                </div>
+                <div className="form-group row">
                     <div className="col">
                         <textarea className="form-control "
                                   placeholder={"New Note"}
                                   onChange={this.textChanged}
-                        ></textarea>
+                        />
                     </div>
                 </div>
                 <button className="btn btn-primary btn-block"
