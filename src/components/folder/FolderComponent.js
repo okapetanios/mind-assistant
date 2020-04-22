@@ -7,10 +7,10 @@ const FolderComponent = ({folder, deleteFolder, select, editing, edit, editTitle
 
     <div className="col">
          <div className="card text-white bg-dark mb-3" sytle={"width:18rem;"}>
-             <i className="fas fa-4x fa-folder"/>
              {!editing &&
               <div className="card-body">
                   <div className={"row"}>
+                      <i className="fas fa-4x fa-folder"/>
                       <div className={"col"}>
                           <Link className={"ma-link"}
                                 to={`/folder/${folder.title}`}>

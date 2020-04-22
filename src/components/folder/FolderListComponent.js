@@ -97,8 +97,6 @@ class FolderListComponent extends React.Component {
                     </button>
                 </div>
                 <br/>
-                <div className={"row"}>
-                    {this.stat}
                     {this.props.folders && this.props.folders.map(folder =>
                         <div key={folder.id}>
                             <FolderComponent
@@ -115,7 +113,6 @@ class FolderListComponent extends React.Component {
                             />
                         </div>
                     )}
-                </div>
             </div>
         )
     }
