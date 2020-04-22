@@ -24,9 +24,6 @@ class NoteListComponent extends React.Component {
         if(this.props.folderId > 0){
             this.props.findNotesForFolder(this.props.folderId);
         }
-        if(this.props.labelId >0){
-            this.props.findNotesForLabel(this.props.labelId);
-        }
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
@@ -35,6 +32,9 @@ class NoteListComponent extends React.Component {
                 user: this.props.user
             });
             this.props.findNotesForUser(this.props.user.id)
+        }
+        if(this.props.labelId !== prevProps.labelId){
+            this.props.findNotesForLabel(this.props.labelId)
         }
     }
 
