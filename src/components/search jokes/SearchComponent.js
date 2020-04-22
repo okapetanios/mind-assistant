@@ -23,16 +23,16 @@ class SearchComponent extends React.Component {
                 <div className={"container"}>
                     <ul className="list-group">
                         <li className={"list-group-item text-center"}>
-                            <h1>Search Results for: {this.props.criteria}</h1>
+                            {this.props.jokes.length > 0 && <h1>Search Results for: {this.props.criteria}</h1>}
+                            {this.props.jokes.length < 1 && <h1>No results found</h1>}
                         </li>
-                        {this.props.jokes && this.props.jokes.map(joke =>
+                        {this.props.jokes.length > 0 && this.props.jokes.map(joke =>
                             <li className="list-group-item" key={joke.id}>
                                 <Link to={`/search/${this.props.criteria}/details/${joke.id}`}>
                                     {joke.joke}
                                 </Link>
                             </li>
                         )}
-                        {this.props.jokes < 1 && <h1>No results found</h1>}
                     </ul>
                 </div>
             </div>

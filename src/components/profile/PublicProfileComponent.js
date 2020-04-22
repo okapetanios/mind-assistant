@@ -29,8 +29,6 @@ class PublicProfileComponent extends React.Component {
         }
     }
 
-    //TODO: Add public labels to profile page
-
     render() {
         return (
             <div className={"container-fluid"}>
