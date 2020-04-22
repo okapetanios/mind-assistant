@@ -1,19 +1,15 @@
 import React from 'react';
 import '../../App.css';
+import AddLabelComponent from "../label/AddLabelComponent";
 
 class NewNoteComponent extends React.Component {
     state = {
         newTitle: "New Note",
         newText: "Note Body",
         newStatus: "private",
-        newLabel: "",
-        existingLabel: "none",
-        newLabels: [],
-        userLabels: [{id:1, title: "label1"}]
+        addLabel: false,
+        newLabels: []
     };
-
-    //TODO:
-    //Add in label addition
 
     titleChanged = (e) => {
         this.setState({
@@ -33,35 +29,10 @@ class NewNoteComponent extends React.Component {
         })
     };
 
-    labelChange = (e) => {
+    addLabel = () => {
         this.setState({
-            newLabel: e.target.value
+            addLabel: true
         })
-    };
-
-    labelChanged = (e) => {
-        this.setState({
-            existingLabel: e.target.value
-        })
-    };
-
-    //need to create a label before add to note
-    createLabel = () => {
-        // this.props.createUserLabel({title: this.state.newLabel});
-        // this.props.createFolderLabel({title: this.state.newLabel});
-        this.setState(prevState => ({
-            newLabel: "",
-            newLabels: [...prevState.newLabels, this.props.label]
-        }));
-    };
-
-    //need to find the label before add
-    addLabel = (labelId) => {
-        // this.props.findLabel(labelId);
-        this.setState(prevState => ({
-            newLabel: "",
-            newLabels: [...prevState.newLabels, this.props.label]
-        }));
     };
 
     saveNote = () => {
@@ -107,56 +78,19 @@ class NewNoteComponent extends React.Component {
                     </div>
                 </div>
                 <div className="form-group row">
-                    <label htmlFor="addNewLabel"
-                           className="col-sm-2 col-form-label">
-                        New Label
-                    </label>
-                    <div className="col-sm-9">
-                        <input type="text"
-                               className="form-control "
-                               id="addNewLabel"
-                               placeholder="New Label (if applicable)"
-                               onChange={this.labelChange}
-                               value={this.state.newLabel}
+                    <div className="col">
+                        <textarea className="form-control "
+                                  placeholder={"New Note"}
+                                  onChange={this.textChanged}
                         />
                     </div>
-                    <div className={"col-1"}>
-                        <button className={"btn btn-primary"}
-                                onClick={() => this.createLabel()}>
-                            <i className="fas fa-plus"></i>
-                        </button>
-                    </div>
                 </div>
-                <div className="form-group row">
-                    <label htmlFor="addLabel"
-                           className="col-sm-2 col-form-label">
-                        Existing Label
-                    </label>
-                    <div className="col-sm-9">
-                        <select className="form-control"
-                                id="addLabel"
-                                placeholder={"none"}
-                                value={this.state.existingLabel}
-                                onChange={this.labelChanged}>
-                            <option value={"none"}>None</option>
-                            {this.state.userLabels.length > 0 && this.state.userLabels.map(label =>
-                                <option key={label.id} value={label.id}>{label.title}</option>
-                            )}
-                        </select>
+                {this.state.addLabel && <AddLabelComponent/>}
+                <div className="row">
+                    <div className="col-sm-2">
+                        Current Labels:
                     </div>
-                    <div className={"col-1"}>
-                        <button className={"btn btn-primary"}
-                                onClick={() => this.addLabel(this.state.existingLabel)}>
-                            <i className="fas fa-plus"></i>
-                        </button>
-                    </div>
-                </div>
-                <div className="form-group row">
-                    <label htmlFor="ma-labels"
-                           className="col-sm-2 col-form-label">
-                        Current Labels
-                    </label>
-                    <div className="col-sm-10">
+                    <div className="col-sm">
                         <ul className={"nav nav-pills"} id={"ma-labels"}>
                             {this.state.newLabels.length === 0 && <p>None</p>}
                             {this.state.newLabels.length > 0 && this.state.newLabels.map(label =>
@@ -166,19 +100,21 @@ class NewNoteComponent extends React.Component {
                             )}
                         </ul>
                     </div>
+                    {!this.state.addLabel &&
+                    <div className="col-sm-2">
+                        <button className={"btn btn-primary float-right"} onClick={this.addLabel}>
+                            Add Label
+                        </button>
+                    </div>}
                 </div>
-                <div className="form-group row">
-                    <div className="col">
-                        <textarea className="form-control "
-                                  placeholder={"New Note"}
-                                  onChange={this.textChanged}
-                        />
-                    </div>
+                <br/>
+                <div className={"row"}>
+                    <button className="btn btn-primary btn-block"
+                            onClick={this.saveNote}>
+                        Add Note
+                    </button>
                 </div>
-                <button className="btn btn-primary btn-block"
-                        onClick={this.saveNote}>
-                    Add Note
-                </button>
+
             </div>
         )
     }
