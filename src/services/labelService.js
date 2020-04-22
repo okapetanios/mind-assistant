@@ -4,9 +4,17 @@ class labelService {
     url = HEROKU_URL + "/api/labels";
     userURL = (userId) => `${HEROKU_URL}/api/users/${userId}/labels`;
     folderURL = (folderId) => `${HEROKU_URL}/api/folders/${folderId}/labels`;
+    labelURL = (labelId) => `${HEROKU_URL}/api/labels/${labelId}/notes`;
 
     findLabelsForUser = (userId) => {
         return fetch(this.userURL(userId),{
+            method: "GET",
+            credentials: "include"
+        }).then(response => response.json())
+    };
+
+    findNotesForLabel =(labelId) => {
+        return fetch(this.labelURL(labelId),{
             method: "GET",
             credentials: "include"
         }).then(response => response.json())
