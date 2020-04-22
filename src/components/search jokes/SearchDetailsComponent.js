@@ -16,6 +16,12 @@ class SearchDetailsComponent extends React.Component {
         this.props.searchNotes(this.props.criteria);
     };
 
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if(this.props.notes.length > 0 && this.props.notes !== prevProps){
+            console.log(this.props.notes)
+        }
+    }
+
     state = {
         users: []
     };
@@ -42,7 +48,7 @@ class SearchDetailsComponent extends React.Component {
                         )}
                         {this.state.users.length === 0 &&
                         <li className={"list-group-item"}>
-                            <h5 className={"text-center"}>No users have saved notes with requested keyword</h5>
+                            <h5>No users have saved notes with requested keyword</h5>
                         </li>}
                     </ul>
                     <br/>
@@ -53,10 +59,10 @@ class SearchDetailsComponent extends React.Component {
                         {this.props.notes.length > 0 && this.props.notes.map(note =>
                             <li key={note.id}
                                 className={"list-group-item"}>
-                                <div className={"text-center"}>
+                                <div className={"row"}>
                                     <h5>{note.title}</h5>
                                 </div>
-                                <div className={"text-center"}>
+                                <div className={"row"}>
                                     {note.note}
                                 </div>
                             </li>

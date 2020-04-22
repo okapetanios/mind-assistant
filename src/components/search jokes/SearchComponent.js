@@ -19,17 +19,22 @@ class SearchComponent extends React.Component {
 
     render() {
         return (
-            <div className={"container-fluid"}>
-                <ul className="list-group">
-                    {this.props.jokes && this.props.jokes.map(joke =>
-                        <li className="list-group-item" key={joke.id}>
-                            <Link to={`/search/${this.props.criteria}/details/${joke.id}`}>
-                                {joke.joke}
-                            </Link>
+            <div className={"App"}>
+                <div className={"container"}>
+                    <ul className="list-group">
+                        <li className={"list-group-item text-center"}>
+                            <h1>Search Results for: {this.props.criteria}</h1>
                         </li>
-                    )}
-                    {this.props.jokes < 1 && <h1>No results found</h1>}
-                </ul>
+                        {this.props.jokes && this.props.jokes.map(joke =>
+                            <li className="list-group-item" key={joke.id}>
+                                <Link to={`/search/${this.props.criteria}/details/${joke.id}`}>
+                                    {joke.joke}
+                                </Link>
+                            </li>
+                        )}
+                        {this.props.jokes < 1 && <h1>No results found</h1>}
+                    </ul>
+                </div>
             </div>
         )
     }
