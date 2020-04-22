@@ -36,18 +36,6 @@ class LoginComponent extends React.Component {
                 <div className="container">
                     <ul className={"container list-group"}>
                         <li className={"list-group-item"}>
-                            {/*Button to close form and go to home page*/}
-                            <div className="form-group row">
-                                <label className="col-sm-2 col-form-label"></label>
-                                <div className="col-sm-10">
-                                    <div>
-                                        <a href="/"
-                                           className="float-right">
-                                            Cancel</a>
-                                    </div>
-                                </div>
-                            </div>
-
                             <h1>Sign In</h1>
 
                             {/*Username field with example*/}
@@ -95,6 +83,9 @@ class LoginComponent extends React.Component {
                                             {/*<a href="#">*/}
                                             {/*    Forgot Password?*/}
                                             {/*</a>*/}
+                                            <a href="/">
+                                                Cancel
+                                            </a>
                                         </div>
                                         <div className="col-6">
                                             <a href="/register"

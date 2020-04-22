@@ -27,11 +27,13 @@ class LabelListComponent extends React.Component {
 
     componentDidMount() {
         this.props.findCurrentUser();
-        console.log(this.props.folderId)
+        if(this.props.folderId > 0){
+            this.props.findLabelsForFolder(this.props.folderId);
+        }
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        if(this.state.user.id === 0 && this.props.user.id > 0){
+        if(!this.props.folderId > 0 && this.state.user.id === 0 && this.props.user.id > 0){
             this.setState({
                 user: this.props.user
             });
@@ -39,10 +41,13 @@ class LabelListComponent extends React.Component {
         }
     }
 
-    //TODO: Figure out push
-    //change to title?
     selectLabel = (labelId) => {
-        // this.props.history.push(`/labels/${labelId}`);
+        const folderId = this.props.folderId;
+        if(folderId > 0){
+            this.props.history.push(`/folder/${folderId}/label/${labelId}`);
+        } else {
+            this.props.history.push(`/label/${labelId}`);
+        }
         this.setState({
             activeLabel: labelId
         });
@@ -82,20 +87,16 @@ class LabelListComponent extends React.Component {
         })
     };
 
-
-    createUserLabel = () => {
-        this.props.createLabelForUser(this.props.user.id, {title: this.state.newTitle});
+    createLabel = () => {
+        const folderId = this.props.folderId;
+        if(folderId > 0){
+            this.props.createLabelForFolder(folderId, {title: this.state.newTitle})
+        } else {
+            this.props.createLabelForUser(this.props.user.id, {title: this.state.newTitle});
+        }
         this.setState({
             newTitle: "New Label"
         })
-    };
-
-    //TODO:
-    //Figure out how to access folder id
-    //Below information is a placeholder and not accurate
-    createFolderLabel = () => {
-        const folderId = this.props.folder.id;
-        this.props.createLabelForFolder(folderId, {title: this.state.newTitle})
     };
 
     deleteLabel = (labelId) => {
@@ -144,7 +145,7 @@ class LabelListComponent extends React.Component {
                         placeholder={"New Label"}
                         value={this.state.newTitle}
                     />
-                    <button onClick={this.createUserLabel}
+                    <button onClick={this.createLabel}
                             className="btn btn-primary btn-block">
                         Add Label
                     </button>
@@ -172,6 +173,11 @@ const dispatchToPropertyMapper = (dispatch) => ({
     createLabelForUser: (userId, label) => {
         LabelService.createLabelForUser(userId, label).then(label => {
             dispatch(createLabel(label))
+        })
+    },
+    findLabelsForFolder: (folderId) => {
+        LabelService.findLabelsForFolder(folderId).then(labels => {
+            dispatch(findLabelsForGroup(labels))
         })
     },
     createLabelForFolder: (folderId, label) => {

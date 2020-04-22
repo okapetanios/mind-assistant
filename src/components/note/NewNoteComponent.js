@@ -1,15 +1,15 @@
 import React from 'react';
 import '../../App.css';
+import AddLabelComponent from "../label/AddLabelComponent";
 
 class NewNoteComponent extends React.Component {
     state = {
         newTitle: "New Note",
         newText: "Note Body",
-        newStatus: "private"
+        newStatus: "private",
+        addLabel: false,
+        newLabels: []
     };
-
-    //TODO:
-    //Add in label addition
 
     titleChanged = (e) => {
         this.setState({
@@ -29,16 +29,19 @@ class NewNoteComponent extends React.Component {
         })
     };
 
-    //TODO:
-    //Add functionality to determine if user or folder should be created
-    createNote = () => {
+    addLabel = () => {
+        this.setState({
+            addLabel: true
+        })
+    };
+
+    saveNote = () => {
         const note = {
             title: this.state.newTitle,
             note: this.state.newText,
             status: this.state.newStatus
         };
-        this.props.createUserNote(note);
-        // this.props.createFolderNote(note)
+        this.props.createNote(note);
     };
 
     render() {
@@ -65,7 +68,7 @@ class NewNoteComponent extends React.Component {
                     </label>
                     <div className="col-sm-10">
                         <select className="form-control"
-                                id="editRole"
+                                id="addStatus"
                                 placeholder={"private"}
                                 onChange={this.statusChanged}
                         >
@@ -79,13 +82,40 @@ class NewNoteComponent extends React.Component {
                         <textarea className="form-control "
                                   placeholder={"New Note"}
                                   onChange={this.textChanged}
-                        ></textarea>
+                        />
                     </div>
                 </div>
-                <button className="btn btn-primary btn-block"
-                        onClick={this.createNote}>
-                    Add Note
-                </button>
+                {this.state.addLabel && <AddLabelComponent/>}
+                <div className="row">
+                    <div className="col-sm-2">
+                        Current Labels:
+                    </div>
+                    <div className="col-sm">
+                        <ul className={"nav nav-pills"} id={"ma-labels"}>
+                            {this.state.newLabels.length === 0 && <p>None</p>}
+                            {this.state.newLabels.length > 0 && this.state.newLabels.map(label =>
+                                <li className={"nav-item"} key={label.id}>
+                                    {label.title}<button className={"btn btn-link"}></button>
+                                </li>
+                            )}
+                        </ul>
+                    </div>
+                    {!this.state.addLabel &&
+                    <div className="col-sm-2">
+                        <button className={"btn btn-primary float-right"}
+                                onClick={this.addLabel}>
+                            Add Label
+                        </button>
+                    </div>}
+                </div>
+                <br/>
+                <div className={"row"}>
+                    <button className="btn btn-primary btn-block"
+                            onClick={this.saveNote}>
+                        Add Note
+                    </button>
+                </div>
+
             </div>
         )
     }

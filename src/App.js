@@ -92,11 +92,13 @@ class App extends React.Component {
                                 />
                             }/>
                         <Route
-                            exact path={"/folder/:folderTitle"}
+                            exact path={["/folder/:folderId", "/folder/:folderId/label/:labelId"]}
                             render={(props) =>
                                 <DefaultLayoutComponent
                                     {...props}
-                                    folderTitle={props.match.params.folderTitle}
+                                    folderId={props.match.params.folderId}
+                                    labelId={props.match.params.labelId}
+                                    history={props.history}
                                 />
                             }/>
                         <Route
