@@ -1,12 +1,19 @@
 import React from 'react';
 import '../../App.css';
+import {findCurrentUser} from "../../actions/userActions";
+import {connect} from "react-redux";
+import userService from "../../services/userService";
+import labelService from "../../services/labelService";
+
+const UserService = new userService();
+const LabelService = new labelService();
 
 class AddLabelComponent extends React.Component {
     state = {
         newLabel: "",
         existingLabel: "none",
         newLabels: [],
-        userLabels: [{id:1, title: "label1"}]
+        userLabels: this.props.labels
     };
 
     labelChange = (e) => {
@@ -93,4 +100,18 @@ class AddLabelComponent extends React.Component {
     }
 }
 
-export default AddLabelComponent;
+const stateToPropertyMapper = (state) => ({
+    user: state.user.user,
+    labels: state.labels.labels
+});
+const dispatchToPropertyMapper = (dispatch) => ({
+    findCurrentUser: () => {
+        UserService.findCurrentUser().then(user => {
+            dispatch(findCurrentUser(user))
+        })
+    }
+});
+export default connect(
+    stateToPropertyMapper,
+    dispatchToPropertyMapper
+)(AddLabelComponent)
