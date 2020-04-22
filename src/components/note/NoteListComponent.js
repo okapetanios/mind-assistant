@@ -16,7 +16,9 @@ const LabelService = new labelService();
 class NoteListComponent extends React.Component {
     state = {
         editingNoteId: '',
-        user: {id: 0}
+        user: {id: 0},
+        newLabels: [],
+        curLabels: []
     };
 
     componentDidMount() {
@@ -58,6 +60,7 @@ class NoteListComponent extends React.Component {
         this.props.updateNote(note.id,note)
     };
 
+
     cancelEdit = () => {
         this.setState({
                           editingId: "",
@@ -79,10 +82,14 @@ class NoteListComponent extends React.Component {
                 {this.props.notes.length >0 && this.props.notes.map(note =>
                     <div key={note.id}>
                         <NoteComponent
+                            updateLabels={this.updateLabels}
+                            curLabels={this.state.curLabels}
+                            newLabels={this.state.newLabels}
                             cancel={this.cancelEdit}
                             editing={note.id === this.state.editingNoteId}
                             deleteNote={this.deleteNote}
                             saveNote={this.saveNote}
+                            cur
                             note={note}
                             folderId={this.props.folderId}
                             labelId={this.props.labelId}
