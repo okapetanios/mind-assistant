@@ -6,10 +6,12 @@ import {createNote, deleteNote, findNotesForGroup, updateNote} from "../../actio
 import {connect} from "react-redux";
 import userService from "../../services/userService";
 import noteService from "../../services/noteService";
+import labelService from "../../services/labelService";
 import NewNoteComponent from "./NewNoteComponent";
 
 const UserService = new userService();
 const NoteService = new noteService();
+const LabelService = new labelService();
 
 class NoteListComponent extends React.Component {
     state = {
@@ -30,6 +32,9 @@ class NoteListComponent extends React.Component {
                 user: this.props.user
             });
             this.props.findNotesForUser(this.props.user.id)
+        }
+        if(this.props.labelId !== prevProps.labelId){
+            this.props.findNotesForLabel(this.props.labelId)
         }
     }
 
@@ -92,7 +97,8 @@ class NoteListComponent extends React.Component {
 
 const stateToPropertyMapper = (state) => ({
     user: state.user.user,
-    notes: state.notes.notes
+    notes: state.notes.notes,
+    labels: state.labels.labels
 });
 const dispatchToPropertyMapper = (dispatch) => ({
     findCurrentUser: () => {
@@ -112,6 +118,11 @@ const dispatchToPropertyMapper = (dispatch) => ({
     },
     findNotesForFolder: (folderId) => {
         NoteService.findNotesForFolder(folderId).then(notes => {
+            dispatch(findNotesForGroup(notes))
+        })
+    },
+    findNotesForLabel: (labelId) => {
+        LabelService.findNotesForLabel(labelId).then(notes => {
             dispatch(findNotesForGroup(notes))
         })
     },

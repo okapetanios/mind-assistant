@@ -13,7 +13,7 @@ const LabelComponent = ({label, active, select, editing, edit, editTitle, newTit
                         <div className={"col"}>
                             <h6>{label.title}</h6>
                         </div>
-                        <div className={"col-2"}>
+                        <div className={"col-lg-1 col-md-4 col-sm-5"}>
                             <button className={`btn btn-outline-${active ? 'light':'dark'}`}
                                     onClick={() => edit(label)}>
                                 <i className="fas fa-pencil-alt"></i>
