@@ -53,6 +53,13 @@ class NoteListComponent extends React.Component {
         this.props.updateNote(note.id,note)
     };
 
+    cancelEdit = () => {
+        this.setState({
+                          editingId: "",
+
+                      })
+    };
+
     render() {
         return (
             <ul className="list-group">
@@ -65,6 +72,7 @@ class NoteListComponent extends React.Component {
                 {this.props.notes.length >0 && this.props.notes.map(note =>
                     <div key={note.id}>
                         <NoteComponent
+                            cancel={this.cancelEdit}
                             editing={note.id === this.state.editingNoteId}
                             deleteNote={this.deleteNote}
                             saveNote={this.saveNote}

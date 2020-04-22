@@ -11,7 +11,7 @@ class NoteComponent extends React.Component {
     };
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        if (prevProps.editing !== this.props.editing) {
+        if (prevProps.editing !== this.props.editing ) {
             this.setState({
                 editing: this.props.editing
             })
@@ -37,7 +37,7 @@ class NoteComponent extends React.Component {
                              <div className={"col"}>
                                  <input className="form-control"
                                         type="text"
-                                        placeholder="Change Title"
+                                        placeholder={this.state.note.title}
                                         onChange={(e) => {
                                             const newText = e.target.value;
                                             this.setState(prevState => {
@@ -59,6 +59,17 @@ class NoteComponent extends React.Component {
                                      <i className="fas fa-check"></i>
                                  </button>
                                  <button
+                                     className="btn btn-primary"
+                                     onClick={() => {
+                                         this.props.cancel()
+                                         this.setState(prevState => {
+                                             prevState.showing = false
+                                             return prevState
+                                         })
+                                     }}>
+                                     <i className="fas fa-ban"></i>
+                                 </button>
+                                 <button
                                      className="btn btn-danger float-right"
                                      onClick={() => this.props.deleteNote(this.state.note.id)}>
                                      <i className="fas fa-times"></i>
@@ -73,7 +84,7 @@ class NoteComponent extends React.Component {
                              <div className="col-sm">
                                  <select className="form-control"
                                          id="editStatus"
-                                         placeholder={"private"}
+                                         placeholder={this.state.note.role}
                                          onChange={(e) => {
                                              const newStatus = e.target.value;
                                              this.setState(prevState => {
@@ -90,7 +101,7 @@ class NoteComponent extends React.Component {
                              <div className={"col"}>
                                  <textarea className="form-control"
                                            type="text"
-                                           placeholder="Change Note"
+                                           placeholder={this.state.note.note}
                                            onChange={(e) => {
                                                const newText = e.target.value;
                                                this.setState(prevState => {
