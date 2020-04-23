@@ -169,7 +169,8 @@ class LabelListComponent extends React.Component {
 
 const stateToPropertyMapper = (state) => ({
     user: state.user.user,
-    labels: state.labels.labels
+    labels: state.labels.labels,
+    notes: state.notes.notes
 });
 const dispatchToPropertyMapper = (dispatch) => ({
     findCurrentUser: () => {
